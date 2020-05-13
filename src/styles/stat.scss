@@ -1,0 +1,8 @@
+.stat-value-unit > * {
+	display: inline-block;
+}
+
+.stat-value {
+	@extend .h1;
+	@extend .pr-1;
+}

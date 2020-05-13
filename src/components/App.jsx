@@ -1,10 +1,17 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
+
+import Header from './Header';
+import Hero from './Hero';
+import Stats from './Stats';
 
 function App() {
 	return (
-		<div>
-			<h1>Hello world!</h1>
-		</div>
+		<Container fluid="md">
+			<Header />
+			<Hero />
+			<Stats />
+		</Container>
 	);
 }
 
