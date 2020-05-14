@@ -1,0 +1,10 @@
+h1 {
+	font-weight: 100;
+	font-size: 2rem;
+	@include media-breakpoint-up('md') {
+		font-size: 3rem;
+	}
+	strong {
+		font-weight: 600;
+	}
+}

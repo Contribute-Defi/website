@@ -3,7 +3,7 @@ import { Card, Nav, Form } from 'react-bootstrap';
 
 function BuySell() {
 	return (
-		<Card>
+		<Card className="buy-sell text-dark">
 			<Card.Header>
 				<Nav variant="tabs" defaultActiveKey="#buy">
 					<Nav.Item>

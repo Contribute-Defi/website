@@ -18,6 +18,13 @@ module.exports = {
 				test: /\.scss$/,
 				use: ['style-loader', 'css-loader', 'sass-loader'],
 			},
+			{
+				test: /\.(woff2?|eot|ttf|otf|svg|png|jpg|gif)(\?.*)?$/,
+				loader: 'file-loader',
+				options: {
+					name: '[name].[hash].[ext]',
+				},
+			},
 		],
 	},
 	devServer: {

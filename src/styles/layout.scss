@@ -1,0 +1,23 @@
+section {
+	padding: 2rem 1rem;
+}
+
+.section-header {
+	background: $gray-200;
+}
+
+.section-hero {
+	background: $gray-600;
+	color: $white;
+}
+
+.section-stats1 {
+	background: $gray-400;
+}
+
+.section-stats1 > .row > * {
+	//border-right: 1px solid black;
+	//&:last-child {
+	//	border-right: none;
+	//}
+}
