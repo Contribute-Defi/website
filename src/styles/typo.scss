@@ -1,10 +1,62 @@
+body {
+	font-family: Raleway, sans-serif;
+}
+
 h1 {
 	font-weight: 100;
-	font-size: 2rem;
+	font-size: 3rem;
 	@include media-breakpoint-up('md') {
-		font-size: 3rem;
+		font-size: 4rem;
 	}
 	strong {
 		font-weight: 600;
 	}
+}
+
+.mb-6 {
+	margin-bottom: 5rem;
+}
+
+.mt-6 {
+	margin-top: 5rem;
+}
+
+.mb-lg-6 {
+	@include media-breakpoint-up('lg') {
+		margin-bottom: 5rem !important;
+	}
+}
+
+.mt-lg-6 {
+	@include media-breakpoint-up('lg') {
+		margin-top: 5rem !important;
+	}
+}
+
+.fs-1 {
+	font-size: 1rem;
+}
+
+.fs-l {
+	font-size: 1.25rem;
+}
+
+.fs-xl {
+	font-size: 1.5rem;
+}
+
+.fs-xxl {
+	font-size: 2rem;
+}
+
+.fs-s {
+	font-size: .875rem;
+}
+
+.fs-xs {
+	font-size: .75rem;
+}
+
+.lh-1 {
+	line-height: 1;
 }

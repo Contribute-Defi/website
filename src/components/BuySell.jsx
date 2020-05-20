@@ -1,37 +1,65 @@
-import React from 'react';
-import { Card, Nav, Form } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Row, Button, ButtonGroup, Col } from 'react-bootstrap';
 
 function BuySell() {
+	const [tab, setTab] = useState('buy');
+
 	return (
-		<Card className="buy-sell text-dark">
-			<Card.Header>
-				<Nav variant="tabs" defaultActiveKey="#buy">
-					<Nav.Item>
-						<Nav.Link onClick={() => alert('buy click')}>
-							Buy
-						</Nav.Link>
-					</Nav.Item>
-					<Nav.Item>
-						<Nav.Link onClick={() => alert('sell click')}>
-							Sell
-						</Nav.Link>
-					</Nav.Item>
-				</Nav>
-			</Card.Header>
-			<Card.Body>
-				<h3>Purchase TRIB tokens to participate</h3>
-				<Form>
-					<Form.Group controlId="sellDai">
-						<Form.Label>Amount</Form.Label>
-						<Form.Control type="text" />
-					</Form.Group>
-					<Form.Group controlId="sellTkns">
-						<Form.Label>You will receive</Form.Label>
-						<Form.Control type="text" />
-					</Form.Group>
-				</Form>
-			</Card.Body>
-		</Card>
+		<Row className="justify-content-center">
+			<Col md="6">
+				<div className="mb-4">
+					<ButtonGroup className="w-100">
+						{Object.entries({ buy: 'Buy', sell: 'Sell' }).map(([key, title]) => (
+							<Button
+								key={key}
+								variant={tab === key ? 'switch-active' : 'switch-inactive'}
+								onClick={() => setTab(key)}
+							>
+								{title}
+							</Button>
+						))}
+					</ButtonGroup>
+				</div>
+				<Row>
+					<Col className="text-left">
+						<Form.Label htmlFor="amount">Amount</Form.Label>
+					</Col>
+					<Col className="text-right">
+						Balance: 0
+					</Col>
+				</Row>
+				<div className="mb-3">
+					<Form.Control type="text" id="amount" />
+				</div>
+
+				<Row>
+					<Col className="text-left">
+						<Form.Label htmlFor="receive">You will receive</Form.Label>
+					</Col>
+					<Col className="text-right">
+						Balance: 0
+					</Col>
+				</Row>
+				<div className="mb-4">
+					<Form.Control type="text" id="receive" />
+				</div>
+
+				<div className="text-center mb-4">
+					<Button>Purchase</Button>
+				</div>
+
+				<p className="fs-xs">
+					10% of every transaction is
+					{' '}
+					<strong>locked forever</strong>
+					{' '}
+					in the interest-bearing pool.
+					{' '}
+					<a href="http://localhost/">Learn more</a>
+					.
+				</p>
+			</Col>
+		</Row>
 	);
 }
 

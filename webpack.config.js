@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const GoogleFontsPlugin = require('google-fonts-plugin');
 
 module.exports = {
 	module: {
@@ -44,6 +45,15 @@ module.exports = {
 		}),
 		new MiniCssExtractPlugin({
 			filename: '[name].[hash].css',
+		}),
+		new GoogleFontsPlugin({
+			fonts: [
+				{
+					family: 'Raleway',
+					variants: ['200', '400', '700'],
+				},
+			],
+			formats: ['woff', 'woff2'],
 		}),
 	],
 };

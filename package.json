@@ -29,6 +29,7 @@
 		"bootstrap": "^4.5.0",
 		"eslint": "^7.0.0",
 		"file-loader": "^6.0.0",
+		"google-fonts-plugin": "^5.0.2",
 		"prop-types": "^15.7.2",
 		"react": "^16.13.1",
 		"react-bootstrap": "^1.0.1",

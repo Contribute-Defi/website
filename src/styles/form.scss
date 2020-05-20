@@ -1,0 +1,19 @@
+.form-control {
+	@extend .btn-dark;
+	background: $gray-800;
+	border-color: $gray-700;
+	&:hover {
+		background: $gray-800;
+		border-color: $gray-700;
+	}
+}
+
+.btn-switch-inactive {
+	@extend .btn-dark;
+	background: $gray-900;
+	border-color: $gray-800;
+	&:hover {
+		background: $gray-700;
+		border-color: $gray-600;
+	}
+}

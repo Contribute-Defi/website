@@ -1,26 +1,36 @@
 import React from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
-import BuySell from '../BuySell';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import Logo from '../Logo';
+import RowSimpleStats from '../RowSimpleStats';
 
 function SectionHero() {
 	return (
 		<section className="section-hero">
-			<Row>
-				<Col md="6">
-					<h2>A Capital Coordination Tool That Pushes The Boundaries Of DeFi.</h2>
-					<p>
-						An autonomous interest-generating protocol powered by contributors all over the world! Early
-						adopters are incentivized to bootstrap liquidity while late comers benefit from the contiuous
-						interest being generated from the pool.
-					</p>
-					<p>
-						<Button variant="link" className="pl-0 pr-0">How Contribute Works</Button>
-					</p>
-				</Col>
-				<Col md="6">
-					<BuySell />
-				</Col>
-			</Row>
+			<div className="hero-hero">
+				<Container fluid="md">
+					<Row className="justify-content-center text-center">
+						<Col lg="6" md="8">
+							<Logo />
+							<h2 className="mb-5 mb-lg-6">
+								A capital coordination tool that pushes the boundaries of DeFi.
+							</h2>
+							<div className="mb-4 mb-lg-5">
+								<Button className="fs-xl">Connect Wallet</Button>
+							</div>
+							<p>
+								<Button variant="link" className="text-white pl-0 pr-0 fs-s">
+									What is Contribute
+								</Button>
+							</p>
+						</Col>
+					</Row>
+				</Container>
+			</div>
+			<div className="hero-stats">
+				<Container fluid="md">
+					<RowSimpleStats />
+				</Container>
+			</div>
 		</section>
 	);
 }

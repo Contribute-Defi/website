@@ -1,5 +1,14 @@
+$padding-section: 2rem 1rem;
+
 section {
 	padding: 2rem 1rem;
+
+	@include media-breakpoint-up('md') {
+		padding: 4rem 1rem;
+	}
+	@include media-breakpoint-up('lg') {
+		padding: 6rem 1rem;
+	}
 }
 
 .section-header {
@@ -7,17 +16,62 @@ section {
 }
 
 .section-hero {
-	background: $gray-600;
+	background: url(../assets/bg.jpg) no-repeat center center;
+	background-size: cover;
 	color: $white;
+	padding: 0;
 }
 
-.section-stats1 {
-	background: $gray-400;
+.hero-hero {
+	padding: 4rem 0;
+	@include media-breakpoint-up('md') {
+		padding: 6rem 0;
+	}
+	@include media-breakpoint-up('lg') {
+		padding: 8rem 0;
+	}
 }
 
-.section-stats1 > .row > * {
-	//border-right: 1px solid black;
-	//&:last-child {
-	//	border-right: none;
-	//}
+
+.hero-stats {
+	padding: 2rem 1rem;
+	background: rgba(15, 15, 15, .5);
+
+	@include media-breakpoint-up('lg') {
+		.row > div .stat {
+			border-right: 1px solid $white;
+		}
+
+		.row > div:last-child .stat {
+			border-right: none;
+		}
+	}
+}
+
+.section-purchase {
+	background: url(../assets/symbol-dark.svg) center 2rem / 16rem 16rem no-repeat, linear-gradient(180deg, #000000 0%, #373737 100%);
+
+	hr {
+		background-color: $gray-600;
+	}
+}
+
+.section-stats {
+	background-color: #444049;
+}
+
+.section-mint-burn {
+	background: linear-gradient(180deg, #DBE4F2 0%, #EEF5FF 100%);
+}
+
+
+.section-footer {
+	padding: 1rem 1rem;
+
+	@include media-breakpoint-up('md') {
+		padding: 2rem 1rem;
+	}
+	@include media-breakpoint-up('lg') {
+		padding: 2rem 1rem;
+	}
 }
