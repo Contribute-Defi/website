@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const GoogleFontsPlugin = require('google-fonts-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
 	module: {
@@ -55,5 +56,6 @@ module.exports = {
 			],
 			formats: ['woff', 'woff2'],
 		}),
+		new Dotenv(),
 	],
 };
