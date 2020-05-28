@@ -18,12 +18,13 @@ function Statistic({
 
 Statistic.propTypes = {
 	label: PropTypes.string.isRequired,
-	value: PropTypes.number.isRequired,
+	value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	unit: PropTypes.string,
 	image: PropTypes.string,
 };
 
 Statistic.defaultProps = {
+	value: null,
 	unit: null,
 	image: null,
 };

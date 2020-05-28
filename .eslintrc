@@ -13,9 +13,12 @@
 		"object-curly-newline": ["error", {
 			"ImportDeclaration": "never" // I find oneliners more readable
 		}],
-		"max-len": ["error", 120],
+		"max-len": ["error", 160],
 		"no-tabs": 0,
+		"arrow-parens": ["error", "as-needed"],
+
 		"react/jsx-indent": ["error", "tab"],
-		"react/jsx-indent-props": ["error", "tab"]
+		"react/jsx-indent-props": ["error", "tab"],
+
 	}
 }

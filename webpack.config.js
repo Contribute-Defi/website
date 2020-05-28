@@ -58,4 +58,5 @@ module.exports = {
 		}),
 		new Dotenv(),
 	],
+	devtool: 'source-map',
 };
