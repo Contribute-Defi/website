@@ -62,7 +62,7 @@ const SectionHero = () => (
 							</DrizzleContext.Consumer>
 						</div>
 						<p>
-							<a href={process.env.WHITEPAPER_LINK}>What is Contribute</a>
+							<a href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">What is Contribute</a>
 						</p>
 					</Col>
 				</Row>
