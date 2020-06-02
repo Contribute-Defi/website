@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { stats } from '../config/const';
+import ContractValue from './ContractValue';
 
 function Bigstat({
-	label, value, unit, image, children,
+	id, children,
 }) {
+	const { label, unit, image } = stats[id];
+	const value = <ContractValue method={id} />;
+
 	return (
 		<div className="bigstat">
 			<div className="clearfix">
@@ -25,16 +30,8 @@ function Bigstat({
 }
 
 Bigstat.propTypes = {
-	label: PropTypes.string.isRequired,
-	value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-	unit: PropTypes.string,
-	image: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
 	children: PropTypes.arrayOf(PropTypes.node).isRequired,
-};
-
-Bigstat.defaultProps = {
-	unit: null,
-	value: null,
 };
 
 export default Bigstat;

@@ -20,31 +20,21 @@ const drizzleOptions = {
 	events: {
 		Contribute: ['TokensBought', 'TokensSold', 'MintAndBurn'],
 	},
+	networkWhitelist: [42],
 };
 
 const drizzle = new Drizzle(drizzleOptions);
 
 const App = () => (
 	<DrizzleContext.Provider drizzle={drizzle}>
-		<DrizzleContext.Consumer>
-			{drizzleContext => {
-				// eslint-disable-next-line no-shadow
-				const { drizzle, drizzleState, initialized } = drizzleContext;
-				if (!initialized) {
-					return 'Loading...';
-				}
-				return (
-					<div className="app">
-						<SectionHero drizzle={drizzle} drizzleState={drizzleState} />
-						<SectionPurchase />
-						<SectionStats drizzle={drizzle} drizzleState={drizzleState} />
-						<SectionMintBurn drizzle={drizzle} drizzleState={drizzleState} />
-						<SectionJoin />
-						<SectionFooter />
-					</div>
-				);
-			}}
-		</DrizzleContext.Consumer>
+		<div className="app">
+			<SectionHero />
+			<SectionPurchase />
+			<SectionStats />
+			<SectionMintBurn />
+			<SectionJoin />
+			<SectionFooter />
+		</div>
 	</DrizzleContext.Provider>
 );
 
