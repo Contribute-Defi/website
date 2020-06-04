@@ -43,6 +43,10 @@ module.exports = (env, argv) => {
 						family: 'Raleway',
 						variants: ['200', '400', '700'],
 					},
+					{
+						family: 'Lato',
+						variants: ['400'],
+					},
 				],
 				formats: ['woff', 'woff2'],
 			}),

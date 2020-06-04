@@ -13,6 +13,8 @@ export const stats = {
 	continuousEarning: {
 		unit: 'DAI',
 		label: 'Continuous Earnings',
+		decimals: 9,
+		smallDecimals: 6,
 	},
 	interestRate: {
 		unit: '%',
@@ -26,20 +28,24 @@ export const stats = {
 	availableToBurn: {
 		unit: 'DAI',
 		label: 'Available to burn',
+		decimals: 9,
+		smallDecimals: 6,
 	},
 	priceAfterBurn: {
 		unit: 'DAI',
 		label: 'Burning TRIB will increase its price to',
 	},
 	price: {
-		unit: 'DAI/TRIB',
+		unit: 'DAI',
 		label: 'Price',
 		image: IconPrice,
 	},
 	floor: {
-		unit: 'TRIB',
+		unit: 'DAI',
 		label: 'Floor',
 		image: IconFloor,
+		decimals: 9,
+		smallDecimals: 6,
 	},
 	totalBurned: {
 		unit: 'TRIB',
@@ -50,5 +56,21 @@ export const stats = {
 		unit: 'TRIB',
 		label: 'Supply',
 		image: IconSupply,
+	},
+	getDaiBalance: {
+		unit: 'DAI',
+		label: 'DAI balance',
+	},
+	getTribBalance: {
+		unit: 'TRIB',
+		label: 'TRIB balance',
+	},
+	getTribToDai: {
+		unit: 'DAI',
+		label: 'DAI amount',
+	},
+	getDaiToTrib: {
+		unit: 'TRIB',
+		label: 'TRIB amount',
 	},
 };

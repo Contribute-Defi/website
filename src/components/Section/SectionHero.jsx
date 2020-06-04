@@ -26,7 +26,7 @@ const SectionHero = () => (
 						<div className="mb-4 mb-lg-5">
 							<DrizzleContext.Consumer>
 								{drizzleContext => {
-									const { drizzleState, initialized } = drizzleContext;
+									const { drizzleState, drizzle, initialized } = drizzleContext;
 									if (!initialized) {
 										return (
 											<div className="message">
@@ -55,6 +55,10 @@ const SectionHero = () => (
 												You are successfully connected to
 												{' '}
 												{networkTitle(web3.networkId)}
+												{' '}
+												with
+												{' '}
+												{drizzle.web3.currentProvider.selectedAddress}
 											</p>
 										</div>
 									);

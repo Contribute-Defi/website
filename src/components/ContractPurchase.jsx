@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DrizzleContext } from '@drizzle/react-plugin';
 import ContractValueInner from './ContractValueInner';
 
-const ContractValue = ({ method, contract, param }) => (
+const ContractPurchase = ({ method }) => (
 	<DrizzleContext.Consumer>
 		{drizzleContext => {
 			const { drizzle, drizzleState, initialized } = drizzleContext;
@@ -11,20 +11,13 @@ const ContractValue = ({ method, contract, param }) => (
 				return null;
 			}
 
-			return <ContractValueInner contract={contract} method={method} param={param} drizzle={drizzle} drizzleState={drizzleState} />;
+			return <ContractPurchaseInner method={method} drizzle={drizzle} drizzleState={drizzleState} />;
 		}}
 	</DrizzleContext.Consumer>
 );
 
-ContractValue.propTypes = {
+ContractPurchase.propTypes = {
 	method: PropTypes.string.isRequired,
-	contract: PropTypes.string,
-	param: PropTypes.string,
 };
 
-ContractValue.defaultProps = {
-	contract: 'ViewContribute',
-	param: null,
-};
-
-export default ContractValue;
+export default ContractPurchase;

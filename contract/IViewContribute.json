@@ -41,6 +41,44 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "getDaiBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "getTribBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "interestPoolTotal",
       "outputs": [
@@ -135,13 +173,5 @@
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "linkReferences": {},
-  "deployedLinkReferences": {},
-  "networks": {
-    "42": {
-      "events": {},
-      "links": {},
-      "address": "0x75bB745B45D636a491B95f42EeaC595De2DBD17b",
-      "transactionHash": "0xde84193646792d6a7724ee5243cd2a655f8a9a5c8ea22eb0a8bdd7d652ef2e6f"
-    }
-  }
+  "deployedLinkReferences": {}
 }
