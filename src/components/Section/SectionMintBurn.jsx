@@ -58,19 +58,19 @@ const SectionMintBurn = () => {
 				<Col md="8" lg="6">
 					{status === 'error' ? (
 						<Alert variant="danger" dismissible onClose={() => setStatus(null)}>
-							Something went wrong with your transaction. See MetaMask popup.
+							Something went wrong. Check MetaMask for details.
 						</Alert>
 					) : null}
 
 					{status === 'success' ? (
 						<Alert variant="success" dismissible onClose={() => setStatus(null)}>
-							Transaction complete! Thank you for participating mate!
+							Transaction complete. Thank you for your contribution!
 						</Alert>
 					) : null}
 
 					{status === 'progress' ? (
 						<Alert variant="info">
-							Transaction in progress. Please pay attention to the MetaMask popup windows.
+							Transaction in progress. Please confirm action on MetaMask.
 						</Alert>
 					) : null}
 				</Col>
