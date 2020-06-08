@@ -144,7 +144,7 @@ function BuySell() {
 
 				{formStatus !== FORM_EDIT ? (
 					<Alert variant="info">
-						Transaction in progress. Please pay attention to the MetaMask popup windows.
+						Transaction in progress. Please confirm action on MetaMask.
 					</Alert>
 				) : null}
 
@@ -156,7 +156,7 @@ function BuySell() {
 
 				{success ? (
 					<Alert variant="success" dismissible onClose={() => setSuccess(false)}>
-						Transaction complete! Thank you for participating mate!
+						Transaction complete. Thank you for your contribution!
 					</Alert>
 				) : null}
 
