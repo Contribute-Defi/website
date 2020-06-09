@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import { DrizzleContext } from '@drizzle/react-plugin';
 import BuySell from '../BuySell';
 
 function SectionPurchase() {
@@ -27,7 +28,12 @@ function SectionPurchase() {
 					tokens to participate
 				</h2>
 
-				<BuySell />
+				<DrizzleContext.Consumer>
+					{drizzleContext => {
+						const { drizzle } = drizzleContext;
+						return <BuySell drizzle={drizzle} />;
+					}}
+				</DrizzleContext.Consumer>
 			</Container>
 		</section>
 	);

@@ -12,8 +12,32 @@
 	@extend .btn-dark;
 	background: $gray-900;
 	border-color: $gray-800;
+	color: $gray-600;
 	&:hover {
 		background: $gray-700;
 		border-color: $gray-600;
 	}
+}
+
+
+.form-unit-wrap {
+	position: relative;
+}
+
+.form-unit {
+	position: absolute;
+	right: .5rem;
+	top: .5rem;
+	opacity: .76;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

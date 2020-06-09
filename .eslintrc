@@ -19,6 +19,7 @@
 
 		"react/jsx-indent": ["error", "tab"],
 		"react/jsx-indent-props": ["error", "tab"],
-
+		"jsx-a11y/interactive-supports-focus": 0,
+		"jsx-a11y/click-events-have-key-events": 0
 	}
 }

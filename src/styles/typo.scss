@@ -65,3 +65,12 @@ a {
 	color: $white;
 	text-decoration: underline;
 }
+
+.stat-value, .bigstat-value, input[type=number], .number {
+	font-family: Lato, sans-serif;
+}
+
+.tooltiped {
+	border-bottom: 1px dotted $gray-500;
+	cursor: pointer;
+}

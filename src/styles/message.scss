@@ -1,10 +1,18 @@
 .message {
-	background: #142129;
-	border: 1px solid #416378;
-	border-radius: .5rem;
-	padding: 2rem;
 	text-align: center;
-	p:last-child {
+	padding: .75rem;
+
+	background: $primary;
+	color: #fff;
+	line-height: 1.1;
+
+	h3 {
+		font-weight: bold;
+		font-size: 1em;
+		text-transform: uppercase;
+	}
+
+	p {
 		margin-bottom: 0;
 	}
 }

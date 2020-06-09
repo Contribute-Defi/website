@@ -56,19 +56,23 @@ class ContractValueInner extends React.Component {
 			return null;
 		}
 
-		const fromWei = (amount, { divideBy = 1, decimals = 3 }) => parseFloat(
+		const fromWei = (amount, { divideBy = 1, decimals, smallDecimals }) => parseFloat(
 			parseFloat(props.drizzle.web3.utils.fromWei(amount)) / divideBy,
-		).toLocaleString(undefined, { maximumFractionDigits: decimals });
+		).toLocaleString(undefined, { maximumFractionDigits: decimals + smallDecimals });
 
-		let valueStr = fromWei(value.value, { decimals: stat.decimals || 3, divideBy: stat.divideBy || 1 });
+		let valueStr = fromWei(value.value, { decimals: stat.decimals || 3, smallDecimals: stat.smallDecimals || 0, divideBy: stat.divideBy || 1 });
 		let valueStr2 = null;
 
 		if (stat.smallDecimals) {
-			const divideAt = valueStr.length - stat.smallDecimals + 1;
-			valueStr2 = valueStr.substring(divideAt);
-			valueStr = valueStr.substring(0, divideAt);
+			const parts = valueStr.split('.');
+			if (parts[1]) {
+				const valueStr1 = parts[1].substring(0, stat.decimals);
+				valueStr2 = parts[1].substring(stat.decimals);
+				valueStr = `${parts[0]}.${valueStr1}`;
+			}
 		}
 
+		console.log(`value ${valueStr}`);
 
 		return (
 			<span>

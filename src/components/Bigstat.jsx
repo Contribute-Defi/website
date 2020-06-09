@@ -15,10 +15,10 @@ function Bigstat({
 				<div className="bigstat-image float-left mr-2">
 					<img src={image} alt={label} />
 				</div>
-				<h3 className="fs-l font-weight-light pt-1 mb-0">{label}</h3>
-				<div className="bigstat-value-unit">
-					<span className="bigstat-value fs-xxl lh-1 mr-1">{value}</span>
-					{unit ?	<span className="bigstat-unit">{unit}</span> : null}
+				<h3 className="fs-l font-weight-light pt-1 mb-1">{label}</h3>
+				<div className="stat-value-unit bigstat-value-unit">
+					<span className="stat-value bigstat-value lh-1 mr-1">{value}</span>
+					{unit ?	<span className="stat-unit bigstat-unit">{unit}</span> : null}
 				</div>
 			</div>
 			<hr />

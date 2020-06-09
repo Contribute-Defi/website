@@ -10,6 +10,8 @@ function BuySell() {
 	const FORM_APPROVING = 1;
 	const FORM_PROCESSING = 2;
 
+	const { ViewContribute, Contribute, ERC20 } = drizzle.contracts;
+
 	const [tab, setTab] = useState('buy');
 	const [formStatus, setFormStatus] = useState(FORM_EDIT);
 	const [error, setError] = useState(null);
@@ -37,7 +39,6 @@ function BuySell() {
 	const handlePurchase = async () => {
 		setFormStatus(FORM_EDIT);
 		setError(null);
-		const { Contribute, ERC20 } = drizzle.contracts;
 		const method = tab === 'buy' ? 'invest' : 'sell';
 		const amountWei = drizzle.web3.utils.toWei(amount);
 
@@ -57,7 +58,36 @@ function BuySell() {
 		setAmount('');
 	};
 
+	const fillAmountFromBalance = async () => {
+		const method = tab === 'buy' ? 'getDaiBalance' : 'getTribBalance';
+		const newAmount = await (await ViewContribute.methods[method].call()).call(); // WTF?
+		setAmount(drizzle.web3.utils.fromWei(newAmount));
+	};
+
 	const sanitizeAmount = a => (a || 0).toString();
+
+	const renderReceive = () => {
+		if (amount === '') {
+			return 'N/A';
+		}
+		if (tab === 'buy') {
+			return (
+				<ContractValue
+					method="getDaiToTrib"
+					contract="Contribute"
+					param={sanitizeAmount(amount)}
+				/>
+			);
+		}
+		return (
+			<ContractValue
+				method="getTribToDai"
+				contract="Contribute"
+				param={sanitizeAmount(amount)}
+			/>
+		);
+	};
+
 
 	return (
 		<Row className="justify-content-center">
@@ -78,27 +108,26 @@ function BuySell() {
 				<Row>
 					<Col className="text-left">
 						<Form.Label htmlFor="amount">
-							Amount (
-							{currFrom}
-							)
+							Amount:
 						</Form.Label>
 					</Col>
 					<Col className="text-right">
 						Balance:
 						{' '}
-						<ContractValue method={currFrom === 'DAI' ? 'getDaiBalance' : 'getTribBalance'} />
-						{' '}
-						{currFrom}
+						<span className="tooltiped" onClick={() => fillAmountFromBalance()} title="Use whole balance" role="button">
+							<ContractValue method={currFrom === 'DAI' ? 'getDaiBalance' : 'getTribBalance'} />
+						</span>
 					</Col>
 				</Row>
-				<div className="mb-3">
+				<div className="mb-3 form-unit-wrap">
 					<Form.Control
-						type="text"
+						type="number"
 						id="amount"
 						value={amount}
 						onChange={e => setAmount(e.target.value)}
 						disabled={formStatus !== FORM_EDIT}
 					/>
+					<div className="form-unit">{currFrom}</div>
 				</div>
 
 				<Row>
@@ -113,31 +142,17 @@ function BuySell() {
 						Balance:
 						{' '}
 						<ContractValue method={currFrom === 'DAI' ? 'getTribBalance' : 'getDaiBalance'} />
-						{' '}
-						{currTo}
 					</Col>
 				</Row>
 				<div className="mb-4">
-					<div className="form-control text-left">
-						{tab === 'buy'
-							? (
-								<ContractValue
-									method="getDaiToTrib"
-									contract="Contribute"
-									param={sanitizeAmount(amount)}
-								/>
-							) : (
-								<ContractValue
-									method="getTribToDai"
-									contract="Contribute"
-									param={sanitizeAmount(amount)}
-								/>
-							)}
+					<div className="form-control text-left number form-unit-wrap">
+						{renderReceive()}
+						<div className="form-unit">{currTo}</div>
 					</div>
 				</div>
 
 				<div className="text-center mb-4">
-					<Button onClick={handlePurchase} disabled={formStatus !== FORM_EDIT}>
+					<Button onClick={() => handlePurchase()} disabled={formStatus !== FORM_EDIT}>
 						{buttonTitle()}
 					</Button>
 				</div>

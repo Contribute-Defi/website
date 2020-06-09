@@ -2,6 +2,8 @@ import React from 'react';
 import { DrizzleContext } from '@drizzle/react-plugin';
 import drizzle from '../lib/drizzle';
 
+import StatusMessage from './StatusMessage';
+
 import SectionHero from './Section/SectionHero';
 import SectionStats from './Section/SectionStats';
 import SectionJoin from './Section/SectionJoin';
@@ -13,6 +15,7 @@ import SectionMintBurn from './Section/SectionMintBurn';
 const App = () => (
 	<DrizzleContext.Provider drizzle={drizzle}>
 		<div className="app">
+			<StatusMessage />
 			<SectionHero />
 			<SectionPurchase />
 			<SectionStats />
