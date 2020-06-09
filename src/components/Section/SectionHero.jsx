@@ -30,11 +30,9 @@ const SectionHero = () => (
 									if (!initialized) {
 										return (
 											<div className="message">
-												<h3>MetaMask not connected</h3>
+												<h3>MetaMask is not connected</h3>
 												<p>
-													Make sure MetaMask is installed and connected with the dapp!
-													<br />
-													Reload for the connect popup to show.
+													Make sure MetaMask is installed and you are logged in.
 												</p>
 											</div>
 										);
