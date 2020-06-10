@@ -1,15 +1,8 @@
 import React from 'react';
 import { DrizzleContext } from '@drizzle/react-plugin';
+import { Container } from 'react-bootstrap';
 
-
-const networkTitle = id => {
-	switch (id) {
-	case 1: return 'Mainnet';
-	case 42: return 'Kovan testnet';
-	default: return 'Unknown network';
-	}
-};
-
+const shortenAddress = address => `${address.substr(0, 8)}...${address.substr(address.length - 8)}`;
 
 const StatusMessage = () => (
 	<DrizzleContext.Consumer>
@@ -17,35 +10,28 @@ const StatusMessage = () => (
 			const { drizzleState, drizzle, initialized } = drizzleContext;
 			if (!initialized) {
 				return (
-					<div className="message">
-						<h3>MetaMask is not connected</h3>
-						<p>
-							Make sure MetaMask is installed and you are logged in.
-						</p>
+					<div className="message error">
+						<strong>MetaMask is not connected.</strong>
+						{' '}
+						Make sure MetaMask is installed and you are logged in.
 					</div>
 				);
 			}
 			if (drizzleState.web3.networkMismatch) {
 				return (
-					<div className="message">
+					<div className="message error">
 						<h3>Network mismatch</h3>
 						<p>Please switch your MetaMask to mainnet.</p>
 					</div>
 				);
 			}
-			const { web3 } = drizzleState;
 			return (
-				<div className="message">
-					<h3>Wallet connected</h3>
-					<p>
-						You are successfully connected to
+				<div className="message info">
+					<Container>
+						<strong>Wallet connected:</strong>
 						{' '}
-						{networkTitle(web3.networkId)}
-						{' '}
-						with
-						{' '}
-						{drizzle.web3.currentProvider.selectedAddress}
-					</p>
+						{shortenAddress(drizzle.web3.currentProvider.selectedAddress)}
+					</Container>
 				</div>
 			);
 		}}

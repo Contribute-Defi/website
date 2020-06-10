@@ -1,8 +1,12 @@
 .message {
+	position: fixed;
+	z-index: 1000;
+	left: 0;
+	top: 0;
+	width: 100%;
 	text-align: center;
 	padding: .75rem;
 
-	background: $primary;
 	color: #fff;
 	line-height: 1.1;
 
@@ -14,5 +18,13 @@
 
 	p {
 		margin-bottom: 0;
+	}
+
+	&.info {
+		background: $gray-800;
+		text-align: right;
+	}
+	&.error {
+		background: $danger;
 	}
 }
