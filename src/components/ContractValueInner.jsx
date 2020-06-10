@@ -75,7 +75,7 @@ class ContractValueInner extends React.Component {
 		// console.log(`value ${valueStr}`);
 
 		return (
-			<span>
+			<span className="number">
 				{valueStr}
 				{valueStr2 ? <small>{valueStr2}</small> : null}
 			</span>

@@ -114,7 +114,7 @@ function BuySell() {
 					<Col className="text-right">
 						Balance:
 						{' '}
-						<span className="tooltiped" onClick={() => fillAmountFromBalance()} title="Use whole balance" role="button">
+						<span className="tooltiped number" onClick={() => fillAmountFromBalance()} title="Use whole balance" role="button">
 							<ContractValue method={currFrom === 'DAI' ? 'getDaiBalance' : 'getTribBalance'} />
 						</span>
 					</Col>
