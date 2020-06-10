@@ -7,7 +7,7 @@ const ContractValue = ({ method, contract, param }) => (
 	<DrizzleContext.Consumer>
 		{drizzleContext => {
 			const { drizzle, drizzleState, initialized } = drizzleContext;
-			if (!initialized) {
+			if (!initialized || drizzleState.web3.networkMismatch) {
 				return null;
 			}
 
