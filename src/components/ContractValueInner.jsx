@@ -72,7 +72,7 @@ class ContractValueInner extends React.Component {
 			}
 		}
 
-		console.log(`value ${valueStr}`);
+		// console.log(`value ${valueStr}`);
 
 		return (
 			<span>

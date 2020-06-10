@@ -9,6 +9,7 @@ const drizzleOptions = {
 		ViewContribute,
 		ERC20,
 	],
+	syncAlways: true,
 	events: {
 		Contribute: ['TokensBought', 'TokensSold', 'MintAndBurn'],
 	},

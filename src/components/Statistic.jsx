@@ -8,6 +8,7 @@ function Statistic({
 }) {
 	const { label, unit, image } = stats[id];
 	const value = <ContractValue method={id} />;
+
 	return (
 		<div className="stat">
 			{image ? <img className="stat-image" src={image} alt={label} /> : null}
