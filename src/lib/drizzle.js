@@ -10,6 +10,9 @@ const drizzleOptions = {
 		ERC20,
 	],
 	syncAlways: true,
+	poll: {
+		block: 2000,
+	},
 	events: {
 		Contribute: ['TokensBought', 'TokensSold', 'MintAndBurn'],
 	},

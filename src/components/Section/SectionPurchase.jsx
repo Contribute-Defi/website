@@ -29,10 +29,7 @@ function SectionPurchase() {
 				</h2>
 
 				<DrizzleContext.Consumer>
-					{drizzleContext => {
-						const { drizzle } = drizzleContext;
-						return <BuySell drizzle={drizzle} />;
-					}}
+					{drizzleContext => <BuySell drizzle={drizzleContext.drizzle} />}
 				</DrizzleContext.Consumer>
 			</Container>
 		</section>

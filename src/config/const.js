@@ -15,6 +15,7 @@ export const stats = {
 		label: 'Continuous Earnings',
 		decimals: 3,
 		smallDecimals: 6,
+		continuous: true,
 	},
 	interestRate: {
 		unit: '%',
@@ -30,12 +31,14 @@ export const stats = {
 		label: 'Available to burn',
 		decimals: 3,
 		smallDecimals: 6,
+		continuous: true,
 	},
 	priceAfterBurn: {
 		unit: 'DAI',
 		label: 'Burning TRIB will increase its price to',
 		decimals: 3,
 		smallDecimals: 6,
+		continuous: true,
 	},
 	price: {
 		unit: 'DAI',
