@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const GoogleFontsPlugin = require('google-fonts-plugin');
+const FaviconsPlugin = require('favicons-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = (env, argv) => {
@@ -69,6 +70,9 @@ module.exports = (env, argv) => {
 		config.plugins.push(new HtmlWebpackPlugin({
 			template: './src/index.html',
 			filename: 'index.html',
+		}));
+		config.plugins.push(new FaviconsPlugin({
+			logo: path.join(__dirname, 'src/assets/symbol.svg'),
 		}));
 	}
 

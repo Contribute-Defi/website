@@ -8,7 +8,7 @@ const ContractValue = ({ method, contract, param }) => (
 		{drizzleContext => {
 			const { drizzle, drizzleState, initialized } = drizzleContext;
 			if (!initialized || drizzleState.web3.networkMismatch) {
-				return null;
+				return <div className="lds-dual-ring" />;
 			}
 
 			return <ContractValueInner contract={contract} method={method} param={param} drizzle={drizzle} drizzleState={drizzleState} />;
