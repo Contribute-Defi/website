@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const GoogleFontsPlugin = require('google-fonts-plugin');
 const FaviconsPlugin = require('favicons-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
@@ -35,21 +34,15 @@ module.exports = (env, argv) => {
 			extensions: ['.js', '.jsx'],
 		},
 		plugins: [
+			new HtmlWebpackPlugin({
+				template: './src/index.html',
+				filename: 'index.html',
+				meta: {
+					viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
+				},
+			}),
 			new MiniCssExtractPlugin({
 				filename: '[name].[hash].css',
-			}),
-			new GoogleFontsPlugin({
-				fonts: [
-					{
-						family: 'Raleway',
-						variants: ['200', '400', '700'],
-					},
-					{
-						family: 'Lato',
-						variants: ['400'],
-					},
-				],
-				formats: ['woff', 'woff2'],
 			}),
 			new Dotenv(),
 		],
@@ -67,10 +60,6 @@ module.exports = (env, argv) => {
 	}
 
 	if (argv.mode === 'production') {
-		config.plugins.push(new HtmlWebpackPlugin({
-			template: './src/index.html',
-			filename: 'index.html',
-		}));
 		config.plugins.push(new FaviconsPlugin({
 			logo: path.join(__dirname, 'src/assets/symbol.svg'),
 		}));

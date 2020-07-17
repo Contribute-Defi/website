@@ -1,29 +1,21 @@
 import React from 'react';
-import { DrizzleContext } from '@drizzle/react-plugin';
-import drizzle from '../lib/drizzle';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import StatusMessage from './StatusMessage';
-
-import SectionHero from './Section/SectionHero';
-import SectionStats from './Section/SectionStats';
-import SectionJoin from './Section/SectionJoin';
-import SectionFooter from './Section/SectionFooter';
-import SectionPurchase from './Section/SectionPurchase';
-import SectionMintBurn from './Section/SectionMintBurn';
-
+import PageComingSoon from './Page/PageComingSoon';
+import PageHome from './Page/PageHome';
 
 const App = () => (
-	<DrizzleContext.Provider drizzle={drizzle}>
-		<div className="app">
-			<StatusMessage />
-			<SectionHero />
-			<SectionPurchase />
-			<SectionStats />
-			<SectionMintBurn />
-			<SectionJoin />
-			<SectionFooter />
-		</div>
-	</DrizzleContext.Provider>
+	<Router>
+		<Switch>
+			<Route path="/">
+				<PageComingSoon />
+			</Route>
+			<Route path="/very-secret-page">
+				<PageHome />
+			</Route>
+		</Switch>
+	</Router>
+
 );
 
 export default App;

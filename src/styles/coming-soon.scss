@@ -1,0 +1,22 @@
+.coming-soon {
+	display: flex;
+	align-items: center;
+	margin: 1rem 0;
+	font-size: 1.75rem;
+	@include media-breakpoint-up('md') {
+		font-size: 2.5rem;
+		margin: 2rem 0;
+	}
+}
+
+.coming-soon-side {
+	flex-grow: 1;
+	height: .25rem;
+	background: $white;
+}
+
+.coming-soon-title {
+	margin: 0 .5rem;
+	text-transform: uppercase;
+	font-weight: normal;
+}

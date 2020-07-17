@@ -1,5 +1,16 @@
 $padding-section: 2rem 1rem;
 
+body {
+	min-height: 100vh;
+}
+
+#app {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+
 section {
 	padding: 2rem 1rem;
 
@@ -20,6 +31,19 @@ section {
 	background-size: cover;
 	color: $white;
 	padding: 0;
+
+	&.fullpage {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		> .hero-hero {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+	}
 }
 
 .hero-hero {
@@ -67,11 +91,4 @@ section {
 
 .section-footer {
 	padding: 1rem 1rem;
-
-	@include media-breakpoint-up('md') {
-		padding: 2rem 1rem;
-	}
-	@include media-breakpoint-up('lg') {
-		padding: 2rem 1rem;
-	}
 }

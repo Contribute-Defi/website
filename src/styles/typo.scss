@@ -4,13 +4,18 @@ body {
 
 h1 {
 	font-weight: 100;
-	font-size: 3rem;
+	font-size: 2.5rem;
 	@include media-breakpoint-up('md') {
 		font-size: 4rem;
 	}
 	strong {
 		font-weight: 600;
 	}
+}
+
+h2, .subtitle {
+	font-size: 1.25rem;
+	font-weight: normal;
 }
 
 .mb-6 {
@@ -57,6 +62,10 @@ h1 {
 	font-size: .75rem;
 }
 
+.fs-xxs {
+	font-size: .625rem;
+}
+
 .lh-1 {
 	line-height: 1;
 }
@@ -72,4 +81,8 @@ a {
 
 .tooltiped {
 	cursor: pointer;
+}
+
+a.btn {
+	text-decoration: none;
 }
