@@ -15,10 +15,10 @@ section {
 	padding: 2rem 1rem;
 
 	@include media-breakpoint-up('md') {
-		padding: 4rem 1rem;
+		padding: 3rem 1rem;
 	}
 	@include media-breakpoint-up('lg') {
-		padding: 6rem 1rem;
+		padding: 4rem 1rem;
 	}
 }
 
