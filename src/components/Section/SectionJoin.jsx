@@ -15,10 +15,10 @@ function SectionJoin() {
 					<img src={Twitter} alt="Follow us on Twitter" />
 				</a>
 				*/}
-				<a href="https://www.telegram.com" className="p-2">
+				<a href={process.env.TELEGRAM_LINK} className="p-2">
 					<img src={Telegram} alt="Follow us on Telegram" />
 				</a>
-				<a href="https://www.discord.com" className="p-2">
+				<a href={process.env.DISCORD_LINK} className="p-2">
 					<img src={Discord} alt="Follow us on Discord" />
 				</a>
 				{/*
