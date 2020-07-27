@@ -3,6 +3,12 @@ import IconSupply from '../assets/icon-supply.svg';
 import IconFloor from '../assets/icon-floor.svg';
 import IconPrice from '../assets/icon-price.svg';
 
+export const LINKS = {
+	telegram: 'https://t.me/contributeDefi',
+	discord: 'https://discord.gg/XdCmKyr',
+	twitter: 'https://twitter.com/TRIBtoken',
+};
+
 
 // eslint-disable-next-line import/prefer-default-export
 export const stats = {
