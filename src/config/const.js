@@ -12,6 +12,70 @@ export const LINKS = {
 
 // eslint-disable-next-line import/prefer-default-export
 export const stats = {
+	totalReserve: {
+		unit: 'USD',
+		label: 'Total Contributed',
+		contract: 'contribute',
+		decimals: 2,
+	},
+	getCurrentTokenPrice: {
+		unit: 'USD',
+		label: 'TRIB Price',
+		contract: 'contribute',
+		pollInterval: 5000,
+		decimals: 9,
+		smallDecimals: 6,
+	},
+	averagePrice: {
+		unit: 'USD',
+		label: 'Average Price',
+		contract: 'contribute',
+		method: 'getCurrentTokenPrice', // temporary
+		pollInterval: 5000,
+		decimals: 9,
+		smallDecimals: 6,
+	},
+	getTotalSupply: {
+		unit: 'TRIB',
+		label: 'Total Supply',
+		contract: 'contribute',
+		decimals: 2,
+	},
+	reserveToTokens: {
+		unit: 'TRIB',
+		label: 'TRIB received',
+		contract: 'contribute',
+		method: 'getReserveToTokensTaxed',
+		decimals: 4,
+	},
+	tokensToReserve: {
+		unit: 'mUSD',
+		label: 'mUSD received',
+		contract: 'contribute',
+		method: 'getTokensToReserveTaxed',
+		decimals: 4,
+	},
+	reserveBalance: {
+		unit: 'DAI',
+		label: 'DAI balance',
+		contract: 'musd',
+		method: 'balanceOf',
+		decimals: 4,
+	},
+	tokenBalance: {
+		unit: 'TRIB',
+		label: 'TRIB balance',
+		contract: 'trib',
+		method: 'balanceOf',
+		decimals: 4,
+	},
+	getTribToDai: {
+		unit: 'DAI',
+		label: 'DAI amount',
+		contract: 'contribute',
+		decimals: 4,
+	},
+/*
 	lockedContributions: {
 		unit: 'DAI',
 		label: 'Locked Contributions',
@@ -68,20 +132,6 @@ export const stats = {
 		label: 'Supply',
 		image: IconSupply,
 	},
-	getDaiBalance: {
-		unit: 'DAI',
-		label: 'DAI balance',
-	},
-	getTribBalance: {
-		unit: 'TRIB',
-		label: 'TRIB balance',
-	},
-	getTribToDai: {
-		unit: 'DAI',
-		label: 'DAI amount',
-	},
-	getDaiToTrib: {
-		unit: 'TRIB',
-		label: 'TRIB amount',
-	},
+
+ */
 };

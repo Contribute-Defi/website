@@ -7,7 +7,7 @@ import Discord from '../../assets/social/discord.svg';
 
 import { LINKS } from '../../config/const';
 
-function SectionJoin() {
+export function SectionJoin() {
 	return (
 		<section className="section-join bg-black text-light text-center">
 			<h2 className="mb-3">Join the community</h2>
@@ -30,5 +30,3 @@ function SectionJoin() {
 		</section>
 	);
 }
-
-export default SectionJoin;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Ethereum from '../../assets/ethereum.svg';
 
-function SectionFooter() {
+export function SectionFooter() {
 	return (
 		<section className="section-footer text-center fs-xxs">
 			<p className="mb-0">
@@ -15,5 +15,3 @@ function SectionFooter() {
 		</section>
 	);
 }
-
-export default SectionFooter;

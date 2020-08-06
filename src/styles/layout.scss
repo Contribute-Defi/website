@@ -44,9 +44,7 @@ section {
 			justify-content: center;
 		}
 	}
-}
 
-.hero-hero {
 	padding: 4rem 0;
 	@include media-breakpoint-up('md') {
 		padding: 6rem 0;
@@ -58,6 +56,14 @@ section {
 
 
 .hero-stats {
+	margin-bottom: -4rem;
+	@include media-breakpoint-up('md') {
+		margin-bottom: -6rem;
+	}
+	@include media-breakpoint-up('lg') {
+		margin-bottom: -8rem;
+	}
+
 	padding: 2rem 1rem;
 	background: rgba(15, 15, 15, .5);
 

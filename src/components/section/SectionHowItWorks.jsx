@@ -3,7 +3,7 @@ import { Carousel } from 'react-bootstrap';
 
 import Slide1 from '../../assets/carousel/slide1.png';
 
-function SectionHowItWorks() {
+export function SectionHowItWorks() {
 	return (
 		<section className="section-how-it-works">
 			<h2>How It Works</h2>
@@ -18,5 +18,3 @@ function SectionHowItWorks() {
 		</section>
 	);
 }
-
-export default SectionHowItWorks;

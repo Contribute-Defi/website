@@ -67,7 +67,7 @@
           "type": "address"
         }
       ],
-      "name": "getTribBalance",
+      "name": "tokenBalance",
       "outputs": [
         {
           "internalType": "uint256",

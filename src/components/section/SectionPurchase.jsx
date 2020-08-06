@@ -1,9 +1,8 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { DrizzleContext } from '@drizzle/react-plugin';
-import BuySell from '../BuySell';
+import { BuySell } from '../ui';
 
-function SectionPurchase() {
+export function SectionPurchase() {
 	return (
 		<section className="section-purchase bg-dark text-light text-center">
 			<Container>
@@ -28,12 +27,8 @@ function SectionPurchase() {
 					tokens to participate
 				</h2>
 
-				<DrizzleContext.Consumer>
-					{drizzleContext => <BuySell drizzle={drizzleContext.drizzle} />}
-				</DrizzleContext.Consumer>
+				<BuySell />
 			</Container>
 		</section>
 	);
 }
-
-export default SectionPurchase;

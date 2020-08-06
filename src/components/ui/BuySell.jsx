@@ -1,30 +1,37 @@
 import React, { useState } from 'react';
+import ethers from 'ethers';
 import { Form, Row, Button, ButtonGroup, Col, Alert } from 'react-bootstrap';
-import ContractValue from './ContractValue';
-import drizzle from '../lib/drizzle';
+import { ContractValue } from './ContractValue';
+import { useEthers } from '../../app';
 
-function BuySell() {
+const { parseEther, formatEther } = ethers.utils;
+
+export function BuySell({ allowSell }) {
 	const defaultAmount = '';
 
 	const FORM_EDIT = null;
 	const FORM_APPROVING = 1;
-	const FORM_PROCESSING = 2;
+	const FORM_APPROVING_WAITING = 2;
+	const FORM_SIGNING = 3;
+	const FORM_SIGNING_WAITING = 4;
 
-	const { ViewContribute, Contribute, ERC20 } = drizzle.contracts;
+	const { connected, contracts, address } = useEthers();
 
 	const [tab, setTab] = useState('buy');
 	const [formStatus, setFormStatus] = useState(FORM_EDIT);
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(false);
 	const [amount, setAmount] = useState(defaultAmount);
-	const currFrom = tab === 'buy' ? 'DAI' : 'TRIB';
-	const currTo = tab === 'buy' ? 'TRIB' : 'DAI';
+	const [receiveAmount, setReceiveAmount] = useState(null);
+	const [isComputing, setIsComputing] = useState(false);
+	const currFrom = tab === 'buy' ? 'mUSD' : 'TRIB';
+	const currTo = tab === 'buy' ? 'TRIB' : 'mUSD';
 
 	const buttonTitle = () => {
-		if (formStatus === FORM_APPROVING) {
-			return 'Approving DAI spending...';
+		if (formStatus === FORM_APPROVING || formStatus === FORM_APPROVING_WAITING) {
+			return 'Approving mUSD spending...';
 		}
-		if (formStatus === FORM_PROCESSING) {
+		if (formStatus === FORM_SIGNING || formStatus === FORM_SIGNING_WAITING) {
 			return tab === 'buy' ? 'Purchasing TRIB' : 'Selling TRIB';
 		}
 
@@ -36,22 +43,47 @@ function BuySell() {
 		setAmount('');
 	};
 
+	const handleAmountUpdated = async value => {
+		setAmount(value);
+		setIsComputing(true);
+
+		let result;
+		if (value === '') {
+			result = 'N/A';
+		} else {
+			value = parseEther(value);
+			if (tab === 'buy') {
+				// (new Intl.NumberFormat('en-US')).format(wholePart)
+				result = await contracts.contribute.getReserveToTokensTaxed(value)
+			} else {
+				result = await contracts.contribute.getTokensToReserveTaxed(value)
+			}
+			result = formatEther(result);
+		}
+		setIsComputing(false);
+		setReceiveAmount(result);
+	}
+
 	const handlePurchase = async () => {
 		setFormStatus(FORM_EDIT);
 		setError(null);
 		const method = tab === 'buy' ? 'invest' : 'sell';
-		const amountWei = drizzle.web3.utils.toWei(amount);
+		const amountWei = parseEther(amount);
 
 		try {
 			if (method === 'invest') {
 				setFormStatus(FORM_APPROVING);
-				await ERC20.methods.approve(Contribute.address, amountWei)
-					.send();
+				const transaction = await contracts.musd.approve(contracts.contribute.address, amountWei);
+				setFormStatus(FORM_APPROVING_WAITING);
+				await transaction.wait();
 			}
-			setFormStatus(FORM_PROCESSING);
-			await Contribute.methods[method](amountWei).send();
+			setFormStatus(FORM_SIGNING);
+			const transaction = await contracts.contribute[method](amountWei);
+			setFormStatus(FORM_SIGNING_WAITING);
+			await transaction.wait();
 			setSuccess(true);
 		} catch (err) {
+			console.error(err);
 			setError('Please approve all MetaMask popups');
 		}
 		setFormStatus(FORM_EDIT);
@@ -59,42 +91,29 @@ function BuySell() {
 	};
 
 	const fillAmountFromBalance = async () => {
-		const method = tab === 'buy' ? 'getDaiBalance' : 'getTribBalance';
-		const newAmount = await (await ViewContribute.methods[method].call()).call(); // WTF?
-		setAmount(drizzle.web3.utils.fromWei(newAmount));
-	};
-
-	const sanitizeAmount = a => (a || 0).toString();
-
-	const renderReceive = () => {
-		if (amount === '') {
-			return 'N/A';
-		}
+		let newAmount;
 		if (tab === 'buy') {
-			return (
-				<ContractValue
-					method="getDaiToTrib"
-					contract="Contribute"
-					param={sanitizeAmount(amount)}
-				/>
-			);
+			newAmount = await contracts.musd.balanceOf(address);
+		} else {
+			newAmount = await contracts.musd.balanceOf(address);
 		}
-		return (
-			<ContractValue
-				method="getTribToDai"
-				contract="Contribute"
-				param={sanitizeAmount(amount)}
-			/>
-		);
+		handleAmountUpdated(formatEther(newAmount));
 	};
 
+	if (!connected) {
+		// todo: show connect component instead i guess
+		return <p>Not connected</p>;
+	}
+
+	let tabOptions = { buy: 'Buy', sell: 'Sell' };
 
 	return (
 		<Row className="justify-content-center">
 			<Col md="6">
+				{allowSell &&
 				<div className="mb-4">
 					<ButtonGroup className="w-100">
-						{Object.entries({ buy: 'Buy', sell: 'Sell' }).map(([key, title]) => (
+						{Object.entries(tabOptions).map(([key, title]) => (
 							<Button
 								key={key}
 								variant={tab === key ? 'switch-active' : 'switch-inactive'}
@@ -105,6 +124,7 @@ function BuySell() {
 						))}
 					</ButtonGroup>
 				</div>
+				}
 				<Row>
 					<Col className="text-left">
 						<Form.Label htmlFor="amount">
@@ -115,7 +135,7 @@ function BuySell() {
 						Balance:
 						{' '}
 						<span className="tooltiped number" onClick={() => fillAmountFromBalance()} title="Use whole balance" role="button">
-							<ContractValue method={currFrom === 'DAI' ? 'getDaiBalance' : 'getTribBalance'} />
+							<ContractValue id={currFrom === 'mUSD' ? 'reserveBalance' : 'tokenBalance'} params={[address]} />
 						</span>
 					</Col>
 				</Row>
@@ -124,7 +144,7 @@ function BuySell() {
 						type="number"
 						id="amount"
 						value={amount}
-						onChange={e => setAmount(e.target.value)}
+						onChange={e => handleAmountUpdated(e.target.value)}
 						disabled={formStatus !== FORM_EDIT}
 					/>
 					<div className="form-unit">{currFrom}</div>
@@ -135,18 +155,18 @@ function BuySell() {
 						<Form.Label htmlFor="receive">
 							You will receive (
 							{currTo}
-							)
+							):
 						</Form.Label>
 					</Col>
 					<Col className="text-right">
 						Balance:
 						{' '}
-						<ContractValue method={currFrom === 'DAI' ? 'getTribBalance' : 'getDaiBalance'} />
+						<ContractValue id={currFrom === 'mUSD' ? 'tokenBalance' : 'reserveBalance'} params={[address]} />
 					</Col>
 				</Row>
 				<div className="mb-4">
 					<div className="form-control text-left number form-unit-wrap">
-						{renderReceive()}
+						{isComputing ? 'computing...' : receiveAmount}
 						<div className="form-unit">{currTo}</div>
 					</div>
 				</div>
@@ -159,7 +179,13 @@ function BuySell() {
 
 				{formStatus !== FORM_EDIT ? (
 					<Alert variant="info">
-						Transaction in progress. Please confirm action on MetaMask.
+						{formStatus === FORM_APPROVING ?
+							'Please sign transaction to approve mUSD spending'
+							: formStatus === FORM_APPROVING_WAITING ? 'Waiting for confirmation'
+							: formStatus === FORM_SIGNING ? 'Please sign transaction to process your order'
+							: formStatus === FORM_SIGNING_WAITING ? 'Waiting for confirmation'
+							: null
+						}
 					</Alert>
 				) : null}
 
@@ -189,5 +215,3 @@ function BuySell() {
 		</Row>
 	);
 }
-
-export default BuySell;

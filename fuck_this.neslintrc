@@ -5,6 +5,11 @@
 	"extends": [
 		"airbnb"
 	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
 	"rules": {
 		"indent": [
 			"error",
@@ -16,7 +21,9 @@
 		"max-len": ["error", 160],
 		"no-tabs": 0,
 		"arrow-parens": ["error", "as-needed"],
-
+		"no-underscore-dangle": "off",
+		"no-console": "off",
+		"import/prefer-default-export": "off",
 		"react/jsx-indent": ["error", "tab"],
 		"react/jsx-indent-props": ["error", "tab"],
 		"jsx-a11y/interactive-supports-focus": 0,

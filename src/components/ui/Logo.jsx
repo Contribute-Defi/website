@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Logo() {
+export function Logo() {
 	return (
 		<h1>
 			CON
@@ -9,5 +9,3 @@ function Logo() {
 		</h1>
 	);
 }
-
-export default Logo;

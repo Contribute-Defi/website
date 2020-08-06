@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ComingSoon() {
+export function ComingSoon() {
 	return (
 		<div className="coming-soon">
 			<div className="coming-soon-side" />

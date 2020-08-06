@@ -2,18 +2,17 @@ import React, { useState } from 'react';
 
 import { Alert, Button, Col, Row } from 'react-bootstrap';
 
-import Statistic from '../Statistic';
-import drizzle from '../../lib/drizzle';
+import { Statistic } from '../ui';
 
-const SectionMintBurn = () => {
+export function SectionMintBurn() {
 	const [status, setStatus] = useState(null);
 
 	const handlePump = async () => {
 		setStatus(null);
-		const { Contribute } = drizzle.contracts;
+		// const { Contribute } = drazzle.contracts;
 		try {
 			setStatus('progress');
-			await Contribute.methods.pump().send();
+			// await Contribute.methods.pump().send();
 			setStatus('success');
 		} catch (err) {
 			setStatus('error');
@@ -77,7 +76,4 @@ const SectionMintBurn = () => {
 			</Row>
 		</section>
 	);
-};
-
-
-export default SectionMintBurn;
+}

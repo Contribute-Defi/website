@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
-import Logo from '../Logo';
+import { Logo } from '../ui';
 
-function SectionHeader() {
+export function SectionHeader() {
 	return (
 		<section className="section-header p-3">
 			<Row className="align-items-center">
@@ -16,5 +16,3 @@ function SectionHeader() {
 		</section>
 	);
 }
-
-export default SectionHeader;
