@@ -6,6 +6,9 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = (env, argv) => {
 	const config = {
+		output: {
+			filename: '[name].[contenthash].js',
+		},
 		module: {
 			rules: [
 				{
@@ -38,7 +41,7 @@ module.exports = (env, argv) => {
 				template: './src/index.html',
 				filename: 'index.html',
 				meta: {
-					viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
+					viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
 				},
 			}),
 			new MiniCssExtractPlugin({
