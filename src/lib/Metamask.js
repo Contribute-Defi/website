@@ -15,7 +15,6 @@ export class Metamask {
 
 	// For now, 'eth_accounts' will continue to always return an array
 	handleAccountsChanged(accounts) {
-		console.log('handleAccountsChanged', accounts);
 		if (accounts.length === 0) {
 			// MetaMask is locked or the user has not connected any accounts
 			throw new Error('Please connect to MetaMask.');
@@ -68,7 +67,6 @@ export class Metamask {
 	}
 
 	async initAndConnect(silent = false) {
-		console.log('metamas initAndConnect', silent);
 		try {
 			await this.init();
 			if (!silent) {
@@ -88,7 +86,6 @@ export class Metamask {
 	}
 
 	get currentAccount() {
-		console.log('metamask current account');
 		return this._currentAccount;
 	}
 

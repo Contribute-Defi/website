@@ -3,7 +3,7 @@
 	margin: auto;
 	justify-content: center;
 	.part {
-		padding: 0 .75rem;
+		padding: 0 .75rem 0 .25rem;
 		text-align: center;
 	}
 	.item {
@@ -15,9 +15,30 @@
 		display: block;
 		font-family: Lato;
 		line-height: 1;
+		&:after {
+			content: ':';
+			font-size: 3rem;
+			position: relative;
+			top: -.25rem;
+			padding-left: 1rem;
+		}
 	}
+
 	.unit {
 		font-size: .6rem;
+		position: relative;
+		left: -1rem;
+	}
+
+	.part:last-child {
+		padding-right: 0;
+		.value:after {
+			content: '';
+			display: none;
+		}
+		.unit {
+			left: 0;
+		}
 	}
 
 	@include media-breakpoint-up('md') {
@@ -26,14 +47,22 @@
 		}
 		.value {
 			font-size: 4rem;
+			&:after {
+				top: -.5rem;
+				left: .25rem; // hack
+				padding-left: 1.5rem;
+			}
 		}
 	}
 	@include media-breakpoint-up('lg') {
 		.part {
-			padding: 0 1.5rem;
+			padding: 0 1.5rem 0 0;
 		}
 		.value {
 			font-size: 6rem;
+			&:after {
+				top: -1rem;
+			}
 		}
 		.unit {
 			font-size: .8rem;

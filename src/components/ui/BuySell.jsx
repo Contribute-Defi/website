@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import ethers from 'ethers';
+import ethers, { BigNumber } from 'ethers';
 import { Form, Row, Button, ButtonGroup, Col, Alert } from 'react-bootstrap';
 import { ContractValue } from './ContractValue';
 import { useEthers } from '../../app';
 
 const { parseEther, formatEther } = ethers.utils;
 
-export function BuySell({ allowSell }) {
+export function BuySell({ isGenesis = false }) {
 	const defaultAmount = '';
 
 	const FORM_EDIT = null;
@@ -15,7 +15,7 @@ export function BuySell({ allowSell }) {
 	const FORM_SIGNING = 3;
 	const FORM_SIGNING_WAITING = 4;
 
-	const { connected, contracts, address } = useEthers();
+	const { connected, contracts, address, onUpdate, networkId } = useEthers();
 
 	const [tab, setTab] = useState('buy');
 	const [formStatus, setFormStatus] = useState(FORM_EDIT);
@@ -24,6 +24,7 @@ export function BuySell({ allowSell }) {
 	const [amount, setAmount] = useState(defaultAmount);
 	const [receiveAmount, setReceiveAmount] = useState(null);
 	const [isComputing, setIsComputing] = useState(false);
+	const [txHash, setTxHash] = useState();
 	const currFrom = tab === 'buy' ? 'mUSD' : 'TRIB';
 	const currTo = tab === 'buy' ? 'TRIB' : 'mUSD';
 
@@ -54,7 +55,11 @@ export function BuySell({ allowSell }) {
 			value = parseEther(value);
 			if (tab === 'buy') {
 				// (new Intl.NumberFormat('en-US')).format(wholePart)
-				result = await contracts.contribute.getReserveToTokensTaxed(value)
+				if (isGenesis) {
+					result = await contracts.contribute.getReserveToTokens(value)
+				} else {
+					result = await contracts.contribute.getReserveToTokensTaxed(value)
+				}
 			} else {
 				result = await contracts.contribute.getTokensToReserveTaxed(value)
 			}
@@ -67,27 +72,55 @@ export function BuySell({ allowSell }) {
 	const handlePurchase = async () => {
 		setFormStatus(FORM_EDIT);
 		setError(null);
+		setSuccess(false);
+		setTxHash(undefined);
 		const method = tab === 'buy' ? 'invest' : 'sell';
+
 		const amountWei = parseEther(amount);
 
 		try {
 			if (method === 'invest') {
 				setFormStatus(FORM_APPROVING);
-				const transaction = await contracts.musd.approve(contracts.contribute.address, amountWei);
-				setFormStatus(FORM_APPROVING_WAITING);
-				await transaction.wait();
+				const spenderAddress = isGenesis ? contracts.genesis.address : contracts.contribute.address
+				const allowance = await contracts.musd.allowance(address, spenderAddress);
+				if (allowance.lt(amountWei)) {
+					const maxAllowance = BigNumber.from(2).pow(256).sub(1);
+					const transaction = await contracts.musd.approve(spenderAddress, maxAllowance);
+					await transaction.wait();
+					setFormStatus(FORM_APPROVING_WAITING);
+				}
 			}
 			setFormStatus(FORM_SIGNING);
-			const transaction = await contracts.contribute[method](amountWei);
+
+			let transaction;
+			if (method === 'invest') {
+				if (isGenesis) {
+					transaction = await contracts.genesis.deposit(amountWei);
+				} else {
+					transaction = await contracts.contribute.invest(amountWei);
+				}
+			} else {
+				transaction = await contracts.contribute.sell(amountWei);
+			}
 			setFormStatus(FORM_SIGNING_WAITING);
 			await transaction.wait();
+			onUpdate();
+			transaction.wait(1).then(() => { onUpdate(); console.log('update after 1 confirmation')});
+			transaction.wait(2).then(() => { onUpdate(); console.log('update after 2 confirmations')});
+			transaction.wait(3).then(() => { onUpdate(); console.log('update after 3 confirmations')});
+			setTxHash(transaction.hash);
 			setSuccess(true);
 		} catch (err) {
-			console.error(err);
-			setError('Please approve all MetaMask popups');
+			if (err.code === 4001) {
+				setError('Please approve all MetaMask popups');
+			} else {
+				setError('Error during processing the transaction. Do you have enough balance?');
+				console.error(err);
+			}
 		}
 		setFormStatus(FORM_EDIT);
 		setAmount('');
+		setReceiveAmount('');
 	};
 
 	const fillAmountFromBalance = async () => {
@@ -106,10 +139,32 @@ export function BuySell({ allowSell }) {
 	}
 
 	let tabOptions = { buy: 'Buy', sell: 'Sell' };
+	const allowSell = !isGenesis;
+
+	function renderTxLink() {
+		if (!txHash) return <span>Transaction</span>;
+
+		let domain;
+		if (networkId === 1) {
+			domain = 'etherscan.io'
+		} else if (networkId === 42) {
+			domain = 'kovan.etherscan.io';
+		} else {
+			return <span>Transaction</span>;
+		}
+
+		return <a href={`https://${domain}/tx/${txHash}`} target="_blank">Transaction</a>;
+
+	}
 
 	return (
 		<Row className="justify-content-center">
 			<Col md="6">
+				<div className="warning mb-4">
+					<strong>WARNING</strong><br />
+					This contract has not been audited.
+				</div>
+
 				{allowSell &&
 				<div className="mb-4">
 					<ButtonGroup className="w-100">
@@ -153,7 +208,7 @@ export function BuySell({ allowSell }) {
 				<Row>
 					<Col className="text-left">
 						<Form.Label htmlFor="receive">
-							You will receive (
+							You will {isGenesis ? 'mint' : 'receive'} (
 							{currTo}
 							):
 						</Form.Label>
@@ -161,7 +216,7 @@ export function BuySell({ allowSell }) {
 					<Col className="text-right">
 						Balance:
 						{' '}
-						<ContractValue id={currFrom === 'mUSD' ? 'tokenBalance' : 'reserveBalance'} params={[address]} />
+						<ContractValue id={currFrom === 'mUSD' ? (isGenesis ? 'genesisTokenBalance' : 'tokenBalance') : 'reserveBalance'} params={[address]} />
 					</Col>
 				</Row>
 				<div className="mb-4">
@@ -197,7 +252,7 @@ export function BuySell({ allowSell }) {
 
 				{success ? (
 					<Alert variant="success" dismissible onClose={() => setSuccess(false)}>
-						Transaction complete. Thank you for your contribution!
+						{renderTxLink()} complete. Thank you for your contribution!
 					</Alert>
 				) : null}
 

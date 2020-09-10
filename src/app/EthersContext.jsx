@@ -21,6 +21,7 @@ export function EthersProvider({ children }) {
 	const [address, setAddress] = useState();
 	const [contracts, setContracts] = useState();
 	const [error, setError] = useState();
+	const [timestamp, setTimestamp] = useState(Date.now());
 
 	let metamask;
 	if (process.browser && window.ethereum) {
@@ -43,7 +44,6 @@ export function EthersProvider({ children }) {
 						genesis,
 						trib,
 						musd,
-						// viewContribute: getContract('viewContribute', networkId, signer),
 					});
 				} catch (e) {
 					console.error(e);
@@ -117,6 +117,8 @@ export function EthersProvider({ children }) {
 				disconnect,
 				contracts,
 				error,
+				timestamp,
+				onUpdate: () => setTimestamp(Date.now()),
 			}}
 		>
 			{children}

@@ -33,6 +33,7 @@ export function Countdown() {
 	}, []);
 
 	const plural = (str, num) => (num === 1 ? str : `${str}s`);
+	const pad = (x) => x ? x.toString().padStart(2, '0') : '00';
 
 	const { days, hours, minutes, seconds } = diff;
 	return (
@@ -43,17 +44,17 @@ export function Countdown() {
 			</span>
 			{' '}
 			<span className="part">
-				<span className="value">{hours}</span>
+				<span className="value">{pad(hours)}</span>
 				<span className="unit">{plural('hour', hours)}</span>
 			</span>
 			{' '}
 			<span className="part">
-				<span className="value">{minutes}</span>
+				<span className="value">{pad(minutes)}</span>
 				<span className="unit">{plural('minute', minutes)}</span>
 			</span>
 			{' '}
 			<span className="part">
-				<span className="value">{seconds}</span>
+				<span className="value">{pad(seconds)}</span>
 				<span className="unit">{plural('second', seconds)}</span>
 			</span>
 		</div>

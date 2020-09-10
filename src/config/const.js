@@ -30,7 +30,7 @@ export const stats = {
 		unit: 'USD',
 		label: 'Average Price',
 		contract: 'contribute',
-		method: 'getCurrentTokenPrice', // temporary
+		method: 'genesisAveragePrice',
 		pollInterval: 5000,
 		decimals: 9,
 		smallDecimals: 6,
@@ -56,8 +56,8 @@ export const stats = {
 		decimals: 4,
 	},
 	reserveBalance: {
-		unit: 'DAI',
-		label: 'DAI balance',
+		unit: 'mUSD',
+		label: 'mUSD balance',
 		contract: 'musd',
 		method: 'balanceOf',
 		decimals: 4,
@@ -69,12 +69,26 @@ export const stats = {
 		method: 'balanceOf',
 		decimals: 4,
 	},
+	genesisTokenBalance: {
+		unit: 'TRIB',
+		label: 'TRIB balance',
+		contract: 'genesis',
+		method: 'getShare',
+		decimals: 4,
+	},
 	getTribToDai: {
 		unit: 'DAI',
 		label: 'DAI amount',
 		contract: 'contribute',
 		decimals: 4,
 	},
+	genesisReceive: {
+		unit: 'TRIB',
+		label: 'You Will Receive',
+		contract: 'genesis',
+		method: 'getShare',
+		decimals: 3,
+	}
 /*
 	lockedContributions: {
 		unit: 'DAI',

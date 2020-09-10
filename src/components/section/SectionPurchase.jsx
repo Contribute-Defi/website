@@ -4,7 +4,7 @@ import { BuySell } from '../ui';
 
 export function SectionPurchase() {
 	return (
-		<section className="section-purchase bg-dark text-light text-center">
+		<section className="section-purchase bg-dark text-light text-center" id="anchor-participate">
 			<Container>
 				<h2 className="mb-4">
 					The first autonomous interest-generating protocol.

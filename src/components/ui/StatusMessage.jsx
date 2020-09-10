@@ -1,12 +1,10 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { EthersStatus, useEthers } from '../../app';
-
-const shortenAddress = address => `${address.substr(0, 8)}...${address.substr(address.length - 8)}`;
+import { shortenAddress } from '../../lib';
 
 export function StatusMessage() {
 	const { connect, connected, address, error, status } = useEthers();
-	console.log({ status, error, connect });
 
 	if (status === EthersStatus.DISCONNECTED) {
 		return (
@@ -22,7 +20,7 @@ export function StatusMessage() {
 		return (
 			<div className="message error">
 				<h3>Network mismatch</h3>
-				<p>Please switch your MetaMask to mainnet or ropsten (for testing).</p>
+				<p>Please switch your MetaMask to mainnet or kovan (for testing).</p>
 			</div>
 		);
 	}

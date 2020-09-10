@@ -7,7 +7,7 @@ import { stats } from "../../config/const";
 const { formatEther } = ethers.utils;
 
 function ContractValue({ id, params = [] }) {
-	const { connected, contracts } = useEthers();
+	const { connected, contracts, timestamp } = useEthers();
 
 	const { method, contract: contractName, pollInterval, decimals, smallDecimals } = stats[id];
 	const [value, setValue] = useState()
@@ -23,10 +23,9 @@ function ContractValue({ id, params = [] }) {
 			// if (pollInterval) {
 			// 	setTimeout(readValueFromContract, pollInterval);
 			// }
-			console.log('read value', id, niceValue);
 		};
 		readValueFromContract().then();
-	}, [connected, contracts]);
+	}, [connected, contracts, timestamp]);
 
 	if (!connected) {
 		return <div className="lds-dual-ring" />;
@@ -61,9 +60,9 @@ function ContractValue({ id, params = [] }) {
 	};
 
 	return (
-		<div>
+		<span>
 			{value}
-		</div>
+		</span>
 	);
 }
 

@@ -13,7 +13,7 @@ export function SectionHeroGenesis() {
 				<Countdown />
 			</div>
 			<div className="mb-3">
-				<a className="btn btn-primary" href="#anchorParticipate">Participate</a>
+				<a className="btn btn-primary" href="#anchor-participate">Participate</a>
 			</div>
 			<div className="small">
 				<a href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">Read the Whitepaper</a>

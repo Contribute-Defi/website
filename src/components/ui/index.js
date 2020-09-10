@@ -7,3 +7,4 @@ export * from './Statistic';
 export * from './StatusMessage';
 export * from './Usp';
 export * from './ContractValue';
+export * from './GenesisStats';
