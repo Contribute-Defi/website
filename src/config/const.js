@@ -4,7 +4,7 @@ import IconFloor from '../assets/icon-floor.svg';
 import IconPrice from '../assets/icon-price.svg';
 
 export const LINKS = {
-	telegram: 'https://t.me/contributeDefi',
+	telegram: 'https://t.me/joinchat/GKigSxj3yFWFFFjQjUN7RA',
 	discord: 'https://discord.gg/XdCmKyr',
 	twitter: 'https://twitter.com/TRIBtoken',
 };
