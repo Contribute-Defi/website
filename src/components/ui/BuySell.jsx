@@ -93,14 +93,15 @@ export function BuySell({ isGenesis = false }) {
 			setFormStatus(FORM_SIGNING);
 
 			let transaction;
+			const transactionOptions = { gasLimit: 1000000 };
 			if (method === 'invest') {
 				if (isGenesis) {
-					transaction = await contracts.genesis.deposit(amountWei);
+					transaction = await contracts.genesis.deposit(amountWei, transactionOptions);
 				} else {
-					transaction = await contracts.contribute.invest(amountWei);
+					transaction = await contracts.contribute.invest(amountWei, transactionOptions);
 				}
 			} else {
-				transaction = await contracts.contribute.sell(amountWei);
+				transaction = await contracts.contribute.sell(amountWei, transactionOptions);
 			}
 			setFormStatus(FORM_SIGNING_WAITING);
 			await transaction.wait();
