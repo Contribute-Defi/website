@@ -7,6 +7,7 @@ export const LINKS = {
 	telegram: 'https://t.me/joinchat/GKigSxj3yFWFFFjQjUN7RA',
 	discord: 'https://discord.gg/XdCmKyr',
 	twitter: 'https://twitter.com/TRIBtoken',
+	medium: 'https://medium.com/@kentosadim',
 };
 
 
