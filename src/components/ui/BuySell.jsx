@@ -39,12 +39,12 @@ export function BuySell({ isGenesis = false }) {
 		return tab === 'buy' ? 'Purchase TRIB' : 'Sell TRIB';
 	};
 
-	const handleChangeTab = key => {
+	const handleChangeTab = (key) => {
 		setTab(key);
 		setAmount('');
 	};
 
-	const handleAmountUpdated = async value => {
+	const handleAmountUpdated = async (value) => {
 		setAmount(value);
 		setIsComputing(true);
 
@@ -56,18 +56,18 @@ export function BuySell({ isGenesis = false }) {
 			if (tab === 'buy') {
 				// (new Intl.NumberFormat('en-US')).format(wholePart)
 				if (isGenesis) {
-					result = await contracts.contribute.getReserveToTokens(value)
+					result = await contracts.contribute.getReserveToTokens(value);
 				} else {
-					result = await contracts.contribute.getReserveToTokensTaxed(value)
+					result = await contracts.contribute.getReserveToTokensTaxed(value);
 				}
 			} else {
-				result = await contracts.contribute.getTokensToReserveTaxed(value)
+				result = await contracts.contribute.getTokensToReserveTaxed(value);
 			}
 			result = formatEther(result);
 		}
 		setIsComputing(false);
 		setReceiveAmount(result);
-	}
+	};
 
 	const handlePurchase = async () => {
 		setFormStatus(FORM_EDIT);
@@ -81,7 +81,7 @@ export function BuySell({ isGenesis = false }) {
 		try {
 			if (method === 'invest') {
 				setFormStatus(FORM_APPROVING);
-				const spenderAddress = isGenesis ? contracts.genesis.address : contracts.contribute.address
+				const spenderAddress = isGenesis ? contracts.genesis.address : contracts.contribute.address;
 				const allowance = await contracts.musd.allowance(address, spenderAddress);
 				if (allowance.lt(amountWei)) {
 					const maxAllowance = BigNumber.from(2).pow(256).sub(1);
@@ -105,10 +105,18 @@ export function BuySell({ isGenesis = false }) {
 			}
 			setFormStatus(FORM_SIGNING_WAITING);
 			await transaction.wait();
+			// sometimes it doesn't update after the trasaction is confirmed
+			// why not reload after some additional confirmations
 			onUpdate();
-			transaction.wait(1).then(() => { onUpdate(); console.log('update after 1 confirmation')});
-			transaction.wait(2).then(() => { onUpdate(); console.log('update after 2 confirmations')});
-			transaction.wait(3).then(() => { onUpdate(); console.log('update after 3 confirmations')});
+			transaction.wait(1).then(() => {
+				onUpdate();
+			});
+			transaction.wait(2).then(() => {
+				onUpdate();
+			});
+			transaction.wait(3).then(() => {
+				onUpdate();
+			});
 			setTxHash(transaction.hash);
 			setSuccess(true);
 		} catch (err) {
@@ -147,51 +155,60 @@ export function BuySell({ isGenesis = false }) {
 
 		let domain;
 		if (networkId === 1) {
-			domain = 'etherscan.io'
+			domain = 'etherscan.io';
 		} else if (networkId === 42) {
 			domain = 'kovan.etherscan.io';
 		} else {
 			return <span>Transaction</span>;
 		}
 
-		return <a href={`https://${domain}/tx/${txHash}`} target="_blank">Transaction</a>;
-
+		return (
+			<a href={`https://${domain}/tx/${txHash}`} target="_blank" rel="noreferrer">
+				Transaction
+			</a>
+		);
 	}
 
 	return (
 		<Row className="justify-content-center">
 			<Col md="6">
 				<div className="warning mb-4">
-					<strong>WARNING</strong><br />
+					<strong>WARNING</strong>
+					<br />
 					This contract has not been audited.
 				</div>
 
-				{allowSell &&
-				<div className="mb-4">
-					<ButtonGroup className="w-100">
-						{Object.entries(tabOptions).map(([key, title]) => (
-							<Button
-								key={key}
-								variant={tab === key ? 'switch-active' : 'switch-inactive'}
-								onClick={() => handleChangeTab(key)}
-							>
-								{title}
-							</Button>
-						))}
-					</ButtonGroup>
-				</div>
-				}
+				{allowSell && (
+					<div className="mb-4">
+						<ButtonGroup className="w-100">
+							{Object.entries(tabOptions).map(([key, title]) => (
+								<Button
+									key={key}
+									variant={tab === key ? 'switch-active' : 'switch-inactive'}
+									onClick={() => handleChangeTab(key)}
+								>
+									{title}
+								</Button>
+							))}
+						</ButtonGroup>
+					</div>
+				)}
 				<Row>
 					<Col className="text-left">
-						<Form.Label htmlFor="amount">
-							Amount:
-						</Form.Label>
+						<Form.Label htmlFor="amount">Amount:</Form.Label>
 					</Col>
 					<Col className="text-right">
-						Balance:
-						{' '}
-						<span className="tooltiped number" onClick={() => fillAmountFromBalance()} title="Use whole balance" role="button">
-							<ContractValue id={currFrom === 'mUSD' ? 'reserveBalance' : 'tokenBalance'} params={[address]} />
+						Balance:{' '}
+						<span
+							className="tooltiped number"
+							onClick={() => fillAmountFromBalance()}
+							title="Use whole balance"
+							role="button"
+						>
+							<ContractValue
+								id={currFrom === 'mUSD' ? 'reserveBalance' : 'tokenBalance'}
+								params={[address]}
+							/>
 						</span>
 					</Col>
 				</Row>
@@ -200,7 +217,7 @@ export function BuySell({ isGenesis = false }) {
 						type="number"
 						id="amount"
 						value={amount}
-						onChange={e => handleAmountUpdated(e.target.value)}
+						onChange={(e) => handleAmountUpdated(e.target.value)}
 						disabled={formStatus !== FORM_EDIT}
 					/>
 					<div className="form-unit">{currFrom}</div>
@@ -209,15 +226,22 @@ export function BuySell({ isGenesis = false }) {
 				<Row>
 					<Col className="text-left">
 						<Form.Label htmlFor="receive">
-							You will {isGenesis ? 'mint' : 'receive'} (
-							{currTo}
+							You will {isGenesis ? 'mint' : 'receive'} ({currTo}
 							):
 						</Form.Label>
 					</Col>
 					<Col className="text-right">
-						Balance:
-						{' '}
-						<ContractValue id={currFrom === 'mUSD' ? (isGenesis ? 'genesisTokenBalance' : 'tokenBalance') : 'reserveBalance'} params={[address]} />
+						Balance:{' '}
+						<ContractValue
+							id={
+								currFrom === 'mUSD'
+									? isGenesis
+										? 'genesisTokenBalance'
+										: 'tokenBalance'
+									: 'reserveBalance'
+							}
+							params={[address]}
+						/>
 					</Col>
 				</Row>
 				<div className="mb-4">
@@ -235,13 +259,15 @@ export function BuySell({ isGenesis = false }) {
 
 				{formStatus !== FORM_EDIT ? (
 					<Alert variant="info">
-						{formStatus === FORM_APPROVING ?
-							'Please sign transaction to approve mUSD spending'
-							: formStatus === FORM_APPROVING_WAITING ? 'Waiting for confirmation'
-							: formStatus === FORM_SIGNING ? 'Please sign transaction to process your order'
-							: formStatus === FORM_SIGNING_WAITING ? 'Waiting for confirmation'
-							: null
-						}
+						{formStatus === FORM_APPROVING
+							? 'Please sign transaction to approve mUSD spending'
+							: formStatus === FORM_APPROVING_WAITING
+							? 'Waiting for confirmation'
+							: formStatus === FORM_SIGNING
+							? 'Please sign transaction to process your order'
+							: formStatus === FORM_SIGNING_WAITING
+							? 'Waiting for confirmation'
+							: null}
 					</Alert>
 				) : null}
 
@@ -258,13 +284,10 @@ export function BuySell({ isGenesis = false }) {
 				) : null}
 
 				<p className="fs-xs">
-					10% of every transaction is
-					{' '}
-					<strong>locked forever</strong>
-					{' '}
-					in the interest-bearing pool.
-					{' '}
-					<a href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">Learn more</a>
+					10% of every transaction is <strong>locked forever</strong> in the interest-bearing pool.{' '}
+					<a href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">
+						Learn more
+					</a>
 					.
 				</p>
 			</Col>

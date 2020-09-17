@@ -1,7 +1,6 @@
 import { Contract } from 'ethers';
 import { artifacts } from '../../contract';
 
-
 export function getContract(contractName, config) {
 	const { address, networkId, signer } = config;
 	const contractArtifacts = artifacts[contractName];

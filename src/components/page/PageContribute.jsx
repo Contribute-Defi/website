@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusMessage } from '../ui';
-import { SectionHero, SectionPurchase, SectionStats, SectionMintBurn, SectionJoin, SectionFooter } from '../section';
+import { SectionHero, SectionPurchase, SectionStats, SectionClaim, SectionJoin, SectionFooter } from '../section';
 
 export function PageContribute() {
 	return (
@@ -9,7 +9,7 @@ export function PageContribute() {
 			<SectionHero />
 			<SectionPurchase />
 			<SectionStats />
-			<SectionMintBurn />
+			<SectionClaim />
 			<SectionJoin />
 			<SectionFooter />
 		</>

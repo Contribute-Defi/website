@@ -8,3 +8,4 @@ export * from './StatusMessage';
 export * from './Usp';
 export * from './ContractValue';
 export * from './GenesisStats';
+export * from './CurrentApy';

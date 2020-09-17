@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
-import { Logo, Statistic } from '../ui';
+import { Logo, Statistic, CurrentApy } from '../ui';
 
 export function SectionHero() {
 	return (
@@ -16,7 +16,7 @@ export function SectionHero() {
 							</h2>
 							<p>
 								<a href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">
-									What is	Contribute
+									What is Contribute
 								</a>
 							</p>
 						</Col>
@@ -27,16 +27,16 @@ export function SectionHero() {
 				<Container fluid="md">
 					<Row className="text-center text-lg-left">
 						<Col lg="3" sm="6" className="mb-4 mb-lg-0">
-							<Statistic id="lockedContributions" />
+							<Statistic id="totalContributed" />
 						</Col>
 						<Col lg="3" sm="6" className="mb-4 mb-lg-0">
-							<Statistic id="continuousEarning" />
+							<Statistic id="totalInterestClaimed" />
 						</Col>
 						<Col lg="3" sm="6" className="mb-4 mb-md-0">
-							<Statistic id="interestRate" />
+							<CurrentApy />
 						</Col>
 						<Col lg="3" sm="6">
-							<Statistic id="interestPoolTotal" />
+							<Statistic id="totalReserve" />
 						</Col>
 					</Row>
 				</Container>

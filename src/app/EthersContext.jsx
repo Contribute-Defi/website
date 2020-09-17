@@ -32,18 +32,21 @@ export function EthersProvider({ children }) {
 		(async () => {
 			if (status === EthersStatus.CONNECTED && networkId && signer) {
 				try {
-					const contribute = getContract('contribute', {networkId, signer});
+					const contribute = getContract('contribute', { networkId, signer });
 					const genesisAddress = await contribute.genesis();
 					const tribAddress = await contribute.token();
 					const musdAddress = await contribute.reserve();
-					const genesis = getContract('genesis', {address: genesisAddress, signer});
-					const trib = getContract('trib', {address: tribAddress, signer});
-					const musd = getContract('musd', {address: musdAddress, signer});
+					const vaultAddress = await contribute.vault();
+					const genesis = getContract('genesis', { address: genesisAddress, signer });
+					const trib = getContract('trib', { address: tribAddress, signer });
+					const musd = getContract('musd', { address: musdAddress, signer });
+					const vault = getContract('vault', { address: vaultAddress, signer });
 					setContracts({
 						contribute,
 						genesis,
 						trib,
 						musd,
+						vault,
 					});
 				} catch (e) {
 					console.error(e);
@@ -65,7 +68,7 @@ export function EthersProvider({ children }) {
 			if (_provider) {
 				const _signer = _provider.getSigner();
 				setSigner(_signer);
-				const _networkId = (await _signer.getChainId());
+				const _networkId = await _signer.getChainId();
 				setNetworkId(_networkId);
 				const accounts = await _provider.listAccounts();
 				if (accounts && accounts.length > 0) {
@@ -129,7 +132,6 @@ export function EthersProvider({ children }) {
 EthersProvider.propTypes = {
 	children: PropTypes.node.isRequired,
 };
-
 
 export function useEthers() {
 	return useContext(EthersContext);

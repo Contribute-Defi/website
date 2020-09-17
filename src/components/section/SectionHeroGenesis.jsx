@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {Hero, Statistic} from '../ui';
+import { CurrentApy, Hero, Statistic } from '../ui';
 import { Countdown } from '../ui/Countdown';
-import {Col, Container, Row} from "react-bootstrap";
+import { Col, Container, Row } from 'react-bootstrap';
 import { useEthers } from '../../app';
 
 export function SectionHeroGenesis() {
@@ -15,32 +15,37 @@ export function SectionHeroGenesis() {
 				<Countdown />
 			</div>
 			<div className="mb-3">
-				<a className="btn btn-primary" href="#anchor-participate">Participate</a>
+				<a className="btn btn-primary" href="#anchor-participate">
+					Participate
+				</a>
 			</div>
 			<div className="small">
-				<a href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">Read the Whitepaper</a>
+				<a href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">
+					Read the Whitepaper
+				</a>
 			</div>
+			<CurrentApy />
 
-			{connected &&
+			{connected && (
 				<div className="hero-stats mt-6">
 					<Container fluid="md">
 						<Row className="text-center text-lg-left">
 							<Col lg="3" sm="6" className="mb-4 mb-lg-0">
-								<Statistic id="totalReserve"/>
+								<Statistic id="totalReserve" />
 							</Col>
 							<Col lg="3" sm="6" className="mb-4 mb-lg-0">
-								<Statistic id="getCurrentTokenPrice"/>
+								<Statistic id="getCurrentTokenPrice" />
 							</Col>
 							<Col lg="3" sm="6" className="mb-4 mb-md-0">
-								<Statistic id="averagePrice"/>
+								<Statistic id="genesisAveragePrice" />
 							</Col>
 							<Col lg="3" sm="6">
-								<Statistic id="getTotalSupply"/>
+								<Statistic id="getTotalSupply" />
 							</Col>
 						</Row>
 					</Container>
 				</div>
-			}
+			)}
 		</section>
 	);
 }

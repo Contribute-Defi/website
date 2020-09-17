@@ -45,11 +45,11 @@ export class Metamask {
 			}
 		}
 
-		ethereum.on('chainChanged', chainId => this.handleChainChanged(chainId));
+		ethereum.on('chainChanged', (chainId) => this.handleChainChanged(chainId));
 		// Note that this event is emitted on page load.
 		// If the array of accounts is non-empty, you're already
 		// connected.
-		ethereum.on('accountsChanged', accounts => this.handleAccountsChanged(accounts));
+		ethereum.on('accountsChanged', (accounts) => this.handleAccountsChanged(accounts));
 	}
 
 	async connect() {

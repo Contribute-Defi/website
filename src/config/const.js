@@ -10,28 +10,62 @@ export const LINKS = {
 	medium: 'https://medium.com/@kentosadim',
 };
 
-
-// eslint-disable-next-line import/prefer-default-export
 export const stats = {
+	totalContributed: {
+		unit: 'USD',
+		label: 'Contributions',
+		decimals: 2,
+	},
 	totalReserve: {
 		unit: 'USD',
-		label: 'Total Contributed',
-		contract: 'contribute',
+		label: 'Reserve',
 		decimals: 2,
+	},
+	totalInterestClaimed: {
+		label: 'Interest Earned',
+		decimals: 2,
+		unit: 'USD',
+	},
+	apy: {
+		label: 'Interest Rate (APY)',
+		decimals: 2,
+		unit: '%',
 	},
 	getCurrentTokenPrice: {
 		unit: 'USD',
 		label: 'TRIB Price',
-		contract: 'contribute',
+		pollInterval: 5000,
+		decimals: 9,
+		smallDecimals: 6,
+		image: IconPrice,
+	},
+	getBurnedTokensAmount: {
+		unit: 'TRIB',
+		label: 'Burned',
+		pollInterval: 5000,
+		// decimals: 9,
+		// smallDecimals: 6,
+		image: IconBurned,
+	},
+	getInterest: {
+		unit: 'USD',
+		label: 'Available to Claim',
 		pollInterval: 5000,
 		decimals: 9,
 		smallDecimals: 6,
 	},
-	averagePrice: {
+	floor: {
+		unit: 'USD',
+		label: 'Floor',
+		pollInterval: 5000,
+		decimals: 9,
+		smallDecimals: 6,
+		callback: (x) => x.div(process.env.DIVIDER),
+		image: IconFloor,
+	},
+	genesisAveragePrice: {
 		unit: 'USD',
 		label: 'Average Price',
-		contract: 'contribute',
-		method: 'genesisAveragePrice',
 		pollInterval: 5000,
 		decimals: 9,
 		smallDecimals: 6,
@@ -39,22 +73,8 @@ export const stats = {
 	getTotalSupply: {
 		unit: 'TRIB',
 		label: 'Total Supply',
-		contract: 'contribute',
-		decimals: 2,
-	},
-	reserveToTokens: {
-		unit: 'TRIB',
-		label: 'TRIB received',
-		contract: 'contribute',
-		method: 'getReserveToTokensTaxed',
-		decimals: 4,
-	},
-	tokensToReserve: {
-		unit: 'mUSD',
-		label: 'mUSD received',
-		contract: 'contribute',
-		method: 'getTokensToReserveTaxed',
-		decimals: 4,
+		// decimals: 2,
+		image: IconSupply,
 	},
 	reserveBalance: {
 		unit: 'mUSD',
@@ -77,76 +97,4 @@ export const stats = {
 		method: 'getShare',
 		decimals: 4,
 	},
-	getTribToDai: {
-		unit: 'DAI',
-		label: 'DAI amount',
-		contract: 'contribute',
-		decimals: 4,
-	},
-	genesisReceive: {
-		unit: 'TRIB',
-		label: 'You Will Receive',
-		contract: 'genesis',
-		method: 'getShare',
-		decimals: 3,
-	}
-/*
-	lockedContributions: {
-		unit: 'DAI',
-		label: 'Locked Contributions',
-	},
-	continuousEarning: {
-		unit: 'DAI',
-		label: 'Continuous Earnings',
-		decimals: 3,
-		smallDecimals: 6,
-		continuous: true,
-	},
-	interestRate: {
-		unit: '%',
-		label: 'Interest Rate (APY)',
-		divideBy: 1e8,
-	},
-	interestPoolTotal: {
-		unit: 'DAI',
-		label: 'Interest Bearing Pool',
-	},
-	availableToBurn: {
-		unit: 'DAI',
-		label: 'Available to burn',
-		decimals: 3,
-		smallDecimals: 6,
-		continuous: true,
-	},
-	priceAfterBurn: {
-		unit: 'DAI',
-		label: 'Burning TRIB will increase its price to',
-		decimals: 3,
-		smallDecimals: 6,
-		continuous: true,
-	},
-	price: {
-		unit: 'DAI',
-		label: 'Price',
-		image: IconPrice,
-	},
-	floor: {
-		unit: 'DAI',
-		label: 'Floor',
-		image: IconFloor,
-		decimals: 3,
-		smallDecimals: 6,
-	},
-	totalBurned: {
-		unit: 'TRIB',
-		label: 'Burned',
-		image: IconBurned,
-	},
-	supply: {
-		unit: 'TRIB',
-		label: 'Supply',
-		image: IconSupply,
-	},
-
- */
 };

@@ -5,7 +5,7 @@ export * from './SectionHero';
 export * from './SectionHeroGenesis';
 export * from './SectionHowItWorks';
 export * from './SectionJoin';
-export * from './SectionMintBurn';
+export * from './SectionClaim';
 export * from './SectionPurchase';
 export * from './SectionPurchaseGenesis';
 export * from './SectionStats';

@@ -9,9 +9,10 @@ export function StatusMessage() {
 	if (status === EthersStatus.DISCONNECTED) {
 		return (
 			<div className="message error">
-				<strong>MetaMask is not connected.</strong>
-				{' '}
-				<button type="button" className="btn btn-outline-light btn-sm ml-2" onClick={() => connect()}>connect now</button>
+				<strong>MetaMask is not connected.</strong>{' '}
+				<button type="button" className="btn btn-outline-light btn-sm ml-2" onClick={() => connect()}>
+					connect now
+				</button>
 			</div>
 		);
 	}
@@ -27,8 +28,7 @@ export function StatusMessage() {
 	if (!connected) {
 		return (
 			<div className="message error">
-				<strong>MetaMask is not connected.</strong>
-				{' '}
+				<strong>MetaMask is not connected.</strong>{' '}
 				{error || 'Make sure MetaMask is installed and you are logged in.'}
 			</div>
 		);
@@ -36,9 +36,7 @@ export function StatusMessage() {
 	return (
 		<div className="message info">
 			<Container>
-				<strong>Wallet connected:</strong>
-				{' '}
-				{shortenAddress(address)}
+				<strong>Wallet connected:</strong> {shortenAddress(address)}
 			</Container>
 		</div>
 	);

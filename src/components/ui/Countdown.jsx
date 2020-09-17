@@ -10,7 +10,6 @@ export function Countdown() {
 	const end = dayjs.utc(endDate);
 	const [diff, setDiff] = useState({});
 
-
 	const updateDiff = () => {
 		let endTemp = end;
 		now = dayjs.utc();
@@ -24,8 +23,18 @@ export function Countdown() {
 		endTemp = endTemp.subtract(minutes, 'minutes');
 
 		const seconds = endTemp.diff(now, 'seconds');
-		setDiff({ days, hours, minutes, seconds });
-		window.setTimeout(updateDiff, 1000);
+
+		if (seconds < 0) {
+			setDiff({ days: 0, hours: 0, minuts: 0, seconds: 0 });
+		} else {
+			setDiff({
+				days,
+				hours,
+				minutes,
+				seconds,
+			});
+			window.setTimeout(updateDiff, 1000);
+		}
 	};
 
 	useEffect(() => {
@@ -33,7 +42,7 @@ export function Countdown() {
 	}, []);
 
 	const plural = (str, num) => (num === 1 ? str : `${str}s`);
-	const pad = (x) => x ? x.toString().padStart(2, '0') : '00';
+	const pad = (x) => (x ? x.toString().padStart(2, '0') : '00');
 
 	const { days, hours, minutes, seconds } = diff;
 	return (
@@ -41,18 +50,15 @@ export function Countdown() {
 			<span className="part">
 				<span className="value">{days}</span>
 				<span className="unit">{plural('day', days)}</span>
-			</span>
-			{' '}
+			</span>{' '}
 			<span className="part">
 				<span className="value">{pad(hours)}</span>
 				<span className="unit">{plural('hour', hours)}</span>
-			</span>
-			{' '}
+			</span>{' '}
 			<span className="part">
 				<span className="value">{pad(minutes)}</span>
 				<span className="unit">{plural('minute', minutes)}</span>
-			</span>
-			{' '}
+			</span>{' '}
 			<span className="part">
 				<span className="value">{pad(seconds)}</span>
 				<span className="unit">{plural('second', seconds)}</span>

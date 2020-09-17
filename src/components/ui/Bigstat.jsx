@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { stats } from '../../config/const';
-// import { ContractValue } from '.';
+import { ContractValue } from './ContractValue';
 
-function Bigstat({
-	id, children,
-}) {
+function Bigstat({ id, children }) {
 	const { label, unit, image } = stats[id];
-	// const value = <ContractValue method={id} />;
-	const value = 'Temp value';
 
 	return (
 		<div className="bigstat">
@@ -18,16 +14,16 @@ function Bigstat({
 				</div>
 				<h3 className="fs-l font-weight-light pt-1 mb-1">{label}</h3>
 				<div className="stat-value-unit bigstat-value-unit">
-					<div className="stat-value bigstat-value lds-dual-ring">
-						<span className="stat-value bigstat-value lh-1 mr-1">{value}</span>
+					<div className="stat-value bigstat-value">
+						<span className="stat-value bigstat-value lh-1 mr-1">
+							<ContractValue id={id} />
+						</span>
 						{unit ? <span className="stat-unit bigstat-unit">{unit}</span> : null}
 					</div>
 				</div>
 			</div>
 			<hr />
-			<p>
-				{children}
-			</p>
+			<p>{children}</p>
 		</div>
 	);
 }

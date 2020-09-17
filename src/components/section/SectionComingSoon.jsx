@@ -8,7 +8,9 @@ export function SectionComingSoon() {
 			<ComingSoon />
 			<Hero />
 			<div>
-				<a className="btn btn-primary" href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">Read the Whitepaper</a>
+				<a className="btn btn-primary" href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">
+					Read the Whitepaper
+				</a>
 			</div>
 		</section>
 	);
