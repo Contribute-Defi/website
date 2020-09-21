@@ -175,7 +175,7 @@ export function BuySell({ isGenesis = false }) {
 				<div className="warning mb-4">
 					<strong>WARNING</strong>
 					<br />
-					This contract has not been audited.
+					This contract has not been formally audited.
 				</div>
 
 				{allowSell && (
@@ -285,7 +285,11 @@ export function BuySell({ isGenesis = false }) {
 
 				<p className="fs-xs">
 					10% of every transaction is <strong>locked forever</strong> in the interest-bearing pool.{' '}
-					<a href={process.env.WHITEPAPER_LINK} rel="noreferrer" target="_blank">
+					<a
+						href="https://medium.com/@kentosadim/contribute-in-a-nutshell-5ec5ecb9ace5"
+						rel="noreferrer"
+						target="_blank"
+					>
 						Learn more
 					</a>
 					.

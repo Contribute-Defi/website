@@ -3,12 +3,16 @@ import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 
 import { Bigstat } from '../ui';
+import { useEthers } from '../../app';
 
 export function SectionStats() {
+	const { connected } = useEthers();
+	if (!connected) return null;
+
 	return (
 		<section className="section-stats text-light">
 			<Container>
-				<h2 className="font-weight-light mb-5 text-center">Token Stats</h2>
+				<h2 className="font-weight-light mb-5 text-center text-uppercase">Token Stats</h2>
 				<Row>
 					<Col md="6" className="pb-4">
 						<Bigstat id="getCurrentTokenPrice">
@@ -26,8 +30,8 @@ export function SectionStats() {
 				<Row>
 					<Col md="6" className="pb-4">
 						<Bigstat id="getBurnedTokensAmount">
-							Tokens are burned on every purchase and sale event. Every time TRIB is burned the price
-							floor is increased. TRIB’s price <strong>cannot go below the floor</strong>.
+							Tokens are burned on every purchase and sale. Every time TRIB is burned the price floor is
+							increased. TRIB’s price <strong>cannot go below the floor</strong>.
 						</Bigstat>
 					</Col>
 					<Col md="6" className="pb-4">

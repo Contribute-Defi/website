@@ -8,7 +8,7 @@ import { shortenAddress } from '../../lib';
 const { formatEther } = ethers.utils;
 
 export function GenesisStats({ genesis = false }) {
-	const { address, connected, contracts } = useEthers();
+	const { address, connected, contracts, timestamp, onUpdate } = useEthers();
 	const [share, setShare] = useState(0);
 	const [mine, setMine] = useState();
 	const [status, setStatus] = useState(null);
@@ -17,13 +17,14 @@ export function GenesisStats({ genesis = false }) {
 		if (contracts) {
 			recountShare();
 		}
-	}, [contracts]);
+	}, [contracts, timestamp]);
 
 	const handleClaim = async () => {
 		try {
 			setStatus('progress');
-			// await contracts.genesis.claim();
+			await contracts.genesis.claim();
 			setStatus('success');
+			onUpdate();
 		} catch (err) {
 			console.error(err);
 			setStatus('error');
@@ -80,7 +81,7 @@ export function GenesisStats({ genesis = false }) {
 							</tr>
 						</tbody>
 					</Table>
-					<Button disabled={genesis} variant="light" onClick={handleClaim}>
+					<Button disabled={genesis} variant="secondary" onClick={handleClaim}>
 						Claim TRIB
 					</Button>
 				</Col>
@@ -96,7 +97,7 @@ export function GenesisStats({ genesis = false }) {
 
 					{status === 'success' ? (
 						<Alert variant="success" dismissible onClose={handleFinish}>
-							Transaction complete. Thank you for playing with us:)
+							Congratulations, you&apos;ve been tribbed!
 						</Alert>
 					) : null}
 

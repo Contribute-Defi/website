@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, Button, Col, Row } from 'react-bootstrap';
 import { useEthers } from '../../app';
 import { Statistic } from '../ui';
+import { formatEther } from 'ethers/lib/utils';
 
 export function SectionClaim() {
 	const [status, setStatus] = useState(null);
-	const { contracts } = useEthers();
+	const [interest, setInterest] = useState(0); // only to be able to disable/enable the button
+	const { connected, contracts, timestamp } = useEthers();
+
+	useEffect(() => {
+		(async () => {
+			if (contracts) {
+				setInterest(parseFloat(formatEther(await contracts.contribute.getInterest())));
+			}
+		})();
+	}, [contracts, timestamp]);
+
+	if (!connected) return null;
 
 	const handleClaim = async () => {
 		setStatus(null);
 		try {
 			setStatus('progress');
-			await contracts.contribute.claimInterest();
+			const tx = await contracts.contribute.claimInterest();
+			await tx.wait();
 			setStatus('success');
 		} catch (err) {
 			console.error(err);
@@ -21,7 +34,7 @@ export function SectionClaim() {
 
 	return (
 		<section className="section-mint-burn text-center">
-			<h2 className="mb-3 mb-lg-4 text-uppercase font-weight-bold">Claim INteresMint And Burn</h2>
+			<h2 className="mb-3 mb-lg-4 text-uppercase">Claim Interest</h2>
 			<Row className="justify-content-center mb-4 mb-lg-5">
 				<Col md="10" lg="8">
 					<p>
@@ -44,10 +57,10 @@ export function SectionClaim() {
 						</Col>
 						<Col md="6" className="mb-3 mb-md-0">
 							<Button
-								variant="secondary"
+								variant={status === 'progress' || interest === 0 ? 'dark' : 'secondary'}
 								className="btn-large text-nowrap"
 								onClick={() => handleClaim()}
-								disabled={status === 'progress'}
+								disabled={status === 'progress' || interest === 0}
 							>
 								Claim
 								{status === 'progress' ? ' in progress' : null}
@@ -67,7 +80,7 @@ export function SectionClaim() {
 
 					{status === 'success' ? (
 						<Alert variant="success" dismissible onClose={() => setStatus(null)}>
-							Transaction complete. Thank you for playing with us:)
+							Congratulations, you&apos;ve been tribbed!
 						</Alert>
 					) : null}
 

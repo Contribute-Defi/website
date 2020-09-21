@@ -13,21 +13,21 @@ export const LINKS = {
 export const stats = {
 	totalContributed: {
 		unit: 'USD',
-		label: 'Contributions',
+		label: 'Locked Contributions',
 		decimals: 2,
 	},
 	totalReserve: {
 		unit: 'USD',
-		label: 'Reserve',
+		label: 'Total Generating Interest',
 		decimals: 2,
 	},
 	totalInterestClaimed: {
-		label: 'Interest Earned',
+		label: 'Total Interest Claimed',
 		decimals: 2,
 		unit: 'USD',
 	},
 	apy: {
-		label: 'Interest Rate (APY)',
+		label: 'Interest Rate (Variable APY)',
 		decimals: 2,
 		unit: '%',
 	},
@@ -51,8 +51,7 @@ export const stats = {
 		unit: 'USD',
 		label: 'Available to Claim',
 		pollInterval: 5000,
-		decimals: 9,
-		smallDecimals: 6,
+		decimals: 3,
 	},
 	floor: {
 		unit: 'USD',
@@ -60,6 +59,7 @@ export const stats = {
 		pollInterval: 5000,
 		decimals: 9,
 		smallDecimals: 6,
+		method: 'getBurnedTokensAmount',
 		callback: (x) => x.div(process.env.DIVIDER),
 		image: IconFloor,
 	},

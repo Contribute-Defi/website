@@ -1,38 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useEthers } from '../../app';
-import { PageComingSoon, PageGenesis, PageContribute } from '.';
+import { PageComingSoon, PageGenesis, PageContribute, PageLoading } from '.';
 import { TestControls } from '../ui/TestControls';
 
 export function Page() {
-	const [isGenesis, setIsGenesis] = useState();
-	const { contracts } = useEthers();
+	const { contracts, isGenesis, onUpdate } = useEthers();
 
-	async function checkGenesis() {
-		const gme = await contracts.contribute.GME();
-		if (gme) {
-			window.setTimeout(() => checkGenesis(), 6000);
-		}
-		setIsGenesis(gme);
+	async function reloadChainData() {
+		onUpdate();
+		window.setTimeout(() => reloadChainData(), 30000);
 	}
 
 	useEffect(() => {
-		(async () => {
-			if (contracts) {
-				await checkGenesis();
-			}
-		})();
+		window.setTimeout(() => reloadChainData(), 6000);
 	}, [contracts]);
 
 	const isComingSoon = process.env.COMING_SOON === '1';
 	const isTest = process.env.TEST === '1';
 
-	if (isGenesis === undefined) {
-		return <span>loading...</span>;
+	let page;
+	if (isComingSoon) {
+		page = <PageComingSoon />;
+	} else if (!contracts || isGenesis === undefined) {
+		page = <PageLoading />;
+	} else {
+		page = isGenesis ? <PageGenesis /> : <PageContribute />;
 	}
-
 	return (
 		<>
-			{isComingSoon ? <PageComingSoon /> : isGenesis ? <PageGenesis /> : <PageContribute />}
+			{page}
 			{isTest && <TestControls />}
 		</>
 	);

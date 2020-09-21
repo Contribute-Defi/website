@@ -20,6 +20,7 @@ export function EthersProvider({ children }) {
 	const [status, setStatus] = useState(EthersStatus.DISCONNECTED);
 	const [address, setAddress] = useState();
 	const [contracts, setContracts] = useState();
+	const [isGenesis, setIsGenesis] = useState();
 	const [error, setError] = useState();
 	const [timestamp, setTimestamp] = useState(Date.now());
 
@@ -37,6 +38,7 @@ export function EthersProvider({ children }) {
 					const tribAddress = await contribute.token();
 					const musdAddress = await contribute.reserve();
 					const vaultAddress = await contribute.vault();
+					const isGenesis = await contribute.GME();
 					const genesis = getContract('genesis', { address: genesisAddress, signer });
 					const trib = getContract('trib', { address: tribAddress, signer });
 					const musd = getContract('musd', { address: musdAddress, signer });
@@ -48,6 +50,7 @@ export function EthersProvider({ children }) {
 						musd,
 						vault,
 					});
+					setIsGenesis(isGenesis);
 				} catch (e) {
 					console.error(e);
 					setError(e.message);
@@ -56,6 +59,14 @@ export function EthersProvider({ children }) {
 			}
 		})();
 	}, [networkId, signer, status]);
+
+	useEffect(() => {
+		(async () => {
+			if (contracts && contracts.contribute) {
+				setIsGenesis(await contracts.contribute.GME());
+			}
+		})();
+	}, [contracts, timestamp]);
 
 	async function connect(silent) {
 		if (!metamask) {
@@ -121,6 +132,7 @@ export function EthersProvider({ children }) {
 				contracts,
 				error,
 				timestamp,
+				isGenesis,
 				onUpdate: () => setTimestamp(Date.now()),
 			}}
 		>

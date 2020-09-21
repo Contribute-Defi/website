@@ -6,7 +6,6 @@ import _musdContract from './mUSD.json';
 import _vaultContract from './Vault.json';
 
 const contribute = process.env.TEST === '1' ? _contributeMockContract : _contributeContract;
-console.log({ test: process.env.TEST, contribute });
 
 export const artifacts = {
 	contribute,

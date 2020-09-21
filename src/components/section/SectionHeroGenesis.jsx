@@ -24,7 +24,6 @@ export function SectionHeroGenesis() {
 					Read the Whitepaper
 				</a>
 			</div>
-			<CurrentApy />
 
 			{connected && (
 				<div className="hero-stats mt-6">

@@ -12,7 +12,7 @@ function Bigstat({ id, children }) {
 				<div className="bigstat-image float-left mr-2">
 					<img src={image} alt={label} />
 				</div>
-				<h3 className="fs-l font-weight-light pt-1 mb-1">{label}</h3>
+				<h3 className="fs-l font-weight-light pt-1 mb-0">{label}</h3>
 				<div className="stat-value-unit bigstat-value-unit">
 					<div className="stat-value bigstat-value">
 						<span className="stat-value bigstat-value lh-1 mr-1">
