@@ -42,6 +42,8 @@ export function BuySell({ isGenesis = false }) {
 	const handleChangeTab = (key) => {
 		setTab(key);
 		setAmount('');
+		setReceiveAmount('');
+		onUpdate();
 	};
 
 	const handleAmountUpdated = async (value) => {
@@ -137,7 +139,7 @@ export function BuySell({ isGenesis = false }) {
 		if (tab === 'buy') {
 			newAmount = await contracts.musd.balanceOf(address);
 		} else {
-			newAmount = await contracts.musd.balanceOf(address);
+			newAmount = await contracts.trib.balanceOf(address);
 		}
 		handleAmountUpdated(formatEther(newAmount));
 	};
