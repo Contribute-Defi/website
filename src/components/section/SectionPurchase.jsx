@@ -14,7 +14,7 @@ export function SectionPurchase() {
 				<p className="mb-5 mb-lg-6">
 					Early adopters are incentivized to bootstrap liquidity.
 					<br />
-					Latecomers benefit from the contiuous interest generated from the lending pool.
+					Latecomers benefit from the continuous interest generated from the lending pool.
 				</p>
 
 				<hr className="mb-4 mb-md-5" />
