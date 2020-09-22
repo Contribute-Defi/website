@@ -12,7 +12,6 @@ export function useContractValue(statName, params = []) {
 	const [value, setValue] = useState();
 
 	const stat = stats[statName];
-	console.log({ statName, stat, timestamp });
 	const { method = statName, contract: contractName = 'contribute', pollInterval, callback } = stat;
 
 	useEffect(() => {
