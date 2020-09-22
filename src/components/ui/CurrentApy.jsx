@@ -7,7 +7,7 @@ const APPROX_BLOCKS_PER_DAY = 6500;
 
 export function CurrentApy() {
 	const { contracts, provider } = useEthers();
-	const [apy, setApy] = useState('36.22');
+	const [apy, setApy] = useState('27.12');
 	/*
 	useEffect(() => {
 		if (contracts) {
