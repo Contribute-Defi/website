@@ -27,17 +27,17 @@ export function SectionHero() {
 				<div className="hero-stats">
 					<Container fluid="md">
 						<Row className="text-center text-lg-left">
-							<Col lg="3" sm="6" className="mb-4 mb-lg-0">
-								<Statistic id="totalContributed" />
-							</Col>
-							<Col lg="3" sm="6" className="mb-4 mb-lg-0">
-								<Statistic id="totalInterestClaimed" />
+							<Col lg="3" sm="6">
+								<Statistic id="totalReserve" />
 							</Col>
 							<Col lg="3" sm="6" className="mb-4 mb-md-0">
 								<CurrentApy />
 							</Col>
-							<Col lg="3" sm="6">
-								<Statistic id="totalReserve" />
+							<Col lg="3" sm="6" className="mb-4 mb-lg-0">
+								<Statistic id="totalInterestClaimed" />
+							</Col>
+							<Col lg="3" sm="6" className="mb-4 mb-lg-0">
+								<Statistic id="totalContributed" />
 							</Col>
 						</Row>
 					</Container>

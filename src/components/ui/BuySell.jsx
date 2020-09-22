@@ -36,7 +36,7 @@ export function BuySell({ isGenesis = false }) {
 			return tab === 'buy' ? 'Purchasing TRIB' : 'Selling TRIB';
 		}
 
-		return tab === 'buy' ? 'Purchase TRIB' : 'Sell TRIB';
+		return tab === 'buy' ? 'Purchase TRIB' : 'Sell TRIB and claim interest';
 	};
 
 	const handleChangeTab = (key) => {
@@ -228,7 +228,7 @@ export function BuySell({ isGenesis = false }) {
 				<Row>
 					<Col className="text-left">
 						<Form.Label htmlFor="receive">
-							You will {isGenesis ? 'mint' : 'receive'} ({currTo}
+							You will {isGenesis ? 'mint' : 'receive after tax'} ({currTo}
 							):
 						</Form.Label>
 					</Col>

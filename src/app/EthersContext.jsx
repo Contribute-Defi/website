@@ -22,7 +22,7 @@ export function EthersProvider({ children }) {
 	const [contracts, setContracts] = useState();
 	const [isGenesis, setIsGenesis] = useState();
 	const [error, setError] = useState();
-	const [timestamp, setTimestamp] = useState(Date.now());
+	const [timestamp, setTimestamp] = useState(0);
 
 	let metamask;
 	if (process.browser && window.ethereum) {

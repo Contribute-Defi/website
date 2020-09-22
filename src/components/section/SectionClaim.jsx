@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Button, Col, Row } from 'react-bootstrap';
-import { useEthers } from '../../app';
+import { useContractValue, useEthers } from '../../app';
 import { Statistic } from '../ui';
 import { formatEther } from 'ethers/lib/utils';
 
 export function SectionClaim() {
 	const [status, setStatus] = useState(null);
 	const [error, setError] = useState();
-	const [interest, setInterest] = useState(0); // only to be able to disable/enable the button
-	const { connected, contracts, timestamp } = useEthers();
+	const { connected, contracts } = useEthers();
 
-	useEffect(() => {
-		(async () => {
-			if (contracts) {
-				setInterest(await getInterest());
-			}
-		})();
-	}, [contracts, timestamp]);
+	const interest = processInterest(useContractValue('getInterest'));
 
 	if (!connected) return null;
 
@@ -37,8 +30,13 @@ export function SectionClaim() {
 		}
 	};
 
+	function processInterest(x) {
+		if (!x) return x;
+		return parseFloat(formatEther(x));
+	}
+
 	async function getInterest() {
-		return parseFloat(formatEther(await contracts.contribute.getInterest()));
+		return await contracts.contribute.getInterest();
 	}
 
 	return (
@@ -76,6 +74,9 @@ export function SectionClaim() {
 							</Button>
 						</Col>
 					</Row>
+					<p className="mt-4 fs-xs">
+						*Selling your TRIB automatically claims any interest you are eligible to receive from the pool.
+					</p>
 				</Col>
 			</Row>
 

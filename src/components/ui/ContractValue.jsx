@@ -1,37 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ethers from 'ethers';
-import { useEthers } from '../../app';
+import { useContractValue, useEthers } from '../../app';
 import { stats } from '../../config/const';
 
 const { formatEther } = ethers.utils;
 
 function ContractValue({ id, params = [] }) {
-	const { connected, contracts, timestamp } = useEthers();
-
-	const { method, contract: contractName = 'contribute', pollInterval, decimals, smallDecimals, callback } = stats[
-		id
-	];
-	const [value, setValue] = useState();
-
-	useEffect(() => {
-		if (!connected || !contracts) return;
-
-		const contract = contracts[contractName];
-		const readValueFromContract = async () => {
-			const rawValue = await contract[method || id](...params);
-			const niceValue = processValue(rawValue);
-			setValue(niceValue);
-			if (pollInterval) {
-				setTimeout(readValueFromContract, pollInterval);
-			}
-		};
-		readValueFromContract().then();
-	}, [connected, contracts, timestamp]);
-
-	if (!connected) {
-		return <div className="lds-dual-ring" />;
-	}
+	const value = useContractValue(id, params);
+	const stat = stats[id];
+	const { decimals, smallDecimals } = stat;
 
 	const processValue = (value) => {
 		if (typeof value === 'undefined') {
@@ -41,9 +19,6 @@ function ContractValue({ id, params = [] }) {
 			return value;
 		}
 		if (typeof value === 'object' && value._isBigNumber) {
-			if (callback) {
-				value = callback(value);
-			}
 			const stringValue = formatEther(value);
 			let [wholePart, decimalPart] = stringValue.split('.');
 			wholePart = new Intl.NumberFormat('en-US').format(wholePart);
@@ -72,7 +47,7 @@ function ContractValue({ id, params = [] }) {
 		}
 	};
 
-	return <span>{value}</span>;
+	return <span>{processValue(value)}</span>;
 }
 
 ContractValue.propTypes = {

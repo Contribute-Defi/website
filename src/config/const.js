@@ -18,8 +18,8 @@ export const stats = {
 	},
 	totalReserve: {
 		unit: 'USD',
-		label: 'Total Generating Interest',
-		decimals: 2,
+		label: 'Total Deposited',
+		decimals: 0,
 	},
 	totalInterestClaimed: {
 		label: 'Total Interest Claimed',
@@ -33,7 +33,7 @@ export const stats = {
 	},
 	getCurrentTokenPrice: {
 		unit: 'USD',
-		label: 'TRIB Price',
+		label: 'Price before tax',
 		pollInterval: 5000,
 		decimals: 9,
 		smallDecimals: 6,
