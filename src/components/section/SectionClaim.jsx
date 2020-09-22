@@ -6,13 +6,14 @@ import { formatEther } from 'ethers/lib/utils';
 
 export function SectionClaim() {
 	const [status, setStatus] = useState(null);
+	const [error, setError] = useState();
 	const [interest, setInterest] = useState(0); // only to be able to disable/enable the button
 	const { connected, contracts, timestamp } = useEthers();
 
 	useEffect(() => {
 		(async () => {
 			if (contracts) {
-				setInterest(parseFloat(formatEther(await contracts.contribute.getInterest())));
+				setInterest(await getInterest());
 			}
 		})();
 	}, [contracts, timestamp]);
@@ -22,15 +23,23 @@ export function SectionClaim() {
 	const handleClaim = async () => {
 		setStatus(null);
 		try {
+			if ((await getInterest()) === 0) {
+				setError('Cannot claim zero interest');
+				return;
+			}
 			setStatus('progress');
 			const tx = await contracts.contribute.claimInterest();
 			await tx.wait();
 			setStatus('success');
 		} catch (err) {
 			console.error(err);
-			setStatus('error');
+			setError('Something went wrong. Check MetaMask for details.');
 		}
 	};
+
+	async function getInterest() {
+		return parseFloat(formatEther(await contracts.contribute.getInterest()));
+	}
 
 	return (
 		<section className="section-mint-burn text-center">
@@ -72,19 +81,15 @@ export function SectionClaim() {
 
 			<Row className="justify-content-center mt-4">
 				<Col md="8" lg="6">
-					{status === 'error' ? (
-						<Alert variant="danger" dismissible onClose={() => setStatus(null)}>
-							Something went wrong. Check MetaMask for details.
+					{error ? (
+						<Alert variant="danger" dismissible onClose={() => setError(undefined)}>
+							{error}
 						</Alert>
-					) : null}
-
-					{status === 'success' ? (
+					) : status === 'success' ? (
 						<Alert variant="success" dismissible onClose={() => setStatus(null)}>
 							Congratulations, you&apos;ve been tribbed!
 						</Alert>
-					) : null}
-
-					{status === 'progress' ? (
+					) : status === 'progress' ? (
 						<Alert variant="info">Transaction in progress. Please confirm action on MetaMask.</Alert>
 					) : null}
 				</Col>
