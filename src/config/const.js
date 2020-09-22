@@ -33,7 +33,7 @@ export const stats = {
 	},
 	getCurrentTokenPrice: {
 		unit: 'USD',
-		label: 'Price before tax',
+		label: 'Price Before Tax',
 		pollInterval: 5000,
 		decimals: 9,
 		smallDecimals: 6,

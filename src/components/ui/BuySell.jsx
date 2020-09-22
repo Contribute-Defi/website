@@ -149,7 +149,7 @@ export function BuySell({ isGenesis = false }) {
 		return <p>Not connected</p>;
 	}
 
-	let tabOptions = { buy: 'Buy', sell: 'Sell' };
+	let tabOptions = { buy: 'Buy', sell: 'Sell and Claim*' };
 	const allowSell = !isGenesis;
 
 	function renderTxLink() {
