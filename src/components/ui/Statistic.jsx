@@ -5,13 +5,25 @@ import { useEthers } from '../../app';
 import { ContractValue } from './ContractValue';
 
 function Statistic({ id, value }) {
-	const { label, unit } = stats[id];
+	const { label, unit, link } = stats[id];
 
 	const { connected } = useEthers();
 
+	function renderLabel() {
+		if (link) {
+			return (
+				<a href={link} target="_blank" rel="noreferrer">
+					{label}
+				</a>
+			);
+		} else {
+			return label;
+		}
+	}
+
 	return (
 		<div className="stat">
-			<div className="stat-label">{label}</div>
+			<div className="stat-label">{renderLabel()}</div>
 			<div className="stat-value-unit">
 				{connected ? (
 					<>

@@ -27,7 +27,8 @@ export const stats = {
 		unit: 'USD',
 	},
 	apy: {
-		label: 'Interest Rate (Variable APY)',
+		label: 'APY (Week Average)',
+		link: 'https://app.mstable.org/analytics',
 		decimals: 2,
 		unit: '%',
 	},
