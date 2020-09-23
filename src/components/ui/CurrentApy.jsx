@@ -42,7 +42,7 @@ export function CurrentApy() {
 			// format
 			let x = niceApy.toString().split('.');
 			x[0] = x[0].padStart(2, '0');
-			x[1] = x[1].padEnd(2, '0');
+			x[1] = x[1] ? x[1].padEnd(2, '0') : '00';
 			setApy(x.join('.'));
 		} catch (e) {
 			console.error(e);
