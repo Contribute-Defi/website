@@ -5,7 +5,7 @@ import { Logo, Statistic, CurrentApy, Usp } from '../ui';
 import { useEthers } from '../../app';
 
 export function SectionHero() {
-	const { connected, isGenesis } = useEthers();
+	const { isGenesis } = useEthers();
 	return (
 		<section className="section-hero">
 			<div className="hero-hero">
@@ -23,7 +23,7 @@ export function SectionHero() {
 					</Row>
 				</Container>
 			</div>
-			{connected && isGenesis !== undefined && (
+			{isGenesis !== undefined && (
 				<div className="hero-stats">
 					<Container fluid="md">
 						<Row className="text-center text-lg-left">

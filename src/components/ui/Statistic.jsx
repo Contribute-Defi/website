@@ -25,14 +25,8 @@ function Statistic({ id, value }) {
 		<div className="stat">
 			<div className="stat-label">{renderLabel()}</div>
 			<div className="stat-value-unit">
-				{connected ? (
-					<>
-						<div className="stat-value">{value ? value : <ContractValue id={id} />}</div>
-						{unit ? <div className="stat-unit">{unit}</div> : null}
-					</>
-				) : (
-					<div className="stat-value bigstat-value lds-dual-ring" />
-				)}
+				<div className="stat-value">{value ? value : <ContractValue id={id} />}</div>
+				{unit ? <div className="stat-unit">{unit}</div> : null}
 			</div>
 		</div>
 	);

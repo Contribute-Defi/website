@@ -14,10 +14,10 @@ export function GenesisStats({ genesis = false }) {
 	const [status, setStatus] = useState(null);
 
 	useEffect(() => {
-		if (contracts) {
+		if (contracts && address) {
 			recountShare();
 		}
-	}, [contracts, timestamp]);
+	}, [contracts, timestamp, address]);
 
 	const handleClaim = async () => {
 		try {

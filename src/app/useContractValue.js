@@ -15,25 +15,31 @@ export function useContractValue(statName, params = []) {
 	const { method = statName, contract: contractName = 'contribute', pollInterval, callback } = stat;
 
 	useEffect(() => {
-		if (!connected || !contracts) return;
-
+		let isMounted = true;
+		if (!contracts) return;
 		const contract = contracts[contractName];
 		const readValueFromContract = async () => {
-			let rawValue = await contract[method](...params);
+			let rawValue;
+			try {
+				rawValue = await contract[method](...params);
+			} catch (e) {
+				console.log(e.message);
+			}
 			if (callback) {
 				rawValue = callback(rawValue);
 			}
-			setValue(rawValue);
-			if (pollInterval && !timestamp) {
-				setTimeout(readValueFromContract, pollInterval);
+			if (isMounted) {
+				setValue(rawValue);
+				if (pollInterval && !timestamp) {
+					setTimeout(readValueFromContract, pollInterval);
+				}
 			}
 		};
 		readValueFromContract().then();
+		return () => {
+			isMounted = false;
+		};
 	}, [connected, contracts, timestamp]);
 
-	if (!connected) {
-		return undefined;
-	} else {
-		return value;
-	}
+	return value;
 }

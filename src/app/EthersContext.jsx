@@ -13,11 +13,20 @@ export const EthersStatus = {
 	WRONG_NETWORK: 4,
 };
 
+const DISCONNECTED_CONTRACT_CONFIG = {
+	status: EthersStatus.DISCONNECTED,
+	networkId: process.env.DEFAULT_ETHER_NETWORK_ID,
+	provider: new ethers.providers.EtherscanProvider(
+		process.env.DEFAULT_ETHER_NETWORK_NAME,
+		process.env.ETHERSCAN_API_KEY,
+	),
+};
+
 export function EthersProvider({ children }) {
-	const [provider, setProvider] = useState(undefined);
+	const [provider, setProvider] = useState();
 	const [signer, setSigner] = useState();
 	const [networkId, setNetworkId] = useState();
-	const [status, setStatus] = useState(EthersStatus.DISCONNECTED);
+	const [status, setStatus] = useState();
 	const [address, setAddress] = useState();
 	const [contracts, setContracts] = useState();
 	const [isGenesis, setIsGenesis] = useState();
@@ -29,77 +38,32 @@ export function EthersProvider({ children }) {
 		metamask = new Metamask(window.ethereum);
 	}
 
-	useEffect(() => {
-		(async () => {
-			if (status === EthersStatus.CONNECTED && networkId && signer) {
-				try {
-					const contribute = getContract('contribute', { networkId, signer });
-					const genesisAddress = await contribute.genesis();
-					const tribAddress = await contribute.token();
-					const musdAddress = await contribute.reserve();
-					const vaultAddress = await contribute.vault();
-					const isGenesis = await contribute.GME();
-					const genesis = getContract('genesis', { address: genesisAddress, signer });
-					const trib = getContract('trib', { address: tribAddress, signer });
-					const musd = getContract('musd', { address: musdAddress, signer });
-					const vault = getContract('vault', { address: vaultAddress, signer });
-					setContracts({
-						contribute,
-						genesis,
-						trib,
-						musd,
-						vault,
-					});
-					setIsGenesis(isGenesis);
-				} catch (e) {
-					console.error(e);
-					setError(e.message);
-					setStatus(EthersStatus.WRONG_NETWORK);
-				}
-			}
-		})();
-	}, [networkId, signer, status]);
-
-	useEffect(() => {
-		(async () => {
-			if (contracts && contracts.contribute) {
-				setIsGenesis(await contracts.contribute.GME());
-			}
-		})();
-	}, [contracts, timestamp]);
-
-	async function connect(silent) {
-		if (!metamask) {
-			return;
-		}
-		const ethereum = await metamask.initAndConnect(silent);
-		if (ethereum) {
-			const _provider = new ethers.providers.Web3Provider(ethereum);
-			setProvider(_provider);
-			if (_provider) {
-				const _signer = _provider.getSigner();
-				setSigner(_signer);
-				const _networkId = await _signer.getChainId();
-				setNetworkId(_networkId);
-				const accounts = await _provider.listAccounts();
-				if (accounts && accounts.length > 0) {
-					setAddress(accounts[0]);
-					setStatus(EthersStatus.CONNECTED);
-				}
-			}
-		} else {
-			setStatus(EthersStatus.FAILED);
-		}
-	}
+	let initialized = false;
 
 	useEffect(() => {
 		connect(true);
 	}, []);
 
 	useEffect(() => {
+		(async () => {
+			if (initialized) {
+				await setupContracts({ status, signer, provider, networkId });
+			}
+		})();
+	}, [status]);
+
+	useEffect(() => {
+		(async () => {
+			if (initialized && contracts && contracts.contribute) {
+				setIsGenesis(await contracts.contribute.GME());
+			}
+		})();
+	}, [contracts, timestamp]);
+
+	useEffect(() => {
 		// eslint-disable-next-line no-unused-vars
 		const updateAddress = async () => {
-			if (provider) {
+			if (initialized && provider) {
 				const accounts = await provider.listAccounts();
 				if (accounts && accounts.length > 0) {
 					setAddress(accounts[0]);
@@ -108,14 +72,81 @@ export function EthersProvider({ children }) {
 		};
 	});
 
+	async function connect(silent) {
+		let contractConfiguration;
+		if (!metamask) {
+			contractConfiguration = DISCONNECTED_CONTRACT_CONFIG;
+		} else {
+			const ethereum = await metamask.initAndConnect(silent);
+			if (ethereum) {
+				contractConfiguration = await extractContractConfigFromMetamask(ethereum);
+			} else {
+				DISCONNECTED_CONTRACT_CONFIG;
+			}
+		}
+		setNetworkId(contractConfiguration.networkId);
+		setSigner(contractConfiguration.signer);
+		setProvider(contractConfiguration.provider);
+		setAddress(contractConfiguration.address);
+		await setupContracts(contractConfiguration);
+		setStatus(contractConfiguration.status);
+		initialized = true;
+	}
+
+	async function extractContractConfigFromMetamask(metamaskEthereum) {
+		const provider = new ethers.providers.Web3Provider(metamaskEthereum);
+		const accounts = await provider.listAccounts();
+		const hasAccount = accounts && accounts.length > 0;
+		const signer = provider.getSigner();
+		const networkId = await signer.getChainId();
+		return {
+			status: hasAccount ? EthersStatus.CONNECTED : EthersStatus.DISCONNECTED,
+			networkId,
+			provider,
+			signer,
+			address: hasAccount ? accounts[0] : undefined,
+		};
+	}
+
+	async function setupContracts(config) {
+		const { status, signer, provider, networkId } = config;
+		let networkAccessor = status === EthersStatus.CONNECTED && signer ? signer : provider;
+		try {
+			const contribute = getContract('contribute', { networkId, networkAccessor });
+			const genesisAddress = await contribute.genesis();
+			const tribAddress = await contribute.token();
+			const musdAddress = await contribute.reserve();
+			const vaultAddress = await contribute.vault();
+			const isGenesis = await contribute.GME();
+			const genesis = getContract('genesis', { address: genesisAddress, networkAccessor });
+			const trib = getContract('trib', { address: tribAddress, networkAccessor });
+			const musd = getContract('musd', { address: musdAddress, networkAccessor });
+			const vault = getContract('vault', { address: vaultAddress, networkAccessor });
+			setContracts({
+				contribute,
+				genesis,
+				trib,
+				musd,
+				vault,
+			});
+			setIsGenesis(isGenesis);
+		} catch (e) {
+			console.error(e);
+			setError(e.message);
+			setStatus(EthersStatus.WRONG_NETWORK);
+		}
+	}
+
 	async function disconnect() {
 		if (!metamask) {
 			return;
 		}
 		await metamask.disconnect();
-		setProvider(undefined);
+		setProvider(DISCONNECTED_CONTRACT_CONFIG.provider);
+		setNetworkId(DISCONNECTED_CONTRACT_CONFIG.networkId);
 		setSigner(undefined);
 		setAddress(undefined);
+		setStatus(EthersStatus.DISCONNECTED);
 	}
 
 	return (

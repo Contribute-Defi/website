@@ -6,9 +6,6 @@ import { Bigstat } from '../ui';
 import { useEthers } from '../../app';
 
 export function SectionStats() {
-	const { connected } = useEthers();
-	if (!connected) return null;
-
 	return (
 		<section className="section-stats text-light">
 			<Container>
