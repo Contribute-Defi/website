@@ -8,6 +8,7 @@ export const LINKS = {
 	discord: 'https://discord.gg/XdCmKyr',
 	twitter: 'https://twitter.com/TRIBtoken',
 	medium: 'https://medium.com/@kentosadim',
+	dappquery: 'https://dashboard.dappquery.com/contribute',
 };
 
 export const stats = {
