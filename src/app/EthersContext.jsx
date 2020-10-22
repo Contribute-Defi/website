@@ -122,12 +122,14 @@ export function EthersProvider({ children }) {
 			const trib = getContract('trib', { address: tribAddress, networkAccessor });
 			const musd = getContract('musd', { address: musdAddress, networkAccessor });
 			const vault = getContract('vault', { address: vaultAddress, networkAccessor });
+			const router = getContract('router', { networkId, networkAccessor });
 			setContracts({
 				contribute,
 				genesis,
 				trib,
 				musd,
 				vault,
+				router,
 			});
 			setIsGenesis(isGenesis);
 		} catch (e) {

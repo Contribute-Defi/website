@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ethers, { BigNumber } from 'ethers';
-import { Form, Row, Button, ButtonGroup, Col, Alert } from 'react-bootstrap';
+import { Form, Row, Button, ButtonGroup, Col, Alert, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { ContractValue } from './ContractValue';
 import { useEthers } from '../../app';
 
@@ -15,18 +15,33 @@ export function BuySell({ isGenesis = false }) {
 	const FORM_SIGNING = 3;
 	const FORM_SIGNING_WAITING = 4;
 
-	const { connected, contracts, address, onUpdate, networkId } = useEthers();
+	const { connected, provider, signer, contracts, address, onUpdate, networkId } = useEthers();
 
+	const [ethBalance, setEthBalance] = useState();
 	const [tab, setTab] = useState('buy');
 	const [formStatus, setFormStatus] = useState(FORM_EDIT);
+	const [currFromSelect, setCurrFromSelect] = useState('ETH');
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(false);
 	const [amount, setAmount] = useState(defaultAmount);
 	const [receiveAmount, setReceiveAmount] = useState(null);
 	const [isComputing, setIsComputing] = useState(false);
 	const [txHash, setTxHash] = useState();
-	const currFrom = tab === 'buy' ? 'mUSD' : 'TRIB';
+	const currFrom = tab === 'buy' ? currFromSelect : 'TRIB';
 	const currTo = tab === 'buy' ? 'TRIB' : 'mUSD';
+
+	useEffect(() => {
+		loadEthBalance();
+	}, []);
+
+	async function loadEthBalance() {
+		setEthBalance(await provider.getBalance(address));
+	}
+
+	function formatEth(eth) {
+		if (!ethBalance) return '';
+		return Math.round(parseFloat(formatEther(ethBalance)) * 1000000) / 1000000;
+	}
 
 	const buttonTitle = () => {
 		if (formStatus === FORM_APPROVING || formStatus === FORM_APPROVING_WAITING) {
@@ -37,6 +52,11 @@ export function BuySell({ isGenesis = false }) {
 		}
 
 		return tab === 'buy' ? 'Purchase TRIB' : 'Sell TRIB and claim interest';
+	};
+
+	const handleUpdate = () => {
+		onUpdate();
+		loadEthBalance();
 	};
 
 	const handleChangeTab = (key) => {
@@ -60,7 +80,13 @@ export function BuySell({ isGenesis = false }) {
 				if (isGenesis) {
 					result = await contracts.contribute.getReserveToTokens(value);
 				} else {
-					result = await contracts.contribute.getReserveToTokensTaxed(value);
+					if (currFrom === 'ETH') {
+						console.log('calcTribOut', value);
+						result = await contracts.router.calcTribOut(value);
+						console.log('result', result);
+					} else {
+						result = await contracts.contribute.getReserveToTokensTaxed(value);
+					}
 				}
 			} else {
 				result = await contracts.contribute.getTokensToReserveTaxed(value);
@@ -81,7 +107,7 @@ export function BuySell({ isGenesis = false }) {
 		const amountWei = parseEther(amount);
 
 		try {
-			if (method === 'invest') {
+			if (currFrom === 'mUSD' && method === 'invest') {
 				setFormStatus(FORM_APPROVING);
 				const spenderAddress = isGenesis ? contracts.genesis.address : contracts.contribute.address;
 				const allowance = await contracts.musd.allowance(address, spenderAddress);
@@ -100,7 +126,15 @@ export function BuySell({ isGenesis = false }) {
 				if (isGenesis) {
 					transaction = await contracts.genesis.deposit(amountWei, transactionOptions);
 				} else {
-					transaction = await contracts.contribute.invest(amountWei, transactionOptions);
+					if (currFrom === 'ETH') {
+						transaction = await signer.sendTransaction({
+							to: contracts.router.address,
+							value: amountWei,
+							...transactionOptions,
+						});
+					} else {
+						transaction = await contracts.contribute.invest(amountWei, transactionOptions);
+					}
 				}
 			} else {
 				transaction = await contracts.contribute.sell(amountWei, transactionOptions);
@@ -109,15 +143,15 @@ export function BuySell({ isGenesis = false }) {
 			await transaction.wait();
 			// sometimes it doesn't update after the trasaction is confirmed
 			// why not reload after some additional confirmations
-			onUpdate();
+			handleUpdate();
 			transaction.wait(1).then(() => {
-				onUpdate();
+				handleUpdate();
 			});
 			transaction.wait(2).then(() => {
-				onUpdate();
+				handleUpdate();
 			});
 			transaction.wait(3).then(() => {
-				onUpdate();
+				handleUpdate();
 			});
 			setTxHash(transaction.hash);
 			setSuccess(true);
@@ -137,7 +171,11 @@ export function BuySell({ isGenesis = false }) {
 	const fillAmountFromBalance = async () => {
 		let newAmount;
 		if (tab === 'buy') {
-			newAmount = await contracts.musd.balanceOf(address);
+			if (currFrom === 'ETH') {
+				newAmount = ethBalance;
+			} else {
+				newAmount = await contracts.musd.balanceOf(address);
+			}
 		} else {
 			newAmount = await contracts.trib.balanceOf(address);
 		}
@@ -207,22 +245,40 @@ export function BuySell({ isGenesis = false }) {
 							title="Use whole balance"
 							role="button"
 						>
-							<ContractValue
-								id={currFrom === 'mUSD' ? 'reserveBalance' : 'tokenBalance'}
-								params={[address]}
-							/>
+							{tab === 'buy' && currFrom === 'ETH' ? (
+								<span>{formatEth(ethBalance)}</span>
+							) : (
+								<ContractValue
+									id={currFrom === 'mUSD' ? 'reserveBalance' : 'tokenBalance'}
+									params={[address]}
+								/>
+							)}
 						</span>
 					</Col>
 				</Row>
 				<div className="mb-3 form-unit-wrap">
-					<Form.Control
-						type="number"
-						id="amount"
-						value={amount}
-						onChange={(e) => handleAmountUpdated(e.target.value)}
-						disabled={formStatus !== FORM_EDIT}
-					/>
-					<div className="form-unit">{currFrom}</div>
+					<InputGroup>
+						<Form.Control
+							type="number"
+							id="amount"
+							value={amount}
+							onChange={(e) => handleAmountUpdated(e.target.value)}
+							disabled={formStatus !== FORM_EDIT}
+						/>
+						{tab === 'buy' ? (
+							<DropdownButton
+								id="currFrom"
+								as={InputGroup.Append}
+								variant="outline-primary"
+								title={currFrom}
+							>
+								<Dropdown.Item onClick={() => setCurrFromSelect('ETH')}>ETH</Dropdown.Item>
+								<Dropdown.Item onClick={() => setCurrFromSelect('mUSD')}>mUSD</Dropdown.Item>
+							</DropdownButton>
+						) : (
+							<div className="form-unit">{currFrom}</div>
+						)}
+					</InputGroup>
 				</div>
 
 				<Row>
@@ -236,7 +292,7 @@ export function BuySell({ isGenesis = false }) {
 						Balance:{' '}
 						<ContractValue
 							id={
-								currFrom === 'mUSD'
+								currTo === 'TRIB'
 									? isGenesis
 										? 'genesisTokenBalance'
 										: 'tokenBalance'

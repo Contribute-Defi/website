@@ -4,6 +4,7 @@ import _genesisContract from './Genesis.json';
 import _tribContract from './Trib.json';
 import _musdContract from './mUSD.json';
 import _vaultContract from './Vault.json';
+import _tribRouterContract from './TribRouter.json';
 
 const contribute = process.env.TEST === '1' ? _contributeMockContract : _contributeContract;
 
@@ -13,4 +14,5 @@ export const artifacts = {
 	trib: _tribContract,
 	musd: _musdContract,
 	vault: _vaultContract,
+	router: _tribRouterContract,
 };
