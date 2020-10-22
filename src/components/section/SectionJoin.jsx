@@ -26,7 +26,7 @@ export function SectionJoin() {
 				<a href={LINKS.medium} className="p-2" target="_blank" rel="noreferrer">
 					<img src={Medium} alt="Follow us on Medium" />
 				</a>
-                <a href={LINKS.dappquery} className="p-2" target="_blank" rel="noreferrer">
+				<a href={LINKS.dappquery} className="p-2" target="_blank" rel="noreferrer">
 					<img src={Dappquery} alt="Track token activity" />
 				</a>
 				{/*
