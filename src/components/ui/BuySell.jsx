@@ -212,12 +212,6 @@ export function BuySell({ isGenesis = false }) {
 	return (
 		<Row className="justify-content-center">
 			<Col md="6">
-				<div className="warning mb-4">
-					<strong>WARNING</strong>
-					<br />
-					This contract has not been formally audited.
-				</div>
-
 				{allowSell && (
 					<div className="mb-4">
 						<ButtonGroup className="w-100">
