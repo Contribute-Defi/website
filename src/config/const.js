@@ -9,6 +9,7 @@ export const LINKS = {
 	twitter: 'https://twitter.com/TRIBtoken',
 	medium: 'https://medium.com/@kentosadim',
 	dappquery: 'https://dashboard.dappquery.com/contribute',
+	github: 'https://github.com/Contribute-Defi',
 };
 
 export const stats = {

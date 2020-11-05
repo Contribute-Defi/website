@@ -4,8 +4,8 @@ import Twitter from '../../assets/social/twitter.svg';
 import Telegram from '../../assets/social/telegram.svg';
 import Discord from '../../assets/social/discord.svg';
 import Medium from '../../assets/social/medium.svg';
-import Dappquery from '../../assets/social/dappquery.png';
-// import Github from '../../assets/social/github.svg';
+import Dappquery from '../../assets/social/dappquery.svg';
+import Github from '../../assets/social/github.svg';
 
 import { LINKS } from '../../config/const';
 
@@ -26,14 +26,12 @@ export function SectionJoin() {
 				<a href={LINKS.medium} className="p-2" target="_blank" rel="noreferrer">
 					<img src={Medium} alt="Follow us on Medium" />
 				</a>
+				<a href={LINKS.github} className="p-2" target="_blank" rel="noreferrer">
+					<img src={Github} alt="Follow us on Github" />
+				</a>
 				<a href={LINKS.dappquery} className="p-2" target="_blank" rel="noreferrer">
 					<img src={Dappquery} alt="Track token activity" />
 				</a>
-				{/*
-				<a href="https://www.github.com" className="p-2">
-					<img src={Github} alt="Follow us on Github" />
-				</a>
-				*/}
 			</div>
 		</section>
 	);

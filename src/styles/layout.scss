@@ -79,7 +79,7 @@ section {
 }
 
 .section-purchase {
-	background: url(../assets/symbol-dark.svg) center 2rem / 16rem 16rem no-repeat, linear-gradient(180deg, #000000 0%, #373737 100%);
+	background: linear-gradient(180deg, #000000 0%, #373737 100%);
 
 	hr {
 		background-color: $gray-600;
