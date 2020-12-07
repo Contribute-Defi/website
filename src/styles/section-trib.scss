@@ -1,0 +1,93 @@
+.section-Trib {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	background: url('../assets/bg-gov.jpg') no-repeat center;
+	background-size: cover;
+	color: #fff;
+	padding: 150px 20px 200px 20px;
+
+	.trib_header {
+		font-size: 3.4em;
+		font-weight: 100;
+		color: #b0b1b6;
+		letter-spacing: 2px;
+		margin-bottom: 80px !important;
+
+		img {
+			width: 45px;
+		}
+	}
+
+	.timer_container_container {
+		.timer_header {
+			font-size: 1.6em;
+		}
+		.timer_container {
+			.timer {
+				.time {
+					font-size: 1.8em;
+					font-weight: 500;
+				}
+
+				.time_text {
+					font-size: 0.6em;
+					font-weight: 100;
+				}
+			}
+
+			.colon {
+				font-weight: 900;
+				padding-top: 16px;
+				margin: 0 10px;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.section-Trib {
+		overflow: hidden;
+		background: url('../assets/bg-gov.jpg') no-repeat center;
+		background-size: cover;
+		color: #fff;
+		padding: 150px 20px 200px 20px;
+
+		.trib_header {
+			min-width: 340px;
+			font-weight: 300;
+			font-size: 2em;
+
+			img {
+				width: 30px;
+			}
+		}
+
+		.timer_container_container {
+			.timer_header {
+				font-size: 1em;
+			}
+			.timer_container {
+				.timer {
+					.time {
+						font-size: 1.2em;
+						font-weight: 500;
+					}
+
+					.time_text {
+						font-size: 0.4em;
+						font-weight: 100;
+					}
+				}
+
+				.colon {
+					font-weight: 900;
+					padding-top: 16px;
+					margin: 0 10px;
+				}
+			}
+		}
+	}
+}

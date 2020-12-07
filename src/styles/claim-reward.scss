@@ -1,0 +1,62 @@
+.claim-reward_container{
+    background: #282828;
+
+    .claim-reward{
+        width: 800px;
+        padding: 60px 20px;
+        color: #fff;
+
+        .claim-reward_header{
+            font-size: 1.8em;
+            font-weight: 100;
+            margin-bottom: 50px;
+        }
+
+        .claim-rewards-details_container{
+            .reward-details_container{
+                border-bottom: 1px solid #4a4a4a;
+                padding: 12px 8px 5px 5px;
+
+                h5{
+                    font-size: 1.2em;
+                    font-weight: 100;
+                }
+
+                .reward-detail-key{
+                    font-weight: 100;
+                }
+
+                .reward-detail-value{
+                    font-weight: 700;
+                }
+            }
+
+            .available-claim-detail{
+                background: #333333;
+            }
+
+            .trig-detail, .divinity-detail{
+                color: #ffa200;
+            }
+        }
+
+        .claim-and-stake-btn{
+            border: none;
+            outline: none;
+            border-radius: 3px;
+            background: #009cff;
+            color: #fff;
+            padding: 5px 20px;
+        }
+    }
+}
+
+
+@media(max-width: 768px){
+    .claim-reward_container{
+    
+        .claim-reward{
+            width: 100%;
+        }
+    }
+}

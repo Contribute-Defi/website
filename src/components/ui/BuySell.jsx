@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import ethers, { BigNumber } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 import { Form, Row, Button, ButtonGroup, Col, Alert, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { ContractValue } from './ContractValue';
 import { useEthers } from '../../app';
-
-const { parseEther, formatEther } = ethers.utils;
+import { parseEther, formatEther } from 'ethers/lib/utils';
+// const { parseEther, formatEther } = ethers.utils;
 
 export function BuySell({ isGenesis = false }) {
 	const defaultAmount = '';

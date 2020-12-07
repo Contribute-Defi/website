@@ -1,0 +1,75 @@
+.tdao-guaranteed {
+	background: #181818;
+	color: #b0b1b6;
+
+	.differences_container {
+		display: flex;
+		flex-direction: row;
+		flex: 1;
+		justify-content: center;
+		align-items: center;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 50px 20px;
+
+		.differences {
+			padding: 20px 30px;
+
+			.difference_header {
+				span {
+					font-weight: 700;
+					color: #009cff;
+				}
+			}
+			.line {
+				width: 60px;
+				height: 1px;
+				margin: 20px 0;
+				background: #b3b3b3;
+			}
+
+			.difference-point {
+				font-size: 0.8em;
+			}
+
+			.more-differences-link {
+				font-size: 0.8em;
+				text-decoration: underline;
+				color: #b0b1b6;
+			}
+		}
+
+		.introducing-tdao {
+			border-right: 1px solid #b3b3b3;
+		}
+
+		.guaranteed-liquidity {
+			padding-left: 50px;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.tdao-guaranteed {
+		.differences_container {
+			width: 100% !important;
+			margin: 0 auto;
+			padding: 50px 20px;
+
+			.differences {
+				flex: 0 0 100%;
+				max-width: 100%;
+				padding: 0 10px;
+				margin-bottom: 20px;
+			}
+
+			.introducing-tdao {
+				border-right: none;
+			}
+
+			.guaranteed-liquidity {
+				padding-left: 10px;
+			}
+		}
+	}
+}

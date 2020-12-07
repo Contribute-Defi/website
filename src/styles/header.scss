@@ -1,0 +1,91 @@
+.header_container {
+	background: #2a2539;
+
+	.header {
+		width: 900px;
+		padding: 10px 0;
+		.logo_container {
+			.logo {
+				font-size: 2em;
+				font-weight: 100;
+				color: #ddd;
+
+				span {
+					font-weight: 400;
+					color: #fff;
+				}
+			}
+		}
+
+		.connected_wallet {
+			margin-top: 15px;
+			color: #fff;
+		}
+
+		.links_container {
+			list-style: none;
+
+			li {
+				margin: 0 10px;
+			}
+
+			.about-link {
+				color: #ddd;
+				border-bottom: 0px solid #058de4;
+			}
+
+			.trade-link {
+				color: #9b2a77;
+				border-bottom: 0px solid #9b2a77;
+			}
+
+			.mint-link {
+				color: #2a715b;
+				border-bottom: 0px solid #2a715b;
+			}
+
+			.govern-link {
+				color: #058de4;
+				border-bottom: 0px solid #058de4;
+				font-weight: 700;
+			}
+
+			.active-path {
+				border-bottom-width: 2px;
+			}
+
+			a {
+				text-decoration: none;
+			}
+		}
+
+		.connect-wallet-btn {
+			border: none;
+			outline: none;
+			border-radius: 3px;
+			background: #009fff;
+			color: #fff;
+			padding: 5px 20px;
+			font-weight: normal;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.header_container {
+		background: #2a2539;
+
+		.header {
+			width: 100%;
+			flex-direction: column;
+			text-align: center;
+			.logo_container {
+				margin-bottom: 20px;
+			}
+
+			.links_container {
+				margin-bottom: 20px !important;
+			}
+		}
+	}
+}

@@ -3,6 +3,7 @@ export * from './BuySell';
 export * from './ComingSoon';
 export * from './Hero';
 export * from './Logo';
+export * from './Menu';
 export * from './Statistic';
 export * from './StatusMessage';
 export * from './Usp';

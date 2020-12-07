@@ -1,0 +1,100 @@
+.participate_container {
+	background: #2d2d38;
+
+	.participate {
+		width: 850px;
+		padding: 60px 20px;
+
+		.participation_header {
+			font-size: 1.6em;
+			font-weight: 100;
+			color: #ffffff;
+			padding-bottom: 50px;
+			margin-bottom: 50px;
+			border-bottom: 1px dashed #5a5a5c;
+
+			.amount {
+				font-weight: 400;
+			}
+		}
+
+		.participate-form_container {
+			width: 65%;
+			.participate-form_header {
+				font-size: 1.6em;
+				font-weight: 300;
+				color: #fff;
+				.type {
+					font-weight: 900;
+				}
+
+				.trib {
+					font-weight: 900;
+					color: #f12ea6;
+				}
+			}
+
+			.participate-input_container {
+				label {
+					width: 100%;
+					color: #fff;
+					font-size: 0.9em;
+				}
+
+				.input_container {
+					border-radius: 3px;
+					background: #42424c;
+					border: 1px solid #686870;
+
+					input {
+						width: 85%;
+						border: none;
+						outline: none;
+						background: none;
+					}
+
+					.drop {
+						width: 15%;
+						height: 100%;
+						background: #686870;
+						color: #fff;
+						font-size: 0.8em;
+						padding: 8px 14px;
+						cursor: pointer;
+					}
+				}
+			}
+			.deposit-btn {
+				width: 35%;
+				padding: 5px 20px;
+				margin-top: 30px;
+				border: none;
+				outline: none;
+				border-radius: 3px;
+				background: #f12ea6;
+				color: #fff;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.participate_container {
+		background: #2d2d38;
+
+		.participate {
+			width: 100%;
+			padding: 60px 20px;
+
+			.participate-form_container {
+				width: 100%;
+
+				.participate-input_container {
+				}
+				.deposit-btn {
+					width: 100%;
+				}
+			}
+		}
+	}
+}

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway:200,400,700|Lato:400");
+@import url('https://fonts.googleapis.com/css?family=Raleway:200,400,700|Lato:100,300,400');
 
 @import 'bs-vars';
 @import '~bootstrap/scss/bootstrap';
@@ -15,3 +15,14 @@
 @import 'join';
 @import 'countdown';
 @import 'warning';
+@import 'header';
+@import 'section-trib';
+@import 'tdao-guaranteed';
+@import 'event-details';
+@import 'join-contribute';
+@import 'live-stats';
+@import 'participate';
+@import 'account-info';
+@import 'stake-earn';
+@import 'nft';
+@import 'claim-reward';

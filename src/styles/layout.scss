@@ -1,7 +1,12 @@
 $padding-section: 2rem 1rem;
 
-body {
+body,
+html {
 	min-height: 100vh;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	// overflow-x: hidden;
 }
 
 #app {
@@ -9,7 +14,6 @@ body {
 	display: flex;
 	flex-direction: column;
 }
-
 
 section {
 	padding: 2rem 1rem;
@@ -54,7 +58,6 @@ section {
 	}
 }
 
-
 .hero-stats {
 	margin-bottom: -4rem;
 	@include media-breakpoint-up('md') {
@@ -65,7 +68,7 @@ section {
 	}
 
 	padding: 2rem 1rem;
-	background: rgba(15, 15, 15, .5);
+	background: rgba(15, 15, 15, 0.5);
 
 	@include media-breakpoint-up('lg') {
 		.row > div .stat {
@@ -91,9 +94,8 @@ section {
 }
 
 .section-mint-burn {
-	background: linear-gradient(180deg, #DBE4F2 0%, #EEF5FF 100%);
+	background: linear-gradient(180deg, #dbe4f2 0%, #eef5ff 100%);
 }
-
 
 .section-footer {
 	padding: 1rem 1rem;

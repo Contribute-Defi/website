@@ -1,9 +1,9 @@
 import React from 'react';
-import ethers, { Contract } from 'ethers';
+import { ethers, Contract } from 'ethers';
 import { useEthers } from '../../app';
 import SavingsContractMock from '../../../contract/SavingsContractMock.json';
-
-const { parseEther } = ethers.utils;
+import { parseEther } from 'ethers/lib/utils';
+// const { parseEther } = ethers.utils;
 
 export function TestControls() {
 	const { contracts, signer } = useEthers();

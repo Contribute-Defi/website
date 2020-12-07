@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Row, Table } from 'react-bootstrap';
-import ethers from 'ethers';
+import { ethers } from 'ethers';
 
 import { useEthers } from '../../app';
 import { shortenAddress } from '../../lib';

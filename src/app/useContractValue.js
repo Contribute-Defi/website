@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useEthers } from './EthersContext';
 import { stats } from '../config/const';
 import React, { useEffect } from 'react';
-import ethers from 'ethers';
+import { ethers } from 'ethers';
 
-const { formatEther } = ethers.utils;
+const { formatEther } = 'ethers/lib/utils';
 
 export function useContractValue(statName, params = []) {
 	const { connected, contracts, timestamp } = useEthers();

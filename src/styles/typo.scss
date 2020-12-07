@@ -1,5 +1,5 @@
 body {
-	font-family: Raleway, sans-serif;
+	font-family: Lato, sans-serif;
 }
 
 h1 {
@@ -13,7 +13,8 @@ h1 {
 	}
 }
 
-h2, .subtitle {
+h2,
+.subtitle {
 	font-size: 1.25rem;
 	font-weight: normal;
 }
@@ -55,15 +56,15 @@ h2, .subtitle {
 }
 
 .fs-s {
-	font-size: .875rem;
+	font-size: 0.875rem;
 }
 
 .fs-xs {
-	font-size: .75rem;
+	font-size: 0.75rem;
 }
 
 .fs-xxs {
-	font-size: .625rem;
+	font-size: 0.625rem;
 }
 
 .lh-1 {
@@ -75,7 +76,10 @@ a {
 	text-decoration: underline;
 }
 
-.stat-value, .bigstat-value, input[type=number], .number {
+.stat-value,
+.bigstat-value,
+input[type='number'],
+.number {
 	font-family: Lato, sans-serif;
 }
 

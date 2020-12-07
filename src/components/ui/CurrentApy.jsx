@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useEthers } from '../../app';
 import { Statistic } from './Statistic';
 import { formatEther } from 'ethers/lib/utils';
-import ethers, { Contract } from 'ethers';
+import { ethers, Contract } from 'ethers';
 
 // generic interface for multiple mstable contracts
 import mstableArtifacts from '../../../contract/IMStable.json';
