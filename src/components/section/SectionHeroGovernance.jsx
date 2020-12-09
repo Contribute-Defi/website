@@ -3,7 +3,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import contribute_trib from '../../assets/symbol.svg';
 import { LogoGovernance, CountdownLLE } from '../ui';
 
-export function SectionHeroGovernance(props) {
+export function SectionTrib(props) {
 	return (
 		<section className="section-hero-governance">
 			<Container>

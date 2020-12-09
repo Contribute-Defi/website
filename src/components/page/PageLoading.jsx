@@ -1,12 +1,12 @@
 import React from 'react';
 import { StatusMessage } from '../ui';
-import { SectionHero, SectionPurchase, SectionStats, SectionClaim, SectionJoin, SectionFooter } from '../section';
+import { SectionHeroTrade, SectionPurchase, SectionStats, SectionClaim, SectionJoin, SectionFooter } from '../section';
 
 export function PageLoading() {
 	return (
 		<>
 			<StatusMessage />
-			<SectionHero />
+			<SectionHeroTrade />
 			<SectionStats />
 			<SectionJoin />
 			<SectionFooter />

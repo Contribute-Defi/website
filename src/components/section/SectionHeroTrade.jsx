@@ -8,7 +8,7 @@ export function SectionHeroTrade() {
 	const { isGenesis } = useEthers();
 	return (
 		<section className="section-hero">
-			<Container fluid="md">
+			<Container>
 				<Row className="justify-content-center text-center">
 					<Col lg="6" md="8">
 						<Logo />

@@ -211,7 +211,7 @@ export function BuySell({ isGenesis = false }) {
 
 	return (
 		<Row className="justify-content-center">
-			<Col md="6">
+			<Col className="buy-sell-form">
 				{allowSell && (
 					<div className="mb-4">
 						<ButtonGroup className="w-100">
@@ -277,10 +277,7 @@ export function BuySell({ isGenesis = false }) {
 
 				<Row>
 					<Col className="text-left">
-						<Form.Label htmlFor="receive">
-							You will {isGenesis ? 'mint' : 'receive after tax'} ({currTo}
-							):
-						</Form.Label>
+						<Form.Label htmlFor="receive">You will {isGenesis ? 'mint' : 'receive after tax'}:</Form.Label>
 					</Col>
 					<Col className="text-right">
 						Balance:{' '}

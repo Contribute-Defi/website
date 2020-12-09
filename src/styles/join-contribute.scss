@@ -1,18 +1,25 @@
+.section-join-contribute {
+	h2 {
+		font-size: 1.6em;
+		font-weight: 300;
+
+		span {
+			font-weight: 700;
+			color: #f45bb9;
+		}
+	}
+	.col {
+		max-width: 600px;
+	}
+}
+.join-contribute_header {
+}
+
 .join-contribute_container {
 	.join-contribute,
 	.join-contribute-column {
 		width: 650px;
 		padding: 60px 20px;
-
-		.join-contribute_header {
-			font-size: 1.8em;
-			font-weight: 300;
-
-			span {
-				font-weight: 700;
-				color: #f45bb9;
-			}
-		}
 
 		.point {
 			font-size: 1em;

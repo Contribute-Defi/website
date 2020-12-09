@@ -7,7 +7,7 @@ export const LINKS = {
 	telegram: 'https://t.me/joinchat/GKigSxj3yFWFFFjQjUN7RA',
 	discord: 'https://discord.gg/XdCmKyr',
 	twitter: 'https://twitter.com/TRIBtoken',
-	medium: 'https://medium.com/@kentosadim',
+	medium: 'https://medium.com/contribute-defi',
 	dappquery: 'https://dashboard.dappquery.com/contribute',
 	github: 'https://github.com/Contribute-Defi',
 };

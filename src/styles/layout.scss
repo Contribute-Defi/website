@@ -6,7 +6,7 @@ html {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
-	// overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 #app {
@@ -30,6 +30,23 @@ section {
 	background: $gray-200;
 }
 
+.section-hero-governance {
+	background: url(../assets/bg-gov.jpg) no-repeat center center;
+	background-size: cover;
+	color: $white;
+	padding: 6rem 0;
+	.col {
+		min-width: 500px;
+	}
+	@include media-breakpoint-up('md') {
+		padding: 12rem 0;
+		h2 {
+			position: relative;
+			left: -1rem;
+		}
+	}
+}
+
 .section-hero {
 	background: url(../assets/bg.jpg) no-repeat center center;
 	background-size: cover;
@@ -40,21 +57,27 @@ section {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
-		> .hero-hero {
-			flex: 1;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-		}
 	}
-
 	padding: 4rem 0;
 	@include media-breakpoint-up('md') {
 		padding: 6rem 0;
 	}
 	@include media-breakpoint-up('lg') {
 		padding: 8rem 0;
+	}
+}
+
+img.logo {
+	height: 2.2rem;
+	@media (min-width: 768px) {
+		height: 3.4rem;
+	}
+}
+
+img.logoGovernance {
+	height: 2.2rem;
+	@media (min-width: 768px) {
+		height: 3.4rem;
 	}
 }
 
@@ -83,7 +106,15 @@ section {
 
 .section-purchase {
 	background: linear-gradient(180deg, #000000 0%, #373737 100%);
-
+	.buy-sell-form {
+		max-width: 500px;
+	}
+	.value-propositon {
+		max-width: 40rem;
+		p {
+			font-weight: 300;
+		}
+	}
 	hr {
 		background-color: $gray-600;
 	}

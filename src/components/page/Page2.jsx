@@ -2,13 +2,13 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import {
 	SectionEventDetails,
-	SectionTrib,
+	SectionHeroGovernance,
 	SectionFooter,
 	SectionJoin,
 	SectionPurchaseSimple,
 	SectionIntroducing,
+	SectionJoinContribute,
 } from '../section';
-import SectionJoinContribute from '../section/SectionJoinContribute';
 import { BuySell, GenesisStats } from '../ui';
 import Header from '../ui/Header';
 
@@ -16,7 +16,7 @@ export function Page2() {
 	return (
 		<div className="page2">
 			<Header activePath="govern" />
-			<SectionTrib />
+			<SectionHeroGovernance />
 			<SectionIntroducing />
 			<SectionEventDetails />
 			<SectionPurchaseSimple />

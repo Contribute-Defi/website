@@ -1,6 +1,6 @@
 import React from 'react';
 import SectionLiveStats from '../section/SectionLiveStats';
-import { SectionTrib, SectionJoin, SectionFooter, SectionIntroducing } from '../section';
+import { SectionHeroGovernance, SectionJoin, SectionFooter, SectionIntroducing } from '../section';
 import Header from '../ui/Header';
 import SectionJoinColumn from '../section/SectionJoinColumn';
 import SectionParticipate from '../section/SectionParticipate';
@@ -13,7 +13,7 @@ export function Page3(props) {
 	return (
 		<div className="page3">
 			<Header activePath="trade" />
-			<SectionTrib />
+			<SectionHeroGovernance />
 			<SectionLiveStats />
 			<SectionIntroducing />
 			<SectionJoinColumn />
