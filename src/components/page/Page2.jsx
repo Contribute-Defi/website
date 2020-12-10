@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
 import {
 	SectionEventDetails,
 	SectionHeroGovernance,
@@ -9,7 +8,6 @@ import {
 	SectionIntroducing,
 	SectionJoinContribute,
 } from '../section';
-import { BuySell, GenesisStats } from '../ui';
 import Header from '../ui/Header';
 
 export function Page2() {
