@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { CurrentApy, Hero, Statistic } from '../ui';
-import { Countdown } from '../ui/Countdown';
+import { Countdown, Hero, Statistic } from '../ui';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useEthers } from '../../app';
 
@@ -12,7 +11,7 @@ export function SectionHeroGenesis() {
 			<Hero />
 			<h3>Genesis Mint Event ends in</h3>
 			<div className="mb-6">
-				<Countdown />
+				<Countdown endDate={process.env.GENESIS_END} />
 			</div>
 			<div className="mb-3">
 				<a className="btn btn-primary" href="#anchor-participate">

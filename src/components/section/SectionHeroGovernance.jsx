@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import contribute_trib from '../../assets/symbol.svg';
-import { LogoGovernance, CountdownLLE } from '../ui';
+import { LogoGovernance, Countdown } from '../ui';
 
 export function SectionTrib(props) {
 	return (
@@ -12,7 +11,7 @@ export function SectionTrib(props) {
 						<div>
 							<LogoGovernance />
 							<h2 className="text-center text-capitalize mb-3">Locked Liquidity Event starts in</h2>
-							<CountdownLLE />
+							<Countdown endDate={process.env.LLE_END} />
 						</div>
 					</Col>
 				</Row>

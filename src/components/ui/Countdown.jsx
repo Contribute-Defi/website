@@ -4,8 +4,7 @@ import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 
-export function Countdown() {
-	const endDate = process.env.GENESIS_END;
+export function Countdown({ endDate }) {
 	let now = dayjs.utc();
 	const end = dayjs.utc(endDate);
 	const [diff, setDiff] = useState({});
