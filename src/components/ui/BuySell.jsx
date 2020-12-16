@@ -6,7 +6,8 @@ import { useEthers } from '../../app';
 import { parseEther, formatEther } from 'ethers/lib/utils';
 // const { parseEther, formatEther } = ethers.utils;
 
-export function BuySell({ isGenesis = false }) {
+// type = trib | tdao
+export function BuySell({ type = 'trib' }) {
 	const defaultAmount = '';
 
 	const FORM_EDIT = null;
@@ -28,11 +29,14 @@ export function BuySell({ isGenesis = false }) {
 	const [isComputing, setIsComputing] = useState(false);
 	const [txHash, setTxHash] = useState();
 	const currFrom = tab === 'buy' ? currFromSelect : 'TRIB';
-	const currTo = tab === 'buy' ? 'TRIB' : 'mUSD';
+
+	const buyCurrencies = type === 'trib' ? ['ETH', 'mUSD'] : ['ETH', 'TRIB'];
 
 	useEffect(() => {
-		loadEthBalance();
-	}, []);
+		if (address) {
+			loadEthBalance();
+		}
+	}, [address]);
 
 	async function loadEthBalance() {
 		setEthBalance(await provider.getBalance(address));
@@ -44,14 +48,25 @@ export function BuySell({ isGenesis = false }) {
 	}
 
 	const buttonTitle = () => {
-		if (formStatus === FORM_APPROVING || formStatus === FORM_APPROVING_WAITING) {
-			return 'Approving mUSD spending...';
-		}
-		if (formStatus === FORM_SIGNING || formStatus === FORM_SIGNING_WAITING) {
-			return tab === 'buy' ? 'Purchasing TRIB' : 'Selling TRIB';
-		}
+		if (type === 'trib') {
+			if (formStatus === FORM_APPROVING || formStatus === FORM_APPROVING_WAITING) {
+				return 'Approving mUSD spending...';
+			}
+			if (formStatus === FORM_SIGNING || formStatus === FORM_SIGNING_WAITING) {
+				return tab === 'buy' ? 'Purchasing TRIB' : 'Selling TRIB';
+			}
 
-		return tab === 'buy' ? 'Purchase TRIB' : 'Sell TRIB and claim interest';
+			return tab === 'buy' ? 'Purchase TRIB' : 'Sell TRIB and claim interest';
+		} else {
+			if (formStatus === FORM_APPROVING || formStatus === FORM_APPROVING_WAITING) {
+				return 'Approving TRIB spending...';
+			}
+			if (formStatus === FORM_SIGNING || formStatus === FORM_SIGNING_WAITING) {
+				return 'Depositing...';
+			}
+
+			return 'Deposit';
+		}
 	};
 
 	const handleUpdate = () => {
@@ -77,16 +92,10 @@ export function BuySell({ isGenesis = false }) {
 			value = parseEther(value);
 			if (tab === 'buy') {
 				// (new Intl.NumberFormat('en-US')).format(wholePart)
-				if (isGenesis) {
-					result = await contracts.contribute.getReserveToTokens(value);
+				if (currFrom === 'ETH') {
+					result = await contracts.router.calcTribOut(value);
 				} else {
-					if (currFrom === 'ETH') {
-						console.log('calcTribOut', value);
-						result = await contracts.router.calcTribOut(value);
-						console.log('result', result);
-					} else {
-						result = await contracts.contribute.getReserveToTokensTaxed(value);
-					}
+					result = await contracts.contribute.getReserveToTokensTaxed(value);
 				}
 			} else {
 				result = await contracts.contribute.getTokensToReserveTaxed(value);
@@ -102,18 +111,35 @@ export function BuySell({ isGenesis = false }) {
 		setError(null);
 		setSuccess(false);
 		setTxHash(undefined);
-		const method = tab === 'buy' ? 'invest' : 'sell';
+		let contract;
+		let ethContract;
+		let baseCurrencyContract;
+		let investMethod;
+		if (type === 'trib') {
+			ethContract = 'router';
+			contract = 'contribute';
+			baseCurrencyContract = 'musd';
+			investMethod = tab === 'buy' ? 'invest' : 'sell';
+		} else {
+			ethContract = 'tribRouterLLE';
+			contract = 'lockedLiquidityEvent';
+			baseCurrencyContract = 'trib';
+			investMethod = 'addLiquidity';
+		}
 
 		const amountWei = parseEther(amount);
 
 		try {
-			if (currFrom === 'mUSD' && method === 'invest') {
+			if (
+				(currFrom === 'mUSD' && investMethod === 'invest') ||
+				(currFrom === 'TRIB' && investMethod === 'addLiquidity')
+			) {
 				setFormStatus(FORM_APPROVING);
-				const spenderAddress = isGenesis ? contracts.genesis.address : contracts.contribute.address;
-				const allowance = await contracts.musd.allowance(address, spenderAddress);
+				const spenderAddress = contracts[contract].address;
+				const allowance = await contracts[baseCurrencyContract].allowance(address, spenderAddress);
 				if (allowance.lt(amountWei)) {
 					const maxAllowance = BigNumber.from(2).pow(256).sub(1);
-					const transaction = await contracts.musd.approve(spenderAddress, maxAllowance);
+					const transaction = await contracts[baseCurrencyContract].approve(spenderAddress, maxAllowance);
 					await transaction.wait();
 					setFormStatus(FORM_APPROVING_WAITING);
 				}
@@ -122,22 +148,19 @@ export function BuySell({ isGenesis = false }) {
 
 			let transaction;
 			const transactionOptions = { gasLimit: 1000000 };
-			if (method === 'invest') {
-				if (isGenesis) {
-					transaction = await contracts.genesis.deposit(amountWei, transactionOptions);
+			if (investMethod === 'invest' || investMethod === 'addLiquidity') {
+				if (currFrom === 'ETH') {
+					console.log('sending eth', ethContract, contracts[ethContract].address, amountWei);
+					transaction = await signer.sendTransaction({
+						to: contracts[ethContract].address,
+						value: amountWei,
+						...transactionOptions,
+					});
 				} else {
-					if (currFrom === 'ETH') {
-						transaction = await signer.sendTransaction({
-							to: contracts.router.address,
-							value: amountWei,
-							...transactionOptions,
-						});
-					} else {
-						transaction = await contracts.contribute.invest(amountWei, transactionOptions);
-					}
+					transaction = await contracts[contract][investMethod](amountWei, transactionOptions);
 				}
 			} else {
-				transaction = await contracts.contribute.sell(amountWei, transactionOptions);
+				transaction = await contracts[contract].sell(amountWei, transactionOptions);
 			}
 			setFormStatus(FORM_SIGNING_WAITING);
 			await transaction.wait();
@@ -188,7 +211,6 @@ export function BuySell({ isGenesis = false }) {
 	}
 
 	let tabOptions = { buy: 'Buy', sell: 'Sell and Claim*' };
-	const allowSell = !isGenesis;
 
 	function renderTxLink() {
 		if (!txHash) return <span>Transaction</span>;
@@ -212,7 +234,7 @@ export function BuySell({ isGenesis = false }) {
 	return (
 		<Row className="justify-content-center">
 			<Col className="buy-sell-form">
-				{allowSell && (
+				{type === 'trib' && (
 					<div className="mb-4">
 						<ButtonGroup className="w-100">
 							{Object.entries(tabOptions).map(([key, title]) => (
@@ -266,8 +288,11 @@ export function BuySell({ isGenesis = false }) {
 								variant="outline-primary"
 								title={currFrom}
 							>
-								<Dropdown.Item onClick={() => setCurrFromSelect('ETH')}>ETH</Dropdown.Item>
-								<Dropdown.Item onClick={() => setCurrFromSelect('mUSD')}>mUSD</Dropdown.Item>
+								{buyCurrencies.map((currency) => (
+									<Dropdown.Item onClick={() => setCurrFromSelect(currency)} key={currency}>
+										{currency}
+									</Dropdown.Item>
+								))}
 							</DropdownButton>
 						) : (
 							<div className="form-unit">{currFrom}</div>
@@ -275,30 +300,29 @@ export function BuySell({ isGenesis = false }) {
 					</InputGroup>
 				</div>
 
-				<Row>
-					<Col className="text-left">
-						<Form.Label htmlFor="receive">You will {isGenesis ? 'mint' : 'receive after tax'}:</Form.Label>
-					</Col>
-					<Col className="text-right">
-						Balance:{' '}
-						<ContractValue
-							id={
-								currTo === 'TRIB'
-									? isGenesis
-										? 'genesisTokenBalance'
-										: 'tokenBalance'
-									: 'reserveBalance'
-							}
-							params={[address]}
-						/>
-					</Col>
-				</Row>
-				<div className="mb-4">
-					<div className="form-control text-left number form-unit-wrap">
-						{isComputing ? 'computing...' : receiveAmount}
-						<div className="form-unit">{currTo}</div>
-					</div>
-				</div>
+				{type === 'trib' && (
+					<>
+						<Row>
+							<Col className="text-left">
+								<Form.Label htmlFor="receive">You will receive after tax:</Form.Label>
+							</Col>
+							<Col className="text-right">
+								Balance:{' '}
+								<ContractValue
+									id={tab === 'buy' ? 'tokenBalance' : 'reserveBalance'}
+									params={[address]}
+								/>
+							</Col>
+						</Row>
+
+						<div className="mb-4">
+							<div className="form-control text-left number form-unit-wrap">
+								{isComputing ? 'computing...' : receiveAmount}
+								<div className="form-unit">{tab === 'buy' ? 'TRIB' : 'mUSD'}</div>
+							</div>
+						</div>
+					</>
+				)}
 
 				<div className="text-center mb-4">
 					<Button onClick={() => handlePurchase()} disabled={formStatus !== FORM_EDIT}>
@@ -309,7 +333,7 @@ export function BuySell({ isGenesis = false }) {
 				{formStatus !== FORM_EDIT ? (
 					<Alert variant="info">
 						{formStatus === FORM_APPROVING
-							? 'Please sign transaction to approve mUSD spending'
+							? `Please sign transaction to approve ${type === 'trib' ? 'mUSD' : 'TRIB'} spending`
 							: formStatus === FORM_APPROVING_WAITING
 							? 'Waiting for confirmation'
 							: formStatus === FORM_SIGNING
@@ -332,17 +356,19 @@ export function BuySell({ isGenesis = false }) {
 					</Alert>
 				) : null}
 
-				<p className="fs-xs">
-					10% of every transaction is <strong>locked forever</strong> in the interest-bearing pool.{' '}
-					<a
-						href="https://medium.com/@kentosadim/contribute-in-a-nutshell-5ec5ecb9ace5"
-						rel="noreferrer"
-						target="_blank"
-					>
-						Learn more
-					</a>
-					.
-				</p>
+				{type === 'trib' && (
+					<p className="fs-xs">
+						10% of every transaction is <strong>locked forever</strong> in the interest-bearing pool.{' '}
+						<a
+							href="https://medium.com/@kentosadim/contribute-in-a-nutshell-5ec5ecb9ace5"
+							rel="noreferrer"
+							target="_blank"
+						>
+							Learn more
+						</a>
+						.
+					</p>
+				)}
 			</Col>
 		</Row>
 	);

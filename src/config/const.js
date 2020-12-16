@@ -100,4 +100,73 @@ export const stats = {
 		method: 'getShare',
 		decimals: 4,
 	},
+	lleTribContributed: {
+		unit: 'TRIB',
+		label: 'TRIB contributed',
+		contract: 'uiView',
+		method: 'tribContributed',
+		decimals: 0,
+	},
+	lleTribContributedUsd: {
+		unit: 'USD',
+		label: 'TRIB contributed',
+		contract: 'uiView',
+		method: 'tribContributed',
+		decimals: 0,
+	},
+	tdaoPrice: {
+		unit: 'TRIB',
+		label: 'TDAO Price',
+		contract: 'uiView',
+		method: 'tdaoPriceTRIB',
+		decimals: 2,
+	},
+	tdaoPriceUsd: {
+		unit: 'USD',
+		label: 'TDAO Price',
+		contract: 'uiView',
+		method: 'tdaoPriceUSD',
+		decimals: 2,
+	},
+	trigPrice: {
+		unit: 'TRIB',
+		label: 'TRIG Price',
+		contract: 'uiView',
+		method: 'trigPriceTRIB',
+		decimals: 2,
+	},
+	trigPriceUsd: {
+		unit: 'USD',
+		label: 'TRIG Price',
+		contract: 'uiView',
+		method: 'trigPriceUSD',
+		decimals: 2,
+	},
+	tribPriceUsd: {
+		unit: 'USD',
+		label: 'TRIB Price',
+		contract: 'uiView',
+		method: 'trigPriceUSD',
+		decimals: 4,
+	},
+	tribFloor: {
+		unit: 'USD',
+		label: 'TRIB Price Floor',
+		contract: 'uiView',
+		method: 'tribFloor',
+	},
+	tdaoMaxSupply: {
+		unit: 'TDAO',
+		label: 'TDAO Max. Supply*',
+	},
+	trigMaxSupply: {
+		unit: 'TRIG',
+		label: 'TRIG Max. Supply**',
+	},
+	eventStartTime: {
+		contract: 'uiView',
+	},
+	eventEndTime: {
+		contract: 'uiView',
+	},
 };

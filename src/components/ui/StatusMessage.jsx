@@ -6,6 +6,8 @@ import { shortenAddress } from '../../lib';
 export function StatusMessage() {
 	const { connect, connected, address, error, status } = useEthers();
 
+	console.log({ connected, address, error, status });
+
 	if (status === EthersStatus.DISCONNECTED) {
 		return (
 			<div className="message error">

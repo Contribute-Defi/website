@@ -7,6 +7,7 @@ export * from './Logo';
 export * from './LogoGovernance';
 export * from './Menu';
 export * from './Statistic';
+export * from './RowStat';
 export * from './StatusMessage';
 export * from './Usp';
 export * from './ContractValue';

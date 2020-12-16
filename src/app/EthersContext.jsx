@@ -3,6 +3,12 @@ import { ethers } from 'ethers';
 import PropTypes from 'prop-types';
 import { Metamask } from '../lib';
 import { getContract } from './contracts';
+import nftRewardsVault from '../../contract/NFTRewardsVault.json';
+import trigRewardsVault from '../../contract/TrigRewardsVault.json';
+import rewardsVault from '../../contract/RewardsVault.json';
+import lockedLiquidityEvent from '../../contract/LockedLiquidityEvent.json';
+import tribRouterLLE from '../../contract/TribRouterLLE.json';
+import uiView from '../../contract/UIView.json';
 
 export const EthersContext = React.createContext({});
 
@@ -81,7 +87,7 @@ export function EthersProvider({ children }) {
 			if (ethereum) {
 				contractConfiguration = await extractContractConfigFromMetamask(ethereum);
 			} else {
-				DISCONNECTED_CONTRACT_CONFIG;
+				contractConfiguration = DISCONNECTED_CONTRACT_CONFIG;
 			}
 		}
 		setNetworkId(contractConfiguration.networkId);
@@ -99,8 +105,9 @@ export function EthersProvider({ children }) {
 		const hasAccount = accounts && accounts.length > 0;
 		const signer = provider.getSigner();
 		const networkId = await signer.getChainId();
+		const status = hasAccount ? EthersStatus.CONNECTED : EthersStatus.DISCONNECTED;
 		return {
-			status: hasAccount ? EthersStatus.CONNECTED : EthersStatus.DISCONNECTED,
+			status,
 			networkId,
 			provider,
 			signer,
@@ -123,6 +130,14 @@ export function EthersProvider({ children }) {
 			const musd = getContract('musd', { address: musdAddress, networkAccessor });
 			const vault = getContract('vault', { address: vaultAddress, networkAccessor });
 			const router = getContract('router', { networkId, networkAccessor });
+
+			const nftRewardsVault = getContract('nftRewardsVault', { networkId, networkAccessor });
+			const trigRewardsVault = getContract('trigRewardsVault', { networkId, networkAccessor });
+			const rewardsVault = getContract('rewardsVault', { networkId, networkAccessor });
+			const lockedLiquidityEvent = getContract('lockedLiquidityEvent', { networkId, networkAccessor });
+			const tribRouterLLE = getContract('tribRouterLLE', { networkId, networkAccessor });
+			const uiView = getContract('uiView', { networkId, networkAccessor });
+
 			setContracts({
 				contribute,
 				genesis,
@@ -130,6 +145,12 @@ export function EthersProvider({ children }) {
 				musd,
 				vault,
 				router,
+				nftRewardsVault,
+				trigRewardsVault,
+				rewardsVault,
+				lockedLiquidityEvent,
+				tribRouterLLE,
+				uiView,
 			});
 			setIsGenesis(isGenesis);
 		} catch (e) {

@@ -6,10 +6,11 @@ dayjs.extend(utc);
 
 export function Countdown({ endDate }) {
 	let now = dayjs.utc();
-	const end = dayjs.utc(endDate);
 	const [diff, setDiff] = useState({});
+	const [tm, setTm] = useState();
 
 	const updateDiff = () => {
+		const end = typeof endDate === 'number' ? dayjs.unix(endDate) : dayjs.utc(endDate);
 		let endTemp = end;
 		now = dayjs.utc();
 		const days = endTemp.diff(now, 'days');
@@ -32,13 +33,18 @@ export function Countdown({ endDate }) {
 				minutes,
 				seconds,
 			});
-			window.setTimeout(updateDiff, 1000);
+			setTm(window.setTimeout(updateDiff, 1000));
 		}
 	};
 
 	useEffect(() => {
-		updateDiff();
-	}, []);
+		if (endDate) {
+			if (tm) {
+				clearTimeout(tm);
+			}
+			updateDiff();
+		}
+	}, [endDate]);
 
 	const plural = (str, num) => (num === 1 ? str : `${str}s`);
 	const pad = (x) => (x ? x.toString().padStart(2, '0') : '00');

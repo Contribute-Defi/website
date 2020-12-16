@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { stats } from '../../config/const';
-import { useEthers } from '../../app';
 import { ContractValue } from './ContractValue';
 
-function Statistic({ id, value }) {
+function Statistic({ id, idSecondary, value, color = '' }) {
 	const { label, unit, link } = stats[id];
-
-	const { connected } = useEthers();
+	const unitSecondary = stats[idSecondary] ? stats[idSecondary].unit : null;
 
 	function renderLabel() {
 		if (link) {
@@ -23,10 +21,15 @@ function Statistic({ id, value }) {
 
 	return (
 		<div className="stat">
-			<div className="stat-label">{renderLabel()}</div>
+			<div className={`stat-label ${color ? `border-${color}` : ''}`}>{renderLabel()}</div>
 			<div className="stat-value-unit">
 				<div className="stat-value">{value ? value : <ContractValue id={id} />}</div>
 				{unit ? <div className="stat-unit">{unit}</div> : null}
+				{idSecondary ? (
+					<div className="stat-secondary">
+						<ContractValue id={idSecondary} /> {unitSecondary}
+					</div>
+				) : null}
 			</div>
 		</div>
 	);

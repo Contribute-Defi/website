@@ -1,5 +1,6 @@
 export * from './SectionComingSoon';
 export * from './SectionJoinContribute';
+export * from './SectionJoinContributeDao';
 export * from './SectionEventDetails';
 export * from './SectionFooter';
 export * from './SectionHeader';
@@ -15,3 +16,4 @@ export * from './SectionPurchaseSimple';
 export * from './SectionPurchaseGenesis';
 export * from './SectionStats';
 export * from './SectionTrib';
+export * from './SectionContributeTdao';

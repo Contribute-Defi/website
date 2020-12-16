@@ -1,18 +1,30 @@
-import _contributeContract from './Contribute.json';
-import _contributeMockContract from './ContributeMock.json';
-import _genesisContract from './Genesis.json';
-import _tribContract from './Trib.json';
-import _musdContract from './mUSD.json';
-import _vaultContract from './Vault.json';
-import _tribRouterContract from './TribRouter.json';
+import Contribute from './Contribute.json';
+import ContributeMock from './ContributeMock.json';
+import genesis from './Genesis.json';
+import trib from './Trib.json';
+import musd from './mUSD.json';
+import vault from './Vault.json';
+import router from './TribRouter.json';
+import nftRewardsVault from './NFTRewardsVault.json';
+import trigRewardsVault from './TrigRewardsVault.json';
+import rewardsVault from './RewardsVault.json';
+import lockedLiquidityEvent from './LockedLiquidityEvent.json';
+import tribRouterLLE from './TribRouterLLE.json';
+import uiView from './UIView.json';
 
-const contribute = process.env.TEST === '1' ? _contributeMockContract : _contributeContract;
+const contribute = process.env.TEST === '1' ? ContributeMock : Contribute;
 
 export const artifacts = {
 	contribute,
-	genesis: _genesisContract,
-	trib: _tribContract,
-	musd: _musdContract,
-	vault: _vaultContract,
-	router: _tribRouterContract,
+	genesis,
+	trib,
+	musd,
+	vault,
+	router,
+	nftRewardsVault,
+	trigRewardsVault,
+	rewardsVault,
+	lockedLiquidityEvent,
+	tribRouterLLE,
+	uiView,
 };

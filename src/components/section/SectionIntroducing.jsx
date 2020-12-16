@@ -44,7 +44,9 @@ export function SectionIntroducing() {
 							Initial liquidity will be <strong>locked forever</strong>, creating a Price Floor for TDAO,
 							in addition to that of TRIB itself, calculated in mUSD.
 						</p>
-						<Link className="more-differences-link">More details are available on Medium</Link>
+						<a className="more-differences-link" href="#medium">
+							More details are available on Medium
+						</a>
 					</Col>
 				</Row>
 			</Container>

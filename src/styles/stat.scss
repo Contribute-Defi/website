@@ -16,3 +16,47 @@
 .stat-image {
 
 }
+
+.border-trib {
+	border-left: .125rem solid $cTrib;
+	padding-left: .5rem;
+}
+
+.border-tdao {
+	border-left: .125rem solid $cTdao;
+	padding-left: .5rem;
+}
+
+.border-trig {
+	border-left: .125rem solid $cTrig;
+	padding-left: .5rem;
+}
+
+.stat-secondary:before {
+	content: '/';
+	display: inline-block;
+	margin-left: .25rem;
+	margin-right: .25rem;
+}
+
+.row-stat .stat-secondary {
+	font-size: .75em;
+	display: inline-block;
+}
+
+hr {
+	margin: .5rem 0;
+	background-color: rgba(255, 255, 255, .33);
+}
+
+.bg-tdao {
+	background: $cTdao;
+}
+.btn-tdao {
+	background: $cTdao;
+	border: 1px solid $cTdao;
+	&:hover {
+		background: darken($cTdao, 10);
+		border: 1px solid darken($cTdao, 10);
+	}
+}
