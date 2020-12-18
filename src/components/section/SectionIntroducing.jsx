@@ -21,7 +21,7 @@ export function SectionIntroducing() {
 							the use of TDAO tokens.
 						</p>
 						<p>
-							Secure your rights to mine TDAO today by participating to the event and receiving a share of
+							Secure your rights to mine TDAO today by participating in the event and receiving a share of
 							1,000 TRIG tokens in exchange for your TRIB.
 						</p>
 						<p>
@@ -44,7 +44,11 @@ export function SectionIntroducing() {
 							Initial liquidity will be <strong>locked forever</strong>, creating a Price Floor for TDAO,
 							in addition to that of TRIB itself, calculated in mUSD.
 						</p>
-						<a className="more-differences-link" href="#medium">
+						<a
+							className="more-differences-link"
+							target="blank"
+							href="https://medium.com/contribute-defi/contribute-dao-a-call-for-action-c66e8f5d57b"
+						>
 							More details are available on Medium
 						</a>
 					</Col>

@@ -185,6 +185,7 @@ export const stats = {
 		label: 'TRIB Price Floor',
 		contract: 'uiView',
 		method: 'tribFloor',
+		decimals: 2,
 	},
 	tdaoMaxSupply: {
 		unit: 'TDAO',

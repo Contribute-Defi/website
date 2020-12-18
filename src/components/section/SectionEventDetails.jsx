@@ -15,7 +15,7 @@ export function SectionEventDetails(props) {
 							<Col>
 								<Container className="justify-content-center">
 									<h4>Total Supply</h4>
-									<h3>5000</h3>
+									<h3>5,000</h3>
 								</Container>
 							</Col>
 							<Col>

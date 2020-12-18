@@ -7,7 +7,7 @@ export function SectionFooter() {
 		<section className="section-footer text-center fs-xxs">
 			<p className="mb-0">
 				<a href="https://ethereum.org" target="_blank" rel="noreferrer" className="text-dark">
-					Powered by <img src={Ethereum} alt="Ethereum" /> ethereum
+					Powered by <img src={Ethereum} alt="Ethereum" /> Ethereum
 				</a>
 			</p>
 		</section>
