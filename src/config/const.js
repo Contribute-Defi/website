@@ -3,6 +3,15 @@ import IconSupply from '../assets/icon-supply.svg';
 import IconFloor from '../assets/icon-floor.svg';
 import IconPrice from '../assets/icon-price.svg';
 
+import imageVisionary from '../assets/nft/VISIONARY.jpg';
+import imageExplorer from '../assets/nft/EXPLORER.jpg';
+import imageAlchemist from '../assets/nft/ALCHEMIST.jpg';
+import imageVoyager from '../assets/nft/VOYAGER.jpg';
+import imageLegend from '../assets/nft/LEGEND.jpg';
+import imageSupreme from '../assets/nft/SUPREME.jpg';
+import imageImmortal from '../assets/nft/IMMORTAL.jpg';
+import imageDivinity from '../assets/nft/DIVINITY.jpg';
+
 export const LINKS = {
 	telegram: 'https://t.me/joinchat/GKigSxj3yFWFFFjQjUN7RA',
 	discord: 'https://discord.gg/XdCmKyr',
@@ -10,6 +19,28 @@ export const LINKS = {
 	medium: 'https://medium.com/contribute-defi',
 	dappquery: 'https://dashboard.dappquery.com/contribute',
 	github: 'https://github.com/Contribute-Defi',
+};
+
+export const nfts = {
+	VISIONARY: 0,
+	EXPLORER: 1,
+	ALCHEMIST: 2,
+	VOYAGER: 3,
+	LEGEND: 4,
+	SUPREME: 5,
+	IMMORTAL: 6,
+	DIVINITY: 7,
+};
+
+export const nftImages = {
+	VISIONARY: imageVisionary,
+	EXPLORER: imageExplorer,
+	ALCHEMIST: imageAlchemist,
+	VOYAGER: imageVoyager,
+	LEGEND: imageLegend,
+	SUPREME: imageSupreme,
+	IMMORTAL: imageImmortal,
+	DIVINITY: imageDivinity,
 };
 
 export const stats = {
@@ -168,5 +199,44 @@ export const stats = {
 	},
 	eventEndTime: {
 		contract: 'uiView',
+	},
+	lleAccountContributed: {
+		contract: 'uiView',
+		method: 'contributed',
+		label: 'Contributed',
+		unit: 'TRIB',
+	},
+	nftBalance: {
+		contract: 'uiView',
+		method: 'nftBalance',
+	},
+	trigApy: {
+		contract: 'trigRewardsVault',
+		method: 'avgFeesPerSecondTotal',
+		label: 'APY',
+		unit: '%',
+	},
+	trigBalance: {
+		contract: 'trig',
+		method: 'balanceOf',
+		label: 'Balance',
+		unit: 'TRIG',
+	},
+	trigStaked: {
+		contract: 'trigRewardsVault',
+		method: 'userInfo',
+		label: 'Staked',
+		unit: 'TRIG',
+	},
+	trigPendingRewards: {
+		contract: 'trigRewardsVault',
+		method: 'pendingReward',
+		label: 'Earned',
+		unit: 'TDAO',
+	},
+	tdaoUniswapPriceUSD: {
+		contract: 'uiView',
+		label: 'Value',
+		unit: 'USD',
 	},
 };

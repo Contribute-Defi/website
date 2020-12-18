@@ -1,12 +1,12 @@
 import React from 'react';
-import tier1 from '../../assets/nft/Tier1.jpg';
-import tier2 from '../../assets/nft/Tier2.jpg';
-import tier3 from '../../assets/nft/Tier3.jpg';
-import tier4 from '../../assets/nft/Tier4.jpg';
-import tier5 from '../../assets/nft/Tier5.jpg';
-import tier6 from '../../assets/nft/Tier6.jpg';
-import tier7 from '../../assets/nft/Tier7.jpg';
-import tier8 from '../../assets/nft/Tier8.jpg';
+import tier1 from '../../assets/nft/VISIONARY.jpg';
+import tier2 from '../../assets/nft/EXPLORER.jpg';
+import tier3 from '../../assets/nft/ALCHEMIST.jpg';
+import tier4 from '../../assets/nft/VOYAGER.jpg';
+import tier5 from '../../assets/nft/LEGEND.jpg';
+import tier6 from '../../assets/nft/SUPREME.jpg';
+import tier7 from '../../assets/nft/IMMORTAL.jpg';
+import tier8 from '../../assets/nft/DIVINITY.jpg';
 
 function SectionNft(props) {
 	return (

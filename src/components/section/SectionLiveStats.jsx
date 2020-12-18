@@ -3,6 +3,10 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import { RowStat, Statistic } from '../ui';
 
 function SectionLiveStats(props) {
+	const handleScrollDown = () => {
+		document.getElementById('anchor-participate').scrollIntoView({ behavior: 'smooth' });
+	};
+
 	return (
 		<section className="section-live-stats text-light">
 			<Container className="mb-6">
@@ -35,7 +39,7 @@ function SectionLiveStats(props) {
 						</div>
 
 						<div className="mt-5 mb-5 text-center">
-							<Button href="#invest" className="btn-tdao pl-5 pr-5">
+							<Button onClick={handleScrollDown} className="btn-tdao pl-5 pr-5">
 								Contribute
 							</Button>
 						</div>

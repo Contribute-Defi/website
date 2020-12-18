@@ -17,12 +17,16 @@ export function Menu(props) {
 				<Link to="/">
 					<li className={`${linkClass} trade-link ${activePath === 'trade' ? 'active-path' : ''}`}>Trade</li>
 				</Link>
-				<Link to="/page2">
-					<li className={`govern-link ${activePath === 'govern' ? 'active-path' : ''}`}>Govern</li>
+				<Link to="/govern">
+					<li className={`${linkClass} govern-link ${activePath === 'govern' ? 'active-path' : ''}`}>
+						Govern
+					</li>
 				</Link>
+				{/*
 				<Link to="/page3">
 					<li className={`govern-link ${activePath === 'govern' ? 'active-path' : ''}`}>Page3</li>
 				</Link>
+*/}
 			</ul>
 		</nav>
 	);

@@ -1,50 +1,115 @@
-import React from 'react';
-import nasa from '../../assets/nasa.jpg';
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, Col, Container, Row } from 'react-bootstrap';
+import { nftImages, nfts } from '../../config/const';
+import { useEthers } from '../../app';
+import { RowStat } from '../ui';
 
-function SectionAccountInfo(props) {
+function SectionAccountInfo({ phase, hasClaimed }) {
+	const { address, contracts } = useEthers();
+	const [nftBalances, setNftBalances] = useState();
+	const [success, setSuccess] = useState();
+	const [error, setError] = useState();
+	const [transactionStatus, setTransactionStatus] = useState();
+
+	useEffect(() => {
+		const ids = Object.values(nfts);
+		const addresses = ids.map((x) => address);
+		contracts.uiView.nftBalance(addresses, ids).then((result) => {
+			setNftBalances(result.map((x) => x.toNumber()));
+		});
+	}, [address]);
+
+	const handleClaim = async () => {
+		setSuccess(false);
+		const { lockedLiquidityEvent } = contracts;
+		setTransactionStatus('signing');
+		try {
+			const transaction = await lockedLiquidityEvent.claimTrig();
+			setTransactionStatus('confirming');
+			await transaction.wait();
+			setSuccess(true);
+		} catch (err) {
+			if (err.code === 4001) {
+				setError('Please approve all MetaMask popups');
+			} else {
+				setError('Error during processing the transaction. Do you have enough balance?');
+				console.error(err);
+			}
+		}
+		setTransactionStatus(undefined);
+	};
+
+	const myNfts = nftBalances ? Object.entries(nfts).filter(([nftName, id]) => nftBalances[id] > 0) : [];
+
 	return (
-		<div className="account-info_container">
-			<div className="account-info mx-auto text-center">
-				<h3 className="account-info_header text-uppercase">Account Info</h3>
-				<div className="account-details_container">
-					<div className="account-detail_container contributed-detail d-flex justify-content-between">
-						<h5 className="account-detail-key m-0">Contribute</h5>
-						<h5 className="account-detail-value m-0">
-							100,000 <span>TRIB</span>
-						</h5>
-					</div>
-					<div className="account-detail_container nft-detail d-flex justify-content-between">
-						<h5 className="account-detail-key m-0">NFTs Earned</h5>
-						<h5 className="account-detail-value m-0"></h5>
-					</div>
-					<div className="account-detail_container common-detail d-flex justify-content-between">
-						<h5 className="account-detail-key m-0">COMMON</h5>
-						<h5 className="account-detail-value m-0">2X</h5>
-					</div>
-					<div className="account-detail_container tribber-detail d-flex justify-content-between">
-						<h5 className="account-detail-key m-0">TRIBBER</h5>
-						<h5 className="account-detail-value m-0">1X</h5>
-					</div>
-				</div>
-				<div className="nft-gallery_container text-center">
-					<h3 className="nft-gallery_header text-uppercase">Nft Gallery</h3>
-					<div className="nft-gallery mx-auto d-flex">
-						<div className="gallery_container mr-3">
-							<div className="gallery-img d-flex justify-content-center align-items-center">
-								<img src={nasa} alt="" />
+		<section className="section-account-info text-light">
+			<Container>
+				<h2 className="font-weight-light mb-5 text-center text-uppercase">
+					{phase === 2 || hasClaimed ? 'Account Info' : 'Claim your rewards'}
+				</h2>
+
+				<Row className="justify-content-center">
+					<Col md="6">
+						<RowStat id="lleAccountContributed" params={[address]} nohr />
+						<Row>
+							<Col className="py-2 mb-2" style={{ background: '#333' }}>
+								NFTs Earned
+							</Col>
+						</Row>
+						{myNfts.map(([nftName, id]) => (
+							<RowStat
+								label={nftName}
+								value={nftBalances[id]}
+								unit="x"
+								key={id}
+								nohr={id === myNfts[myNfts.length - 1][1]}
+							/>
+						))}
+
+						{phase === 3 && (
+							<div className="text-center mb-4">
+								<Button className="btn-tdao px-5" onClick={handleClaim}>
+									Claim
+								</Button>
 							</div>
-							<h5 className="img-title text-uppercase mt-2">Visionary</h5>
+						)}
+
+						{transactionStatus ? (
+							<Alert variant="info">
+								{transactionStatus === 'signing'
+									? 'Please sign transaction to proceed'
+									: transactionStatus === 'confirming'
+									? 'Waiting for confirmation'
+									: null}
+							</Alert>
+						) : null}
+
+						{error ? (
+							<Alert variant="danger" dismissible onClose={() => setError(null)}>
+								{error}
+							</Alert>
+						) : null}
+
+						{success ? (
+							<Alert variant="success" dismissible onClose={() => setSuccess(false)}>
+								Transaction complete. Thank you for your contribution!
+							</Alert>
+						) : null}
+					</Col>
+				</Row>
+
+				<h2 className="font-weight-light mb-5 mt-4 text-center text-uppercase">NFT Gallery</h2>
+
+				<div className="nft-gallery">
+					{myNfts.map(([nftName]) => (
+						<div className="nft-image" key={nftName}>
+							<img src={nftImages[nftName]} alt="" />
+							<div>{nftName}</div>
 						</div>
-						<div className="gallery_container ml-3">
-							<div className="gallery-img d-flex justify-content-center align-items-center">
-								<img src={nasa} alt="" />
-							</div>
-							<h5 className="img-title text-uppercase mt-2">Explorer</h5>
-						</div>
-					</div>
+					))}
 				</div>
-			</div>
-		</div>
+			</Container>
+		</section>
 	);
 }
 

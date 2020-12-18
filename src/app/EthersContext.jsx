@@ -3,12 +3,6 @@ import { ethers } from 'ethers';
 import PropTypes from 'prop-types';
 import { Metamask } from '../lib';
 import { getContract } from './contracts';
-import nftRewardsVault from '../../contract/NFTRewardsVault.json';
-import trigRewardsVault from '../../contract/TrigRewardsVault.json';
-import rewardsVault from '../../contract/RewardsVault.json';
-import lockedLiquidityEvent from '../../contract/LockedLiquidityEvent.json';
-import tribRouterLLE from '../../contract/TribRouterLLE.json';
-import uiView from '../../contract/UIView.json';
 
 export const EthersContext = React.createContext({});
 
@@ -137,6 +131,7 @@ export function EthersProvider({ children }) {
 			const lockedLiquidityEvent = getContract('lockedLiquidityEvent', { networkId, networkAccessor });
 			const tribRouterLLE = getContract('tribRouterLLE', { networkId, networkAccessor });
 			const uiView = getContract('uiView', { networkId, networkAccessor });
+			const trig = getContract('trig', { networkId, networkAccessor });
 
 			setContracts({
 				contribute,
@@ -151,6 +146,7 @@ export function EthersProvider({ children }) {
 				lockedLiquidityEvent,
 				tribRouterLLE,
 				uiView,
+				trig,
 			});
 			setIsGenesis(isGenesis);
 		} catch (e) {

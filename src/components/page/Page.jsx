@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEthers } from '../../app';
-import { PageComingSoon, PageGenesis, PageContribute, PageLoading, Page2, Page3 } from '.';
+import { PageComingSoon, PageGenesis, PageContribute, PageLoading, PageGovern, Page3 } from '.';
 import { TestControls } from '../ui/TestControls';
 
 export function Page() {

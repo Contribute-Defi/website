@@ -150,7 +150,6 @@ export function BuySell({ type = 'trib' }) {
 			const transactionOptions = { gasLimit: 1000000 };
 			if (investMethod === 'invest' || investMethod === 'addLiquidity') {
 				if (currFrom === 'ETH') {
-					console.log('sending eth', ethContract, contracts[ethContract].address, amountWei);
 					transaction = await signer.sendTransaction({
 						to: contracts[ethContract].address,
 						value: amountWei,

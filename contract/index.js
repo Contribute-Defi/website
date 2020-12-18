@@ -11,6 +11,7 @@ import rewardsVault from './RewardsVault.json';
 import lockedLiquidityEvent from './LockedLiquidityEvent.json';
 import tribRouterLLE from './TribRouterLLE.json';
 import uiView from './UIView.json';
+import trig from './TRIG.json';
 
 const contribute = process.env.TEST === '1' ? ContributeMock : Contribute;
 
@@ -27,4 +28,5 @@ export const artifacts = {
 	lockedLiquidityEvent,
 	tribRouterLLE,
 	uiView,
+	trig,
 };

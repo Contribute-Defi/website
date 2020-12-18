@@ -1,7 +1,10 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import { Col, Container, Row } from 'react-bootstrap';
 
 export function SectionEventDetails(props) {
+	const { startTime, endTime } = props;
+	const duration = startTime && endTime ? dayjs.unix(endTime).diff(dayjs.unix(startTime), 'day') : 'N/A';
 	return (
 		<section className="section-event-details">
 			<Container>
@@ -30,11 +33,13 @@ export function SectionEventDetails(props) {
 						</Row>
 						<div className="details_container d-flex justify-content-between">
 							<p className="m-0">Start Date</p>
-							<p className="m-0 font-weight-bold">16.Nov.2020</p>
+							<p className="m-0 font-weight-bold">
+								{startTime ? dayjs.unix(startTime).format('DD.MM.YYYY') : 'N/A'}
+							</p>
 						</div>
 						<div className="details_container d-flex justify-content-between">
 							<p className="m-0">Duration</p>
-							<p className="m-0 font-weight-bold">10 Days</p>
+							<p className="m-0 font-weight-bold">{duration} Days</p>
 						</div>
 						<div className="details_container d-flex justify-content-between">
 							<p className="m-0">Accepted Currencies</p>

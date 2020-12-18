@@ -32,6 +32,11 @@
 	padding-left: .5rem;
 }
 
+.border-nft {
+	border-left: .125rem solid $cNft;
+	padding-left: .5rem;
+}
+
 .stat-secondary:before {
 	content: '/';
 	display: inline-block;
@@ -45,13 +50,14 @@
 }
 
 hr {
-	margin: .5rem 0;
+	margin: .75rem 0;
 	background-color: rgba(255, 255, 255, .33);
 }
 
 .bg-tdao {
 	background: $cTdao;
 }
+
 .btn-tdao {
 	background: $cTdao;
 	border: 1px solid $cTdao;

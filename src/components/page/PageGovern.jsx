@@ -14,14 +14,16 @@ import Header from '../ui/Header';
 import SectionLiveStats from '../section/SectionLiveStats';
 import { useContractValue, useEthers } from '../../app';
 import SectionAccountInfo from '../section/SectionAccountInfo';
+import SectionStakeEarn from '../section/SectionStakeEarn';
 
-export function Page2() {
+export function PageGovern() {
 	const { provider } = useEthers();
 	const [phase, setPhase] = useState(1);
 	const [currentTime, setCurrentTime] = useState();
 	const eventStartTime = useContractValue('eventStartTime');
 	const eventEndTime = useContractValue('eventEndTime');
 	const [phaseEndTime, setPhaseEndTime] = useState();
+	const [hasClaimed, setHasClaimed] = useState(true);
 
 	useEffect(() => {
 		if (provider) {
@@ -35,7 +37,6 @@ export function Page2() {
 		if (eventStartTime && eventEndTime && currentTime) {
 			const startTime = eventStartTime.toNumber();
 			const endTime = eventEndTime.toNumber();
-			console.log({ currentTime, startTime, endTime });
 			if (currentTime < startTime) {
 				setPhase(1);
 				setPhaseEndTime(startTime);
@@ -48,23 +49,28 @@ export function Page2() {
 		}
 	}, [eventStartTime, eventEndTime, currentTime]);
 
-	console.log({ phase, phaseEndTime });
+	const startTime = eventStartTime ? eventStartTime.toNumber() : undefined;
+	const endTime = eventEndTime ? eventEndTime.toNumber() : undefined;
+
 	return (
 		<div className="page2">
 			<Header activePath="govern" />
 			<SectionHeroGovernance phase={phase} endTime={phaseEndTime} />
 			{phase >= 2 && <SectionLiveStats />}
 			<SectionIntroducing />
-			{phase === 1 && <SectionEventDetails />}
+			{phase === 1 && <SectionEventDetails startTime={startTime} endTime={endTime} />}
 			{phase === 1 && <SectionPurchaseSimple />}
 			{phase === 1 && <SectionJoinContribute />}
 			{phase === 2 && <SectionJoinContributeDao />}
 			{phase === 2 && <SectionContributeTdao />}
-			{phase === 3 && <SectionAccountInfo />}
+			{(phase === 2 || (phase === 3 && !hasClaimed)) && (
+				<SectionAccountInfo phase={phase} hasClaimed={hasClaimed} />
+			)}
+			{phase === 3 && hasClaimed && <SectionStakeEarn phase={phase} />}
 			<SectionJoin />
 			<SectionFooter />
 		</div>
 	);
 }
 
-export default Page2;
+export default PageGovern;
