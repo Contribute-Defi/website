@@ -22,11 +22,6 @@ export function Menu(props) {
 						Govern
 					</li>
 				</Link>
-				{/*
-				<Link to="/page3">
-					<li className={`govern-link ${activePath === 'govern' ? 'active-path' : ''}`}>Page3</li>
-				</Link>
-*/}
 			</ul>
 		</nav>
 	);

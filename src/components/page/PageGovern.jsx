@@ -7,8 +7,9 @@ import {
 	SectionPurchaseSimple,
 	SectionIntroducing,
 	SectionJoinContribute,
-	SectionJoinContributeDao,
+	SectionJoinColumn,
 	SectionContributeTdao,
+	SectionNFT,
 } from '../section';
 import Header from '../ui/Header';
 import SectionLiveStats from '../section/SectionLiveStats';
@@ -61,12 +62,13 @@ export function PageGovern() {
 			{phase === 1 && <SectionEventDetails startTime={startTime} endTime={endTime} />}
 			{phase === 1 && <SectionPurchaseSimple />}
 			{phase === 1 && <SectionJoinContribute />}
-			{phase === 2 && <SectionJoinContributeDao />}
+			{phase === 2 && <SectionJoinColumn />}
 			{phase === 2 && <SectionContributeTdao />}
 			{(phase === 2 || (phase === 3 && !hasClaimed)) && (
 				<SectionAccountInfo phase={phase} hasClaimed={hasClaimed} />
 			)}
 			{phase === 3 && hasClaimed && <SectionStakeEarn phase={phase} />}
+			{phase >= 2 && <SectionNFT />}
 			<SectionJoin />
 			<SectionFooter />
 		</div>

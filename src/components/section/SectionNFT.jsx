@@ -8,7 +8,7 @@ import tier6 from '../../assets/nft/SUPREME.jpg';
 import tier7 from '../../assets/nft/IMMORTAL.jpg';
 import tier8 from '../../assets/nft/DIVINITY.jpg';
 
-function SectionNft(props) {
+export function SectionNFT(props) {
 	return (
 		<div className="nft-container">
 			<div className="nft text-center mx-auto">
@@ -18,7 +18,11 @@ function SectionNft(props) {
 				<p className="nft-desc mx-auto">
 					These NFTs were crested to reward users who take the most risk in the Locked Liquidity Event
 				</p>
-				<span className="read-block-link">Read the blog post to learn more.</span>
+				<span className="read-block-link">
+					<a target="blank" href="https://medium.com/contribute-defi">
+						Read the blog post to learn more.
+					</a>
+				</span>
 				<div className="gallery d-flex">
 					<div className="card_container">
 						<div className="card">
@@ -123,5 +127,3 @@ function SectionNft(props) {
 		</div>
 	);
 }
-
-export default SectionNft;
