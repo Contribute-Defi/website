@@ -1,15 +1,8 @@
 .section-join-contribute {
-	.pointers {
-		.col:first-child {
-			border-right: 1px #444049 solid;
-		}
-
-		.col:last-child {
-			border-left: 1px #444049 solid;
-		}
+	.col {
+		max-width: 700px;
 	}
-
-	h1 {
+	h2 {
 		font-weight: 300;
 		max-width: 700px;
 		text-align: center;
@@ -18,18 +11,9 @@
 		margin-bottom: 1.6em;
 		span {
 			font-weight: 700;
-			color: #f45bb9;
+			color: #F45BB9;
 		}
 	}
-
-	h2 {
-		font-size: 1.2em;
-		font-weight: 600;
-		color: #444049;
-		text-align: center;
-		text-transform: uppercase;
-	}
-
 	p {
 		text-align: center;
 	}

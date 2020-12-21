@@ -48,6 +48,7 @@ export function PageGovern() {
 				setPhase(3);
 			}
 		}
+		console.log({ currentTime, startTime, endTime });
 	}, [eventStartTime, eventEndTime, currentTime]);
 
 	const startTime = eventStartTime ? eventStartTime.toNumber() : undefined;

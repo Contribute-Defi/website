@@ -9,8 +9,8 @@ const App = () => {
 		<EthersProvider>
 			<HashRouter>
 				<Switch>
-					<Route path="/" exact component={Page} />
-					<Route path="/govern" exact component={PageGovern} />
+					<Route path="/" exact component={PageGovern} />
+					<Route path="/trade" exact component={Page} />
 				</Switch>
 			</HashRouter>
 		</EthersProvider>
