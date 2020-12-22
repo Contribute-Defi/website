@@ -1,0 +1,157 @@
+.section-join-contribute-columns {
+	h2 {
+		font-weight: 300;
+		max-width: 700px;
+		text-align: center;
+		font-size: 1.6em;
+		text-transform: uppercase;
+		margin-bottom: 1.6em;
+		span {
+			font-weight: 700;
+			color: #f45bb9;
+		}
+	}
+	h3 {
+		font-size: 1.2em;
+		font-weight: 700;
+		color: #444049;
+		text-align: center;
+		text-transform: uppercase;
+	}
+	p {
+		text-align: center;
+		padding: 0px 20px 0px 20px;
+	}
+	a {
+		color: #444049;
+	}
+	.pointers {
+		.col:first-child {
+			border-right: 1px #444049 solid;
+		}
+		.col:last-child {
+			border-left: 1px #444049 solid;
+		}
+		.col {
+			max-width: 600px;
+		}
+	}
+}
+//
+// 	h1 {
+// 		font-size: 1.6em;
+// 		font-weight: 300;
+//
+// 		span {
+// 			font-weight: 700;
+// 			color: #f45bb9;
+// 	.pointers {
+// 		.col:first-child {
+// 			border-right: 1px #444049 solid;
+// 		}
+// 	}
+// 	.col {
+// 		max-width: 600px;
+// 	}
+// }
+// .join-contribute_header {
+// }
+//
+// .join-contribute_container {
+// 	.join-contribute,
+// 	.join-contribute-column {
+// 		width: 650px;
+// 		padding: 60px 20px;
+//
+// 		.point {
+// 			font-size: 1em;
+// 			font-weight: 300;
+// 			color: #727272;
+// 		.col:last-child {
+// 			border-left: 1px #444049 solid;
+// 		}
+// 	}
+//
+// 	.join-contribute-column {
+// 		width: 1000px;
+//
+// 		.join-contribute_header {
+// 			max-width: 900px;
+// 		}
+//
+// 		.columns_container {
+// 			.mining-tdao_column {
+// 				border-left: 1px solid #444049;
+// 				border-right: 1px solid #444049;
+// 			}
+//
+// 			.governance-rights_column {
+// 				.column-link {
+// 					font-size: 1em;
+// 					font-weight: 900;
+// 					color: #727272;
+// 					border-bottom: 1px solid #727272;
+// 					cursor: pointer;
+// 				}
+// 			}
+//
+// 			.point_header {
+// 				font-weight: 700;
+// 				color: #615d65;
+// 			}
+//
+// 			.point {
+// 				font-weight: 300;
+// 			}
+// }
+//
+// @media (max-width: 768px) {
+// 	.join-contribute_container {
+// 		.join-contribute,
+// 		.join-contribute-column {
+// 			width: 100% !important;
+// 			padding: 60px 20px;
+//
+// 			.join-contribute_header {
+// 				width: 100% !important;
+// 				padding: 0 !important;
+// 			}
+// 		}
+//
+// 		.join-contribute-column {
+// 			width: 100% !important;
+//
+// 			.join-contribute_header {
+// 				width: 100% !important;
+// 			}
+//
+// 			.columns_container {
+// 				.column_container {
+// 					flex: 0 0 100%;
+// 					max-width: 100%;
+// 				}
+// 				.locked-liquidity_column {
+// 					padding: 0 !important;
+// 				}
+// 				.mining-tdao_column {
+// 					border-left: none;
+// 					border-right: none;
+// 					padding: 0 !important;
+// 				}
+// 	h2 {
+// 		font-size: 1.2em;
+// 		font-weight: 600;
+// 		color: #444049;
+// 		text-align: center;
+// 		text-transform: uppercase;
+// 	}
+//
+// 				.governance-rights_column {
+// 					padding: 0 !important;
+// 				}
+// 			}
+// 		}
+// 	p {
+// 		text-align: center;
+// 	}
+// }
