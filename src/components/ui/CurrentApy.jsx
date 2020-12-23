@@ -46,7 +46,7 @@ export function CurrentApy() {
 			setApy(x.join('.'));
 		} catch (e) {
 			console.error(e);
-			setApy('err.??');
+			setApy('00.000');
 		}
 
 		window.setTimeout(computeApy, 1000 * 3600); // reload once per hour
