@@ -16,10 +16,10 @@ function SectionLiveStats(props) {
 						<Statistic id="lleTribContributed" idSecondary="lleTribContributedUsd" color="trib" />
 					</Col>
 					<Col sm="6" lg="4">
-						<Statistic id="tdaoPrice" idSecondary="tdaoPriceUsd" color="tdao" />
+						<Statistic id="tdaoPriceTRIB" idSecondary="tdaoPriceUSD" color="tdao" />
 					</Col>
 					<Col sm="6" lg="4">
-						<Statistic id="trigPrice" idSecondary="trigPriceUsd" color="trig" />
+						<Statistic id="trigPriceTRIB" idSecondary="trigPriceUSD" color="trig" />
 					</Col>
 				</Row>
 			</Container>
@@ -27,12 +27,12 @@ function SectionLiveStats(props) {
 				<Row>
 					<Col md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }} xl={{ span: 6, offset: 3 }}>
 						<div className="border-trib">
-							<RowStat id="tribPriceUsd" />
+							<RowStat id="tribPriceUSD" />
 							<RowStat id="tribFloor" />
 						</div>
 						<div className="border-tdao">
 							<RowStat id="tdaoMaxSupply" value={5000} />
-							<RowStat id="tdaoPrice" idSecondary="tdaoPriceUsd" />
+							<RowStat id="tdaoPriceTRIB" idSecondary="tdaoPriceUSD" />
 						</div>
 						<div className="border-trig">
 							<RowStat id="trigMaxSupply" value={1000} />

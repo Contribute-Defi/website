@@ -4,11 +4,11 @@
 
 .stat-value {
 	font-weight: 400;
-	font-size: 2.25rem;
+	font-size: 2.25em;
 	@extend .pr-1;
 	small {
 		font-size: .5em;
-		margin-left: .25rem;
+		margin-left: .25em;
 		min-width: 3.55em;
 	}
 }

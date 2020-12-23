@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { ethers } from 'ethers';
 import { useContractValue, useEthers } from '../../app';
 import { stats } from '../../config/const';
@@ -49,14 +48,5 @@ function ContractValue({ id, params = [] }) {
 
 	return <span>{processValue(value)}</span>;
 }
-
-ContractValue.propTypes = {
-	id: PropTypes.string.isRequired,
-	params: PropTypes.arrayOf(PropTypes.string),
-};
-
-ContractValue.defaultProps = {
-	param: [],
-};
 
 export { ContractValue };

@@ -54,6 +54,8 @@ export function PageGovern() {
 	const startTime = eventStartTime ? eventStartTime.toNumber() : undefined;
 	const endTime = eventEndTime ? eventEndTime.toNumber() : undefined;
 
+	console.log({ phase, hasClaimed });
+
 	return (
 		<div className="page2">
 			<Header activePath="govern" />

@@ -12,6 +12,8 @@ import imageSupreme from '../assets/nft/SUPREME.jpg';
 import imageImmortal from '../assets/nft/IMMORTAL.jpg';
 import imageDivinity from '../assets/nft/DIVINITY.jpg';
 
+export const USE_UNISWAP_PRICE = false;
+
 export const LINKS = {
 	telegram: 'https://t.me/joinchat/GKigSxj3yFWFFFjQjUN7RA',
 	discord: 'https://discord.gg/XdCmKyr',
@@ -145,55 +147,53 @@ export const stats = {
 		method: 'tribContributed',
 		decimals: 0,
 	},
-	tdaoPrice: {
+	tdaoPriceTRIB: {
 		unit: 'TRIB',
-		label: 'TDAO Price',
+		label: 'TDAO Price Floor',
 		contract: 'uiView',
-		method: 'tdaoPriceTRIB',
 		decimals: 2,
+		params: [USE_UNISWAP_PRICE],
 	},
-	tdaoPriceUsd: {
+	tdaoPriceUSD: {
 		unit: 'USD',
 		label: 'TDAO Price',
 		contract: 'uiView',
 		method: 'tdaoPriceUSD',
 		decimals: 2,
+		params: [USE_UNISWAP_PRICE],
 	},
-	trigPrice: {
+	trigPriceTRIB: {
 		unit: 'TRIB',
 		label: 'TRIG Price',
 		contract: 'uiView',
-		method: 'trigPriceTRIB',
 		decimals: 2,
 	},
-	trigPriceUsd: {
+	trigPriceUSD: {
 		unit: 'USD',
 		label: 'TRIG Price',
 		contract: 'uiView',
-		method: 'trigPriceUSD',
 		decimals: 2,
+		params: [USE_UNISWAP_PRICE],
 	},
-	tribPriceUsd: {
+	tribPriceUSD: {
 		unit: 'USD',
 		label: 'TRIB Price',
 		contract: 'uiView',
-		method: 'trigPriceUSD',
 		decimals: 4,
 	},
 	tribFloor: {
 		unit: 'USD',
-		label: 'TRIB Price Floor',
+		label: 'TRIB Price Floor*',
 		contract: 'uiView',
-		method: 'tribFloor',
 		decimals: 2,
 	},
 	tdaoMaxSupply: {
 		unit: 'TDAO',
-		label: 'TDAO Max. Supply*',
+		label: 'TDAO Max. Supply',
 	},
 	trigMaxSupply: {
 		unit: 'TRIG',
-		label: 'TRIG Max. Supply**',
+		label: 'TRIG Max. Supply',
 	},
 	eventStartTime: {
 		contract: 'uiView',
@@ -208,14 +208,17 @@ export const stats = {
 		unit: 'TRIB',
 	},
 	nftBalance: {
-		contract: 'uiView',
-		method: 'nftBalance',
+		label: 'Balance',
+		unit: 'NFT',
+		// this one is just a placeholder, values are passed directly. that's why no contract/method
 	},
 	trigApy: {
-		contract: 'trigRewardsVault',
-		method: 'avgFeesPerSecondTotal',
+		contract: 'uiView',
+		method: 'apyTrig',
 		label: 'APY',
 		unit: '%',
+		decimals: 2,
+		callback: (x) => x.mul(100),
 	},
 	trigBalance: {
 		contract: 'trig',
@@ -228,16 +231,54 @@ export const stats = {
 		method: 'userInfo',
 		label: 'Staked',
 		unit: 'TRIG',
+		params: [0], // first param always zero
+		callback: (x) => x.amount,
 	},
-	trigPendingRewards: {
+	trigPendingReward: {
 		contract: 'trigRewardsVault',
 		method: 'pendingReward',
 		label: 'Earned',
+		decimals: 3,
 		unit: 'TDAO',
+		params: [0], // first param always zero
 	},
-	tdaoUniswapPriceUSD: {
+
+	apyNft: {
 		contract: 'uiView',
+		label: 'APY',
+		decimals: 2,
+		unit: '%',
+		callback: (x) => x.mul(100),
+	},
+	nftStaked: {
+		contract: 'nftRewardsVault',
+		method: 'userInfo',
+		unit: 'NFT',
+		label: 'Staked',
+		callback: (x) => x.amount,
+	},
+	nftPendingReward: {
+		contract: 'nftRewardsVault',
+		method: 'pendingReward',
+		unit: 'TDAO',
+		label: 'Earned',
+		decimals: 3,
+	},
+	trigValue: {
 		label: 'Value',
+		contract: 'trigRewardsVault',
+		method: 'pendingReward',
+		decimals: 2,
+		params: [0],
+		multiplyByTdaoPrice: true,
+		unit: 'USD',
+	},
+	nftValue: {
+		label: 'Value',
+		contract: 'nftRewardsVault',
+		method: 'pendingReward',
+		decimals: 2,
+		multiplyByTdaoPrice: true,
 		unit: 'USD',
 	},
 };

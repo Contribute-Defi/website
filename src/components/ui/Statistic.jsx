@@ -23,7 +23,9 @@ function Statistic({ id, idSecondary, value, params, color = '' }) {
 		<div className="stat">
 			<div className={`stat-label ${color ? `border-${color}` : ''}`}>{renderLabel()}</div>
 			<div className="stat-value-unit">
-				<div className="stat-value">{value ? value : <ContractValue id={id} params={params} />}</div>
+				<div className="stat-value">
+					{value !== undefined ? value : <ContractValue id={id} params={params} />}
+				</div>
 				{unit ? <div className="stat-unit">{unit}</div> : null}
 				{idSecondary ? (
 					<div className="stat-secondary">
