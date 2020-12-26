@@ -255,6 +255,7 @@ export const stats = {
 		method: 'userInfo',
 		unit: 'NFT',
 		label: 'Staked',
+		type: 'int',
 		callback: (x) => x.amount,
 	},
 	nftPendingReward: {

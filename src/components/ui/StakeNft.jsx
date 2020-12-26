@@ -29,7 +29,7 @@ export function StakeNft() {
 		const ids = Object.values(nfts);
 		const addresses = ids.map((x) => address);
 		console.log('get nft balances', { addresses, ids });
-		contracts.uiView.nftBalance(ids, addresses).then((result) => {
+		contracts.uiView.nftBalance(addresses, ids).then((result) => {
 			console.log('NFT BALANCES VOLE RESULT', { result });
 			setNftBalances(result.map((x) => x.toNumber()));
 		});
