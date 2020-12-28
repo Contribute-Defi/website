@@ -45,8 +45,8 @@ function SectionLiveStats(props) {
 						</div>
 						<div className="note">
 							<p>
-								* The TRIB Price Floor takes into account the burned tokens in addition to the locked
-								tokens in Uniswap Pool TDAO/TRIB.
+								* The TRIB Virtual Price Floor takes into account the burned tokens in addition to the
+								locked tokens in Uniswap Pool TDAO/TRIB.
 							</p>
 							<p>
 								** The TDAO Price Floor is the price, in TRIB, that it will be listed at on Uniswap, No

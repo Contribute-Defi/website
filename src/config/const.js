@@ -149,7 +149,7 @@ export const stats = {
 	},
 	tdaoPriceTRIB: {
 		unit: 'TRIB',
-		label: 'TDAO Price Floor',
+		label: 'TDAO Price Floor**',
 		contract: 'uiView',
 		decimals: 2,
 		params: [USE_UNISWAP_PRICE],
@@ -183,7 +183,7 @@ export const stats = {
 	},
 	tribFloor: {
 		unit: 'USD',
-		label: 'TRIB Price Floor*',
+		label: 'TRIB Virtual Price Floor*',
 		contract: 'uiView',
 		decimals: 2,
 	},
