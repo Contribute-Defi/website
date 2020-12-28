@@ -4,29 +4,29 @@ import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 
+const DAY = 24 * 3600;
+const HOUR = 3600;
+const MINUTE = 60;
+
 export function Countdown({ endDate }) {
-	let now = dayjs.utc();
 	const [diff, setDiff] = useState({});
 	const [tm, setTm] = useState();
 
 	const updateDiff = () => {
-		const end = typeof endDate === 'number' ? dayjs.unix(endDate) : dayjs.utc(endDate);
-		let endTemp = end;
-		now = dayjs.utc();
-		const days = endTemp.diff(now, 'days');
-		endTemp = endTemp.subtract(days, 'days');
+		let now = dayjs.utc().unix();
 
-		const hours = endTemp.diff(now, 'hours');
-		endTemp = endTemp.subtract(hours, 'hours');
-
-		const minutes = endTemp.diff(now, 'minutes');
-		endTemp = endTemp.subtract(minutes, 'minutes');
-
-		const seconds = endTemp.diff(now, 'seconds');
-
-		if (seconds < 0) {
-			setDiff({ days: 0, hours: 0, minuts: 0, seconds: 0 });
+		if (endDate < now) {
+			setDiff({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 		} else {
+			let diff = endDate - now;
+			const days = Math.floor(diff / DAY);
+			diff -= days * DAY;
+
+			const hours = Math.floor(diff / HOUR);
+			diff -= hours * HOUR;
+
+			const minutes = Math.floor(diff / MINUTE);
+			const seconds = diff - minutes * MINUTE;
 			setDiff({
 				days,
 				hours,
