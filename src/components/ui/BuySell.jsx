@@ -195,8 +195,10 @@ export function BuySell({ type = 'trib' }) {
 		if (tab === 'buy') {
 			if (currFrom === 'ETH') {
 				newAmount = ethBalance;
-			} else {
+			} else if (currFrom === 'mUSD') {
 				newAmount = await contracts.musd.balanceOf(address);
+			} else {
+				newAmount = await contracts.trib.balanceOf(address);
 			}
 		} else {
 			newAmount = await contracts.trib.balanceOf(address);
