@@ -130,7 +130,7 @@ export function SectionNFT(props) {
 						<h5 className="total-issued text-uppercase">
 							1.0% of NFT rewards
 							<br />
-							<span>1,000 TRIB</span> Minimum
+							<span>2,000 TRIB</span> Minimum
 						</h5>
 					</div>
 					<div className="card_container">
