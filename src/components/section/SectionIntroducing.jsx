@@ -33,16 +33,16 @@ export function SectionIntroducing() {
 						<h5>Guaranteed Liquidity</h5>
 						<div className="line"></div>
 						<p>
-							Early supporters will also be gifted with a series of limited-edition NFTs granting a Bonus
-							on their commitment.
+							Early supporters will also be gifted with a series of limited-edition NFTs granting a bonus
+							to their commitment.
 						</p>
 						<p>
 							100% of the TRIB submitted in the event will match 5,000 TDAO tokens and both will be
 							deposited to the TDAO/TRIB Uniswap Pool
 						</p>
 						<p>
-							Initial liquidity will be <strong>locked forever</strong>, creating a Price Floor for TDAO,
-							in addition to that of TRIB itself, calculated in mUSD.
+							Initial liquidity will be <strong>locked</strong>, creating a Price Floor for TDAO, in
+							addition to that of TRIB itself, calculated in mUSD.
 						</p>
 						<a
 							className="more-differences-link"

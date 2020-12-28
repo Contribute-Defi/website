@@ -34,7 +34,7 @@ export function useContractValue(statName, params = []) {
 				rawValue = await callback(rawValue);
 			}
 			// DANGER!!!
-			// super adhoc scheisse becuase someone promissed he'll put all redonly data in UIView but he didn't !!!
+			// super adhoc scheisse because someone promised he'll put all readonly data in UIView but he didn't !!!
 			if (stat.multiplyByTdaoPrice) {
 				const tdaoPrice = await contracts.uiView.tdaoPriceUSD(USE_UNISWAP_PRICE);
 				rawValue = rawValue.mul(tdaoPrice).div(BigNumber.from(10).pow(18));
