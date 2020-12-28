@@ -11,14 +11,14 @@ import tier7 from '../../assets/nft/IMMORTAL.jpg';
 import tier8 from '../../assets/nft/DIVINITY.jpg';
 
 export function SectionNFT(props) {
-	const { address, connected, contracts, timestamp, onUpdate } = useEthers();
+	const { contracts } = useEthers();
 	const [nftQuantity, setNftQuantity] = useState([1, 1, 2, 4, 5, 6, 8, 10]);
 
 	useEffect(() => {
-		if (contracts && address) {
+		if (contracts) {
 			recountNFTRemaining();
 		}
-	}, [contracts, timestamp, address]);
+	}, [contracts]);
 
 	const recountNFTRemaining = async () => {
 		const address = await contracts.lockedLiquidityEvent.address;
@@ -26,6 +26,7 @@ export function SectionNFT(props) {
 		const ids = [0, 1, 2, 3, 4, 5, 6, 7];
 		const nftBalance = await contracts.uiView.nftBalance(addresses, ids);
 		let newBalance = new Array();
+		console.log(address);
 		for (let i in nftBalance) {
 			if (i == 4 || i == 3) {
 				newBalance.push(0);
