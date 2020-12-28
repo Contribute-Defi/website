@@ -147,7 +147,7 @@ export function BuySell({ type = 'trib' }) {
 			setFormStatus(FORM_SIGNING);
 
 			let transaction;
-			const transactionOptions = { gasLimit: 1000000 };
+			let transactionOptions = { gasLimit: 800000 };
 			if (investMethod === 'invest' || investMethod === 'addLiquidity') {
 				if (currFrom === 'ETH') {
 					transaction = await signer.sendTransaction({
@@ -156,10 +156,10 @@ export function BuySell({ type = 'trib' }) {
 						...transactionOptions,
 					});
 				} else {
-					transaction = await contracts[contract][investMethod](amountWei, transactionOptions);
+					transaction = await contracts[contract][investMethod](amountWei);
 				}
 			} else {
-				transaction = await contracts[contract].sell(amountWei, transactionOptions);
+				transaction = await contracts[contract].sell(amountWei);
 			}
 			setFormStatus(FORM_SIGNING_WAITING);
 			await transaction.wait();
