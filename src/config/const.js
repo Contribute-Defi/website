@@ -144,7 +144,7 @@ export const stats = {
 		unit: 'USD',
 		label: 'TRIB contributed',
 		contract: 'uiView',
-		method: 'tribContributed',
+		method: 'tribContributedUSD',
 		decimals: 0,
 	},
 	tdaoPriceTRIB: {
