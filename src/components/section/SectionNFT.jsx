@@ -27,7 +27,11 @@ export function SectionNFT(props) {
 		const nftBalance = await contracts.uiView.nftBalance(addresses, ids);
 		let newBalance = new Array();
 		for (let i in nftBalance) {
-			newBalance.push(nftBalance[i].toString());
+			if (i == 4 || i == 3) {
+				newBalance.push(0);
+			} else {
+				newBalance.push(nftBalance[i].toString());
+			}
 		}
 		setNftQuantity(newBalance.reverse());
 	};
