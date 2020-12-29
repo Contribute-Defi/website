@@ -3,7 +3,7 @@ import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { Statistic } from './Statistic';
 import { useEthers } from '../../app';
 import { nfts } from '../../config/const';
-import { parseUnits } from 'ethers/lib/utils';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import { TransactionModal } from './TransactionModal';
 
 const defaultToggles = {
@@ -22,19 +22,18 @@ export function StakeNft() {
 	const [toggles, setToggles] = useState(defaultToggles);
 	const [inputs, setInputs] = useState({});
 	const [transactionStatus, setTransactionStatus] = useState(0);
+	const [ts, setTs] = useState(Date.now()); // this is for keeping nft balances in sync
 
 	const [nftBalances, setNftBalances] = useState();
 
 	useEffect(() => {
 		const ids = Object.values(nfts);
 		const addresses = ids.map((x) => address);
-		console.log('get nft balances', { addresses, ids });
 		contracts.uiView.nftBalance(addresses, ids).then((result) => {
-			console.log('NFT BALANCES VOLE RESULT', { result });
 			setNftBalances(result.map((x) => x.toNumber()));
 		});
 		// contracts.nftRewardsVault.userInfo(address, id); ... to be finished
-	}, [address]);
+	}, [address, ts]);
 
 	function handleToggle(key) {
 		setToggles({ ...toggles, [key]: !toggles[key] });
@@ -45,13 +44,29 @@ export function StakeNft() {
 	}
 
 	const handleDeposit = async (nftId) => {
-		const amount = parseUnits(inputs[`stake${nftId}`]);
-		await handleTransaction(async () => await contracts.trigRewardsVault.deposit(0, amount));
+		if (!inputs[`stake${nftId}`]) return;
+		const amount = inputs[`stake${nftId}`];
+		await handleTransaction(async () => await contracts.nftRewardsVault.deposit(nftId, amount));
+		setInputs({ ...inputs, [`stake${nftId}`]: 0 });
+		setTs(Date.now());
 	};
 
 	const handleWithdraw = async (nftId, claim = false) => {
-		const amount = claim ? 0 : parseUnits(inputs[`unstake${nftId}`]);
-		await handleTransaction(async () => await contracts.trigRewardsVault.withdraw(0, amount));
+		if (!claim && !inputs[`unstake${nftId}`]) return;
+		const amount = claim ? 0 : inputs[`unstake${nftId}`];
+		await handleTransaction(async () => await contracts.nftRewardsVault.withdraw(nftId, amount));
+		setInputs({ ...inputs, [`unstake${nftId}`]: 0 });
+		setTs(Date.now());
+	};
+
+	const handleUpdateStake = async (nftId) => {
+		setInputs({ ...inputs, [`stake${nftId}`]: nftBalances[nftId], [`unstake${nftId}`]: 0 });
+	};
+
+	const handleUpdateUnstake = async (nftId) => {
+		const result = await contracts.nftRewardsVault.userInfo(nftId, address);
+		const amount = result.amount.toNumber();
+		setInputs({ ...inputs, [`unstake${nftId}`]: amount, [`stake${nftId}`]: 0 });
 	};
 
 	async function handleTransaction(callback) {
@@ -74,7 +89,7 @@ export function StakeNft() {
 		<>
 			{Object.entries(nfts).map(([nftName, nftId]) => (
 				<div className="border-nft mb-4" key={nftName}>
-					<Row className="mb-3">
+					<Row className="mb-3  stake-earn-header">
 						<Col sm={4}>
 							<h4>{nftName}</h4>
 						</Col>
@@ -94,14 +109,15 @@ export function StakeNft() {
 					</Row>
 					{toggles[nftName] && (
 						<>
+							<hr />
 							<Row>
 								<Col>
 									<Statistic id="apyNft" params={[address, nftId, false]} />
 								</Col>
-								<Col>
+								<Col onClick={() => handleUpdateStake(nftId)}>
 									<Statistic id="nftBalance" value={(nftBalances && nftBalances[nftId]) || 0} />
 								</Col>
-								<Col>
+								<Col onClick={() => handleUpdateUnstake(nftId)}>
 									<Statistic id="nftStaked" params={[nftId, address]} />
 								</Col>
 								<Col>
@@ -119,9 +135,7 @@ export function StakeNft() {
 											type="number"
 											id="trigStake"
 											value={inputs[`stake${nftId}`] || 0}
-											onChange={(e) =>
-												handleChangeInput('nftStake', `stake${nftId}`, e.target.value)
-											}
+											onChange={(e) => handleChangeInput(`stake${nftId}`, e.target.value)}
 										/>
 									</InputGroup>
 								</Col>
@@ -131,9 +145,7 @@ export function StakeNft() {
 											type="number"
 											id="trigUnstake"
 											value={inputs[`unstake${nftId}`] || 0}
-											onChange={(e) =>
-												handleChangeInput('nftUnstake', `unstake${nftId}`, e.target.value)
-											}
+											onChange={(e) => handleChangeInput(`unstake${nftId}`, e.target.value)}
 										/>
 									</InputGroup>
 								</Col>

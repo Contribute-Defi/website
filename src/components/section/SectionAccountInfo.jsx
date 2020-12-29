@@ -4,7 +4,7 @@ import { nftImages, nfts } from '../../config/const';
 import { useEthers } from '../../app';
 import { RowStat } from '../ui';
 
-function SectionAccountInfo({ phase, hasClaimed }) {
+function SectionAccountInfo({ phase, hasClaimed, onClaimed }) {
 	const { address, contracts } = useEthers();
 	const [nftBalances, setNftBalances] = useState();
 	const [success, setSuccess] = useState();
@@ -37,6 +37,7 @@ function SectionAccountInfo({ phase, hasClaimed }) {
 			}
 		}
 		setTransactionStatus(undefined);
+		onClaimed();
 	};
 
 	const myNfts = nftBalances ? Object.entries(nfts).filter(([nftName, id]) => nftBalances[id] > 0) : [];

@@ -212,30 +212,62 @@ export const stats = {
 		unit: 'NFT',
 		// this one is just a placeholder, values are passed directly. that's why no contract/method
 	},
-	trigApy: {
+	apyTrig: {
 		contract: 'uiView',
-		method: 'apyTrig',
 		label: 'APY',
 		unit: '%',
 		decimals: 2,
 		callback: (x) => x.mul(100),
+	},
+	apyLp: {
+		contract: 'uiView',
+		label: 'APY',
+		unit: '%',
+		decimals: 2,
+		params: ['0x82cdcc1fb92add7787fb71c51fd72b04b604cee0'],
 	},
 	trigBalance: {
 		contract: 'trig',
 		method: 'balanceOf',
 		label: 'Balance',
 		unit: 'TRIG',
+		decimals: 3,
+	},
+	lpBalance: {
+		contract: 'rewardsVault',
+		method: 'balanceOf',
+		label: 'Balance',
+		unit: 'TRIG',
+		decimals: 3,
 	},
 	trigStaked: {
 		contract: 'trigRewardsVault',
 		method: 'userInfo',
 		label: 'Staked',
 		unit: 'TRIG',
+		decimals: 3,
+		params: [0], // first param always zero
+		callback: (x) => x.amount,
+	},
+	lpStaked: {
+		contract: 'rewardsVault',
+		method: 'userInfo',
+		label: 'Staked',
+		unit: 'NFT',
+		decimals: 3,
 		params: [0], // first param always zero
 		callback: (x) => x.amount,
 	},
 	trigPendingReward: {
 		contract: 'trigRewardsVault',
+		method: 'pendingReward',
+		label: 'Earned',
+		decimals: 3,
+		unit: 'TDAO',
+		params: [0], // first param always zero
+	},
+	lpPendingReward: {
+		contract: 'rewardsVault',
 		method: 'pendingReward',
 		label: 'Earned',
 		decimals: 3,
@@ -268,6 +300,15 @@ export const stats = {
 	trigValue: {
 		label: 'Value',
 		contract: 'trigRewardsVault',
+		method: 'pendingReward',
+		decimals: 2,
+		params: [0],
+		multiplyByTdaoPrice: true,
+		unit: 'USD',
+	},
+	lpValue: {
+		label: 'Value',
+		contract: 'rewardsVault',
 		method: 'pendingReward',
 		decimals: 2,
 		params: [0],

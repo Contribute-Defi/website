@@ -132,6 +132,34 @@ img.logoGovernance {
 	background-color: #282828;
 }
 
+.section-stake-earn {
+	background-color: #282828;
+	.stat-label {
+		color: rgba(255, 255, 255, .66);
+		text-transform: uppercase;
+	}
+	.stat-value-unit {
+		white-space: nowrap;
+	}
+	.stat-value {
+		font-size: 2em;
+	}
+	.stat-unit {
+		color: rgba(255, 255, 255, .66);
+		font-size: 11px;
+	}
+	h4 {
+		margin-top: .33em;
+	}
+}
+
+.stake-earn-header {
+	.btn {
+		font-size: 14px;
+		margin-left: 6px;
+	}
+}
+
 .section-mint-burn {
 	background: linear-gradient(180deg, #dbe4f2 0%, #eef5ff 100%);
 }

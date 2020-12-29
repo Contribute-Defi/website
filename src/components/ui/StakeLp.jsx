@@ -5,13 +5,13 @@ import { useContractValue, useEthers } from '../../app';
 import { TransactionModal } from './TransactionModal';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 
-export function StakeTrig() {
+export function StakeLp() {
 	const { address, contracts, onUpdate } = useEthers();
 	const [toggle, setToggle] = useState(true);
 	const [inputs, setInputs] = useState({});
 	const [transactionStatus, setTransactionStatus] = useState(0);
-	const trigBalance = useContractValue('trigBalance', [address]);
-	const trigStaked = useContractValue('trigStaked', [address]);
+	const lpBalance = useContractValue('lpBalance', [address]);
+	const lpStaked = useContractValue('lpStaked', [address]);
 
 	function handleToggle() {
 		setToggle(!toggle);
@@ -24,25 +24,25 @@ export function StakeTrig() {
 	const handleDeposit = async (amount) => {
 		if (!amount) return;
 		amount = parseUnits(amount);
-		await handleTransaction(async () => await contracts.trigRewardsVault.deposit(0, amount));
+		await handleTransaction(async () => await contracts.rewardsVault.deposit(0, amount));
 	};
 
 	const handleWithdraw = async (amount) => {
 		if (!amount) return;
 		amount = parseUnits(amount);
-		await handleTransaction(async () => await contracts.trigRewardsVault.withdraw(0, amount));
+		await handleTransaction(async () => await contracts.rewardsVault.withdraw(0, amount));
 	};
 
 	const handleClaim = async () => {
-		await handleTransaction(async () => await contracts.trigRewardsVault.withdraw(0, 0));
+		await handleTransaction(async () => await contracts.rewardsVault.withdraw(0, 0));
 	};
 
 	const handleUpdateStake = async () => {
-		setInputs({ ...inputs, stake: formatUnits(trigBalance), unstake: 0 });
+		setInputs({ ...inputs, stake: formatUnits(lpBalance), unstake: 0 });
 	};
 
 	const handleUpdateUnstake = async () => {
-		setInputs({ ...inputs, unstake: formatUnits(trigStaked), stake: 0 });
+		setInputs({ ...inputs, unstake: formatUnits(lpStaked), stake: 0 });
 	};
 
 	async function handleTransaction(callback) {
@@ -61,17 +61,19 @@ export function StakeTrig() {
 	}
 
 	return (
-		<div className="border-trig mb-4">
+		<div className="border-lp mb-4">
 			<Row className="mb-3 stake-earn-header">
 				<Col sm={4}>
-					<h4>TRIG</h4>
+					<h4>TDAO/ETH LP</h4>
 				</Col>
 				<Col sm={8} className="text-right">
 					<Button href="https://app.uniswap.org" variant="outline-secondary">
 						Trade In Uniswap
 					</Button>
 					&nbsp;
-					<Button onClick={() => handleClaim(0)}>Claim rewards</Button>
+					<Button onClick={() => handleClaim(0)} variant="outline-secondary">
+						Claim rewards
+					</Button>
 					&nbsp;
 					<Button onClick={() => handleToggle()} variant="link">
 						{toggle ? '▲' : '▼'}
@@ -83,19 +85,19 @@ export function StakeTrig() {
 					<hr />
 					<Row>
 						<Col>
-							<Statistic id="apyTrig" params={[address, 0, true, false]} />
+							<Statistic id="apyLp" params={[address, 0, true]} />
 						</Col>
 						<Col onClick={() => handleUpdateStake()}>
-							<Statistic id="trigBalance" params={[address]} />
+							<Statistic id="lpBalance" params={[address]} />
 						</Col>
 						<Col onClick={() => handleUpdateUnstake()}>
-							<Statistic id="trigStaked" params={[address]} />
+							<Statistic id="lpStaked" params={[address]} />
 						</Col>
 						<Col>
-							<Statistic id="trigPendingReward" params={[address]} />
+							<Statistic id="lpPendingReward" params={[address]} />
 						</Col>
 						<Col>
-							<Statistic id="trigValue" params={[address]} />
+							<Statistic id="lpValue" params={[address]} />
 						</Col>
 					</Row>
 					<hr />
@@ -123,12 +125,12 @@ export function StakeTrig() {
 					</Row>
 					<Row className="pb-2">
 						<Col sm={6}>
-							<Button onClick={() => handleDeposit(inputs['stake'])} block>
+							<Button onClick={() => handleDeposit(inputs['stake'])} block variant="outline-secondary">
 								Stake
 							</Button>
 						</Col>
 						<Col sm={6}>
-							<Button onClick={() => handleWithdraw(inputs['unstake'])} block>
+							<Button onClick={() => handleWithdraw(inputs['unstake'])} block variant="outline-secondary">
 								Unstake
 							</Button>
 						</Col>

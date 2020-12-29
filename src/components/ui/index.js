@@ -15,4 +15,5 @@ export * from './GenesisStats';
 export * from './CurrentApy';
 export * from './StakeTrig';
 export * from './StakeNft';
+export * from './StakeLp';
 export * from './TransactionModal';

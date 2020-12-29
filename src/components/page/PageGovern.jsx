@@ -18,13 +18,18 @@ import SectionAccountInfo from '../section/SectionAccountInfo';
 import SectionStakeEarn from '../section/SectionStakeEarn';
 
 export function PageGovern() {
-	const { provider } = useEthers();
+	const { address, provider, onUpdate } = useEthers();
 	const [phase, setPhase] = useState(1);
 	const [currentTime, setCurrentTime] = useState();
 	const eventStartTime = useContractValue('eventStartTime');
 	const eventEndTime = useContractValue('eventEndTime');
 	const [phaseEndTime, setPhaseEndTime] = useState();
-	const [hasClaimed, setHasClaimed] = useState(true);
+	const trigBalance = useContractValue('trigBalance', [address]);
+	const [hasClaimed, setHasClaimed] = useState(false);
+
+	useEffect(() => {
+		setHasClaimed(trigBalance && trigBalance.gt ? trigBalance.gt(0) : false);
+	}, [trigBalance]);
 
 	useEffect(() => {
 		if (provider) {
@@ -48,13 +53,12 @@ export function PageGovern() {
 				setPhase(3);
 			}
 		}
-		console.log({ currentTime, startTime, endTime });
 	}, [eventStartTime, eventEndTime, currentTime]);
 
 	const startTime = eventStartTime ? eventStartTime.toNumber() : undefined;
 	const endTime = eventEndTime ? eventEndTime.toNumber() : undefined;
 
-	console.log({ phase, hasClaimed });
+	console.log({ currentTime, startTime, endTime, phase, hasClaimed });
 
 	return (
 		<div className="page2">
@@ -68,7 +72,7 @@ export function PageGovern() {
 			{phase === 2 && <SectionJoinColumn />}
 			{phase === 2 && <SectionContributeTdao />}
 			{(phase === 2 || (phase === 3 && !hasClaimed)) && (
-				<SectionAccountInfo phase={phase} hasClaimed={hasClaimed} />
+				<SectionAccountInfo phase={phase} hasClaimed={hasClaimed} onClaimed={onUpdate} />
 			)}
 			{phase === 3 && hasClaimed && <SectionStakeEarn phase={phase} />}
 			{phase >= 2 && <SectionNFT />}
