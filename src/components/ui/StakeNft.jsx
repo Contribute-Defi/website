@@ -84,6 +84,7 @@ export function StakeNft() {
 	}
 
 	// const myNfts = nftBalances ? Object.entries(nfts).filter(([nftName, id]) => nftBalances[id] > 0) : [];
+	console.log({ inputs });
 
 	return (
 		<>
