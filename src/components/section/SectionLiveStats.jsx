@@ -3,8 +3,10 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import { RowStat, Statistic } from '../ui';
 
 function SectionLiveStats(props) {
-	const handleScrollDown = () => {
-		document.getElementById('anchor-participate').scrollIntoView({ behavior: 'smooth' });
+	const { phase } = props;
+	const handleScrollDown = (element) => {
+		console.log(element);
+		document.getElementById(element).scrollIntoView({ behavior: 'smooth' });
 	};
 
 	return (
@@ -37,12 +39,13 @@ function SectionLiveStats(props) {
 						<div className="border-trig">
 							<RowStat id="trigMaxSupply" value={1000} />
 						</div>
-
-						<div className="mt-5 mb-5 text-center">
-							<Button onClick={handleScrollDown} className="btn-tdao pl-5 pr-5">
-								Contribute
-							</Button>
-						</div>
+						{phase === 2 && (
+							<div className="mt-5 mb-5 text-center">
+								<Button onClick={handleScrollDown('anchor-participate')} className="btn-tdao pl-5 pr-5">
+									Contribute
+								</Button>
+							</div>
+						)}
 						<div className="note">
 							<p>
 								* The TRIB Virtual Price Floor takes into account the burned tokens in addition to the

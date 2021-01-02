@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { Statistic } from './Statistic';
 import { useContractValue, useEthers } from '../../app';
@@ -10,8 +10,36 @@ export function StakeTrig() {
 	const [toggle, setToggle] = useState(true);
 	const [inputs, setInputs] = useState({});
 	const [transactionStatus, setTransactionStatus] = useState(0);
+	const [apy, setApy] = useState('00.00');
 	const trigBalance = useContractValue('trigBalance', [address]);
 	const trigStaked = useContractValue('trigStaked', [address]);
+
+	async function calcApy() {
+		try {
+			const rewardsPerSecond = await contracts.trigRewardsVault.avgFeesPerSecondTotal();
+			const totalStaked = await contracts.trig.balanceOf(contracts.trigRewardsVault.address);
+			const trigUSD = await contracts.uiView.trigPriceUSD(false);
+			const tdaoUSD = await contracts.uiView.tdaoPriceUSD(true);
+			const ether = parseUnits('1');
+			const rewardsPerYear = rewardsPerSecond.mul('31536000');
+			const rewardYearUSD = rewardsPerYear.mul(tdaoUSD).div(ether);
+			let totalStakedUSD = totalStaked.mul(trigUSD).div(ether);
+			totalStakedUSD = totalStakedUSD == 0 ? ether : totalStakedUSD;
+			const apy = rewardYearUSD.mul(ether).div(totalStakedUSD);
+			const floatApy = Number(formatUnits(apy)) * 100;
+			let niceApy = floatApy.toFixed(2);
+			setApy(niceApy);
+		} catch (e) {
+			console.log(e);
+			setApy('00.000');
+		}
+	}
+
+	useEffect(() => {
+		if (contracts) {
+			calcApy();
+		}
+	}, [contracts]);
 
 	function handleToggle() {
 		setToggle(!toggle);
@@ -83,7 +111,7 @@ export function StakeTrig() {
 					<hr />
 					<Row>
 						<Col>
-							<Statistic id="apyTrig" params={[address, 0, true, false]} />
+							<Statistic id="apyTrig" value={apy} />
 						</Col>
 						<Col onClick={() => handleUpdateStake()}>
 							<Statistic id="trigBalance" params={[address]} />

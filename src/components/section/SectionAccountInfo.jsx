@@ -43,7 +43,7 @@ function SectionAccountInfo({ phase, hasClaimed, onClaimed }) {
 	const myNfts = nftBalances ? Object.entries(nfts).filter(([nftName, id]) => nftBalances[id] > 0) : [];
 
 	return (
-		<section className="section-account-info text-light">
+		<section className="section-account-info text-light" id="anchor-participate">
 			<Container>
 				<h2 className="font-weight-light mb-5 text-center text-uppercase">
 					{phase === 2 || hasClaimed ? 'Account Info' : 'Claim your rewards'}
@@ -52,9 +52,10 @@ function SectionAccountInfo({ phase, hasClaimed, onClaimed }) {
 				<Row className="justify-content-center">
 					<Col md="6">
 						<RowStat id="lleAccountContributed" params={[address]} nohr />
+						<RowStat id="claimableTrig" params={[address]} nohr />
 						<Row>
 							<Col className="py-2 mb-2" style={{ background: '#333' }}>
-								NFTs Earned
+								Total NFTs Earned
 							</Col>
 						</Row>
 						{myNfts.map(([nftName, id]) => (

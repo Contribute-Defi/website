@@ -119,6 +119,7 @@ export function EthersProvider({ children }) {
 			const musdAddress = await contribute.reserve();
 			const vaultAddress = await contribute.vault();
 			const isGenesis = await contribute.GME();
+
 			const genesis = getContract('genesis', { address: genesisAddress, networkAccessor });
 			const trib = getContract('trib', { address: tribAddress, networkAccessor });
 			const musd = getContract('musd', { address: musdAddress, networkAccessor });
@@ -132,6 +133,11 @@ export function EthersProvider({ children }) {
 			const tribRouterLLE = getContract('tribRouterLLE', { networkId, networkAccessor });
 			const uiView = getContract('uiView', { networkId, networkAccessor });
 			const trig = getContract('trig', { networkId, networkAccessor });
+			const feeController = getContract('feeController', { networkId, networkAccessor });
+			const ethTdaoLpAddress = await feeController.pairWETH();
+			const pairWeth = getContract('ierc20', { address: ethTdaoLpAddress, networkAccessor });
+			const nftAddress = await lockedLiquidityEvent.nft();
+			const nft = getContract('nft', { address: nftAddress, networkAccessor });
 
 			setContracts({
 				contribute,
@@ -147,6 +153,8 @@ export function EthersProvider({ children }) {
 				tribRouterLLE,
 				uiView,
 				trig,
+				pairWeth,
+				nft,
 			});
 			setIsGenesis(isGenesis);
 		} catch (e) {

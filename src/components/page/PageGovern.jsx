@@ -24,12 +24,12 @@ export function PageGovern() {
 	const eventStartTime = useContractValue('eventStartTime');
 	const eventEndTime = useContractValue('eventEndTime');
 	const [phaseEndTime, setPhaseEndTime] = useState();
-	const trigBalance = useContractValue('trigBalance', [address]);
+	const tribContributed = useContractValue('lleAccountContributed', [address]);
 	const [hasClaimed, setHasClaimed] = useState(false);
 
 	useEffect(() => {
-		setHasClaimed(trigBalance && trigBalance.gt ? trigBalance.gt(0) : false);
-	}, [trigBalance]);
+		setHasClaimed(tribContributed == 0 ? true : false);
+	}, [tribContributed]);
 
 	useEffect(() => {
 		if (provider) {
@@ -58,13 +58,13 @@ export function PageGovern() {
 	const startTime = eventStartTime ? eventStartTime.toNumber() : undefined;
 	const endTime = eventEndTime ? eventEndTime.toNumber() : undefined;
 
-	console.log({ currentTime, startTime, endTime, phase, hasClaimed });
+	console.log({ currentTime, startTime, endTime, phase });
 
 	return (
 		<div className="page2">
 			<Header activePath="govern" />
 			<SectionHeroGovernance phase={phase} endTime={phaseEndTime} />
-			{phase >= 2 && <SectionLiveStats />}
+			{phase >= 2 && <SectionLiveStats phase={phase} />}
 			<SectionIntroducing />
 			{phase === 1 && <SectionEventDetails startTime={startTime} endTime={endTime} />}
 			{phase === 1 && <SectionPurchaseSimple />}

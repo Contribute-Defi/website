@@ -12,6 +12,9 @@ import lockedLiquidityEvent from './LockedLiquidityEvent.json';
 import tribRouterLLE from './TribRouterLLE.json';
 import uiView from './UIView.json';
 import trig from './TRIG.json';
+import feeController from './FeeController.json';
+import ierc20 from './IERC20.json';
+import nft from './NFT.json';
 
 const contribute = process.env.TEST === '1' ? ContributeMock : Contribute;
 
@@ -29,4 +32,7 @@ export const artifacts = {
 	tribRouterLLE,
 	uiView,
 	trig,
+	feeController,
+	ierc20,
+	nft,
 };

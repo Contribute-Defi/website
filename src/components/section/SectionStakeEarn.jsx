@@ -12,8 +12,8 @@ function SectionStakeEarn() {
 							<h2 className="font-weight-light mb-5 text-center text-uppercase">Stake and Earn</h2>
 							<div style={{ fontSize: '.8rem' }}>
 								<StakeTrig />
-								<StakeNft />
 								<StakeLp />
+								<StakeNft />
 							</div>
 						</Col>
 					</Row>

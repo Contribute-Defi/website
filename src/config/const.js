@@ -207,6 +207,13 @@ export const stats = {
 		label: 'Contributed',
 		unit: 'TRIB',
 	},
+	claimableTrig: {
+		contract: 'uiView',
+		method: 'claimableTrig',
+		label: 'Claimable',
+		decimals: 2,
+		unit: 'TRIG',
+	},
 	nftBalance: {
 		label: 'Balance',
 		unit: 'NFT',
@@ -224,7 +231,7 @@ export const stats = {
 		label: 'APY',
 		unit: '%',
 		decimals: 2,
-		params: ['0x82cdcc1fb92add7787fb71c51fd72b04b604cee0'],
+		params: ['0xD463aBE0e9a98B084c9f7D0759b7C4Da44e244dA'],
 	},
 	trigBalance: {
 		contract: 'trig',
@@ -234,10 +241,10 @@ export const stats = {
 		decimals: 3,
 	},
 	lpBalance: {
-		contract: 'rewardsVault',
+		contract: 'pairWeth',
 		method: 'balanceOf',
 		label: 'Balance',
-		unit: 'TRIG',
+		unit: 'LP',
 		decimals: 3,
 	},
 	trigStaked: {
@@ -253,7 +260,7 @@ export const stats = {
 		contract: 'rewardsVault',
 		method: 'userInfo',
 		label: 'Staked',
-		unit: 'NFT',
+		unit: 'LP',
 		decimals: 3,
 		params: [0], // first param always zero
 		callback: (x) => x.amount,
@@ -322,5 +329,17 @@ export const stats = {
 		decimals: 2,
 		multiplyByTdaoPrice: true,
 		unit: 'USD',
+	},
+	lpRewardsPerSecond: {
+		contract: 'rewardsVault',
+		method: 'avgFeesPerSecondTotal',
+	},
+	lpTotalStaked: {
+		contract: 'pairWeth',
+		method: 'balanceOf',
+	},
+	calculateLpPriceUSD: {
+		contract: 'uiView',
+		method: 'calculateLpPriceUSD',
 	},
 };

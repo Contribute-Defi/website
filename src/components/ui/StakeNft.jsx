@@ -7,14 +7,14 @@ import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import { TransactionModal } from './TransactionModal';
 
 const defaultToggles = {
-	VISIONARY: true,
-	EXPLORER: true,
-	ALCHEMIST: true,
-	VOYAGER: true,
-	LEGEND: true,
-	SUPREME: true,
-	IMMORTAL: true,
-	DIVINITY: true,
+	VISIONARY: false,
+	EXPLORER: false,
+	ALCHEMIST: false,
+	VOYAGER: false,
+	LEGEND: false,
+	SUPREME: false,
+	IMMORTAL: false,
+	DIVINITY: false,
 };
 
 export function StakeNft() {
@@ -24,7 +24,42 @@ export function StakeNft() {
 	const [transactionStatus, setTransactionStatus] = useState(0);
 	const [ts, setTs] = useState(Date.now()); // this is for keeping nft balances in sync
 
+	const [apys, setApys] = useState({});
 	const [nftBalances, setNftBalances] = useState();
+
+	async function calcApy(id) {
+		try {
+			const nftPrice = [500, 2000, 5000, 10000, 20000, 50000, 100000, 50000];
+			const totalAllocPoint = await contracts.nftRewardsVault.totalAllocPoint();
+			const poolInfo = await contracts.nftRewardsVault.poolInfo(id);
+			const poolAllocationPoint = poolInfo.allocPoint;
+			const rewardsPerSecond = await contracts.nftRewardsVault.avgFeesPerSecondTotal();
+			const totalStaked = await contracts.nft.balanceOf(contracts.nftRewardsVault.address, id);
+			const nftUSD = nftPrice[id];
+			const tdaoUSD = await contracts.uiView.tdaoPriceUSD(true);
+			const ether = parseUnits('1');
+			const rewardsPerYear = rewardsPerSecond.mul('31536000');
+			const rewardYearUSD = rewardsPerYear.mul(tdaoUSD).div(ether);
+			let totalStakedUSD = totalStaked.mul(nftUSD).div(ether);
+			totalStakedUSD = totalStakedUSD == 0 ? ether : totalStakedUSD;
+			const apy = rewardYearUSD.mul(ether).div(totalStakedUSD);
+			const floatApy = Number(formatUnits(apy)) * 100;
+			let niceApy = floatApy.toFixed(2);
+			setApys({ [id]: niceApy });
+		} catch (e) {
+			console.log(e);
+			setApys({ [id]: '00.000' });
+		}
+	}
+
+	useEffect(() => {
+		const ids = Object.values(nfts);
+		const addresses = ids.map((x) => address);
+		contracts.uiView.nftBalance(addresses, ids).then((result) => {
+			setNftBalances(result.map((x) => x.toNumber()));
+		});
+		// contracts.nftRewardsVault.userInfo(address, id); ... to be finished
+	}, [address, ts]);
 
 	useEffect(() => {
 		const ids = Object.values(nfts);
@@ -96,7 +131,7 @@ export function StakeNft() {
 						</Col>
 						<Col sm={8} className="text-right">
 							<Button href="https://app.uniswap.org" variant="outline-secondary">
-								Trade In Uniswap
+								Trade in OpenSea
 							</Button>
 							&nbsp;
 							<Button variant="outline-secondary" onClick={() => handleWithdraw(nftId, true)}>
