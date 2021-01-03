@@ -29,11 +29,9 @@ export function StakeNft() {
 	const [apys, setApys] = useState({});
 	const [nftBalances, setNftBalances] = useState();
 
-	async function calcApy(id) {
+	async function calcApy(nftName) {
+		const id = nfts[nftName];
 		try {
-			setApys({ ...apys, [id]: 123 });
-			return;
-
 			const totalAllocPoint = await contracts.nftRewardsVault.totalAllocPoint();
 			const poolInfo = await contracts.nftRewardsVault.poolInfo(id);
 			const poolAllocationPoint = poolInfo.allocPoint;
@@ -46,7 +44,7 @@ export function StakeNft() {
 			const rewardYearUSD = rewardsPerYear.mul(tdaoUSD).div(ether);
 			let totalStakedUSD = totalStaked.mul(nftUSD).div(ether);
 			totalStakedUSD = totalStakedUSD.eq(0) ? ether : totalStakedUSD;
-			const apy = rewardYearUSD.mul(ether).div(totalStakedUSD);
+			const apy = rewardYearUSD.mul(poolAllocationPoint).mul(ether).div(totalStakedUSD).div(totalAllocPoint);
 			const floatApy = Number(formatUnits(apy)) * 100;
 			let niceApy = floatApy.toFixed(2);
 			setApys({ ...apys, [id]: niceApy });
@@ -147,7 +145,7 @@ export function StakeNft() {
 							<hr />
 							<Row>
 								<Col>
-									<Statistic id="apyNft" value={apys[nftName] || 0} />
+									<Statistic id="apyNft" value={apys[nftId] || 0} />
 								</Col>
 								<Col onClick={() => handleUpdateStake(nftId)}>
 									<Statistic id="nftBalance" value={(nftBalances && nftBalances[nftId]) || 0} />
