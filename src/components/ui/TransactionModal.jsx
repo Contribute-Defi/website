@@ -12,6 +12,8 @@ export function TransactionModal({ status, onHide }) {
 					<span>Waiting for signature...</span>
 				) : status === 2 ? (
 					<span>Waiting for network confirmation...</span>
+				) : status === 9 ? (
+					<span>Please approve the token spending...</span>
 				) : status === 10 ? (
 					<span>
 						Error when processing the transaction. See error console (F12) for details and contact us when

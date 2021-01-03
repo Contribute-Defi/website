@@ -4,6 +4,7 @@ import { Statistic } from './Statistic';
 import { useContractValue, useEthers } from '../../app';
 import { TransactionModal } from './TransactionModal';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { BigNumber } from 'ethers';
 
 export function StakeTrig() {
 	const { address, contracts, onUpdate } = useEthers();
@@ -55,6 +56,13 @@ export function StakeTrig() {
 	const handleDeposit = async (amount) => {
 		if (!amount) return;
 		amount = parseUnits(amount);
+		const maxAllowance = BigNumber.from(2).pow(256).sub(1);
+		const spenderAddress = contracts.trigRewardsVault.address;
+		const allowance = await contracts.trig.allowance(address, spenderAddress);
+		if (allowance.lt(amount)) {
+			setTransactionStatus(9);
+			await contracts.trig.approve(spenderAddress, maxAllowance);
+		}
 		await handleTransaction(async () => await contracts.trigRewardsVault.deposit(0, amount));
 	};
 

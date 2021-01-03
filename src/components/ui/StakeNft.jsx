@@ -82,6 +82,12 @@ export function StakeNft() {
 	const handleDeposit = async (nftId) => {
 		if (!inputs[`stake${nftId}`]) return;
 		const amount = inputs[`stake${nftId}`];
+		const spenderAddress = contracts.trigRewardsVault.address;
+		const approved = await contracts.nft.isApprovedForAll(address, spenderAddress);
+		if (!approved) {
+			setTransactionStatus(9);
+			await contracts.nft.setApprovalForAll(spenderAddress, true);
+		}
 		await handleTransaction(async () => await contracts.nftRewardsVault.deposit(nftId, amount));
 		setInputs({ ...inputs, [`stake${nftId}`]: 0 });
 		setTs(Date.now());
@@ -120,7 +126,6 @@ export function StakeNft() {
 	}
 
 	// const myNfts = nftBalances ? Object.entries(nfts).filter(([nftName, id]) => nftBalances[id] > 0) : [];
-	console.log({ apys });
 
 	return (
 		<>
