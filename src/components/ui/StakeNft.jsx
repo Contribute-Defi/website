@@ -17,6 +17,8 @@ const defaultToggles = {
 	DIVINITY: false,
 };
 
+const nftPrices = [500, 2000, 5000, 10000, 20000, 50000, 100000, 50000];
+
 export function StakeNft() {
 	const { address, contracts, onUpdate } = useEthers();
 	const [toggles, setToggles] = useState(defaultToggles);
@@ -29,26 +31,28 @@ export function StakeNft() {
 
 	async function calcApy(id) {
 		try {
-			const nftPrice = [500, 2000, 5000, 10000, 20000, 50000, 100000, 50000];
+			setApys({ ...apys, [id]: 123 });
+			return;
+
 			const totalAllocPoint = await contracts.nftRewardsVault.totalAllocPoint();
 			const poolInfo = await contracts.nftRewardsVault.poolInfo(id);
 			const poolAllocationPoint = poolInfo.allocPoint;
 			const rewardsPerSecond = await contracts.nftRewardsVault.avgFeesPerSecondTotal();
 			const totalStaked = await contracts.nft.balanceOf(contracts.nftRewardsVault.address, id);
-			const nftUSD = nftPrice[id];
+			const nftUSD = nftPrices[id];
 			const tdaoUSD = await contracts.uiView.tdaoPriceUSD(true);
 			const ether = parseUnits('1');
 			const rewardsPerYear = rewardsPerSecond.mul('31536000');
 			const rewardYearUSD = rewardsPerYear.mul(tdaoUSD).div(ether);
 			let totalStakedUSD = totalStaked.mul(nftUSD).div(ether);
-			totalStakedUSD = totalStakedUSD == 0 ? ether : totalStakedUSD;
+			totalStakedUSD = totalStakedUSD.eq(0) ? ether : totalStakedUSD;
 			const apy = rewardYearUSD.mul(ether).div(totalStakedUSD);
 			const floatApy = Number(formatUnits(apy)) * 100;
 			let niceApy = floatApy.toFixed(2);
-			setApys({ [id]: niceApy });
+			setApys({ ...apys, [id]: niceApy });
 		} catch (e) {
 			console.log(e);
-			setApys({ [id]: '00.000' });
+			setApys({ ...apys, [id]: '00.000' });
 		}
 	}
 
@@ -61,17 +65,12 @@ export function StakeNft() {
 		// contracts.nftRewardsVault.userInfo(address, id); ... to be finished
 	}, [address, ts]);
 
-	useEffect(() => {
-		const ids = Object.values(nfts);
-		const addresses = ids.map((x) => address);
-		contracts.uiView.nftBalance(addresses, ids).then((result) => {
-			setNftBalances(result.map((x) => x.toNumber()));
-		});
-		// contracts.nftRewardsVault.userInfo(address, id); ... to be finished
-	}, [address, ts]);
-
 	function handleToggle(key) {
+		// since nfts are collapsed by default, makes more sense to only compute the APY we need on toggle.
+		// note: we could do the same with NFT balances, but we get those with a single call so it's easier to keep it
 		setToggles({ ...toggles, [key]: !toggles[key] });
+		const willOpen = !toggles[key];
+		if (willOpen) calcApy(key);
 	}
 
 	function handleChangeInput(key, value) {
@@ -119,7 +118,7 @@ export function StakeNft() {
 	}
 
 	// const myNfts = nftBalances ? Object.entries(nfts).filter(([nftName, id]) => nftBalances[id] > 0) : [];
-	console.log({ inputs });
+	console.log({ apys });
 
 	return (
 		<>
@@ -148,7 +147,7 @@ export function StakeNft() {
 							<hr />
 							<Row>
 								<Col>
-									<Statistic id="apyNft" params={[address, nftId, false]} />
+									<Statistic id="apyNft" value={apys[nftName] || 0} />
 								</Col>
 								<Col onClick={() => handleUpdateStake(nftId)}>
 									<Statistic id="nftBalance" value={(nftBalances && nftBalances[nftId]) || 0} />

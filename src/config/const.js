@@ -281,13 +281,10 @@ export const stats = {
 		unit: 'TDAO',
 		params: [0], // first param always zero
 	},
-
 	apyNft: {
-		contract: 'uiView',
 		label: 'APY',
 		decimals: 2,
 		unit: '%',
-		callback: (x) => x.mul(100),
 	},
 	nftStaked: {
 		contract: 'nftRewardsVault',
