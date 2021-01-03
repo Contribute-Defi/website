@@ -16,15 +16,18 @@ export function StakeTrig() {
 
 	async function calcApy() {
 		try {
-			const rewardsPerSecond = await contracts.trigRewardsVault.avgFeesPerSecondTotal();
+			const ether = parseUnits('1');
+
 			const totalStaked = await contracts.trig.balanceOf(contracts.trigRewardsVault.address);
 			const trigUSD = await contracts.uiView.trigPriceUSD(false);
+			let totalStakedUSD = totalStaked.mul(trigUSD).div(ether);
+			totalStakedUSD = totalStakedUSD.eq(0) ? trigUSD : totalStakedUSD;
+
 			const tdaoUSD = await contracts.uiView.tdaoPriceUSD(true);
-			const ether = parseUnits('1');
+			const rewardsPerSecond = await contracts.trigRewardsVault.avgFeesPerSecondTotal();
 			const rewardsPerYear = rewardsPerSecond.mul('31536000');
 			const rewardYearUSD = rewardsPerYear.mul(tdaoUSD).div(ether);
-			let totalStakedUSD = totalStaked.mul(trigUSD).div(ether);
-			totalStakedUSD = totalStakedUSD == 0 ? ether : totalStakedUSD;
+
 			const apy = rewardYearUSD.mul(ether).div(totalStakedUSD);
 			const floatApy = Number(formatUnits(apy)) * 100;
 			let niceApy = floatApy.toFixed(2);

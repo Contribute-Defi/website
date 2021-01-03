@@ -16,15 +16,18 @@ export function StakeLp() {
 
 	async function calcApy() {
 		try {
-			const rewardsPerSecond = await contracts.rewardsVault.avgFeesPerSecondTotal();
+			const ether = parseUnits('1');
+
 			const totalStaked = await contracts.pairWeth.balanceOf(contracts.rewardsVault.address);
 			const lpUSD = await contracts.uiView.calculateLpPriceUSD(contracts.pairWeth.address);
+			let totalStakedUSD = totalStaked.mul(lpUSD).div(ether);
+			totalStakedUSD = totalStakedUSD.eq(0) ? lpUSD : totalStakedUSD;
+
 			const tdaoUSD = await contracts.uiView.tdaoPriceUSD(true);
-			const ether = parseUnits('1');
+			const rewardsPerSecond = await contracts.rewardsVault.avgFeesPerSecondTotal();
 			const rewardsPerYear = rewardsPerSecond.mul('31536000');
 			const rewardYearUSD = rewardsPerYear.mul(tdaoUSD).div(ether);
-			let totalStakedUSD = totalStaked.mul(lpUSD).div(ether);
-			totalStakedUSD = totalStakedUSD == 0 ? ether : totalStakedUSD;
+
 			const apy = rewardYearUSD.mul(ether).div(totalStakedUSD);
 			const floatApy = Number(formatUnits(apy)) * 100;
 			let niceApy = floatApy.toFixed(2);

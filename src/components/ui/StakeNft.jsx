@@ -37,13 +37,17 @@ export function StakeNft() {
 			const poolAllocationPoint = poolInfo.allocPoint;
 			const rewardsPerSecond = await contracts.nftRewardsVault.avgFeesPerSecondTotal();
 			const totalStaked = await contracts.nft.balanceOf(contracts.nftRewardsVault.address, id);
-			const nftUSD = nftPrices[id];
-			const tdaoUSD = await contracts.uiView.tdaoPriceUSD(true);
 			const ether = parseUnits('1');
+
+			const tribPriceUSD = await contracts.uiView.tribPriceUSD();
+			const nftUSD = tribPriceUSD.mul(nftPrices[id].toString());
+			let totalStakedUSD = totalStaked.mul(nftUSD);
+			totalStakedUSD = totalStakedUSD.eq(0) ? nftUSD : totalStakedUSD;
+
+			const tdaoUSD = await contracts.uiView.tdaoPriceUSD(true);
 			const rewardsPerYear = rewardsPerSecond.mul('31536000');
 			const rewardYearUSD = rewardsPerYear.mul(tdaoUSD).div(ether);
-			let totalStakedUSD = totalStaked.mul(nftUSD).div(ether);
-			totalStakedUSD = totalStakedUSD.eq(0) ? ether : totalStakedUSD;
+
 			const apy = rewardYearUSD.mul(poolAllocationPoint).mul(ether).div(totalStakedUSD).div(totalAllocPoint);
 			const floatApy = Number(formatUnits(apy)) * 100;
 			let niceApy = floatApy.toFixed(2);
