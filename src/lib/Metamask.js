@@ -32,9 +32,9 @@ export class Metamask {
 		}
 
 		try {
-			const chainId = await ethereum.request('eth_chainId');
+			const chainId = await ethereum.send('eth_chainId');
 			this.handleChainChanged(chainId);
-			const accounts = await ethereum.request('eth_accounts');
+			const accounts = await ethereum.send('eth_accounts');
 			this.handleAccountsChanged(accounts);
 		} catch (err) {
 			// In the future, maybe in 2020, this will return a 4100 error if
@@ -56,7 +56,7 @@ export class Metamask {
 		console.log('metamask connect');
 		// This is equivalent to ethereum.enable()
 		try {
-			const accounts = await this.ethereum.request('eth_requestAccounts');
+			const accounts = await this.ethereum.send('eth_requestAccounts');
 			this.handleAccountsChanged(accounts);
 		} catch (err) {
 			if (err.code === 4001) {
