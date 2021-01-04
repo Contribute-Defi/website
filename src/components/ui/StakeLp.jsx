@@ -57,7 +57,7 @@ export function StakeLp() {
 		if (!amount) return;
 		amount = parseUnits(amount);
 		const maxAllowance = BigNumber.from(2).pow(256).sub(1);
-		const spenderAddress = contracts.trigRewardsVault.address;
+		const spenderAddress = contracts.rewardsVault.address;
 		const allowance = await contracts.pairWeth.allowance(address, spenderAddress);
 		if (allowance.lt(amount)) {
 			setTransactionStatus(9);

@@ -82,7 +82,7 @@ export function StakeNft() {
 	const handleDeposit = async (nftId) => {
 		if (!inputs[`stake${nftId}`]) return;
 		const amount = inputs[`stake${nftId}`];
-		const spenderAddress = contracts.trigRewardsVault.address;
+		const spenderAddress = contracts.nftRewardsVault.address;
 		const approved = await contracts.nft.isApprovedForAll(address, spenderAddress);
 		if (!approved) {
 			setTransactionStatus(9);
