@@ -107,10 +107,6 @@ export function StakeTrig() {
 					<h4>TRIG</h4>
 				</Col>
 				<Col sm={8} className="text-right">
-					<Button href="https://app.uniswap.org" variant="outline-secondary">
-						Trade In Uniswap
-					</Button>
-					&nbsp;
 					<Button onClick={() => handleClaim(0)}>Claim rewards</Button>
 					&nbsp;
 					<Button onClick={() => handleToggle()} variant="link">

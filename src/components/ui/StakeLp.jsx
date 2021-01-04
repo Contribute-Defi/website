@@ -107,13 +107,15 @@ export function StakeLp() {
 					<h4>TDAO/ETH LP</h4>
 				</Col>
 				<Col sm={8} className="text-right">
-					<Button href="https://app.uniswap.org" variant="outline-secondary">
-						Trade In Uniswap
+					<Button
+						href="https://app.uniswap.org/#/swap?inputCurrency=0x8e84ee8b28ddbe2b1d5e204e674460835d298815&outputCurrency=ETH"
+						target="blank"
+						variant="outline-secondary"
+					>
+						Trade at Uniswap
 					</Button>
 					&nbsp;
-					<Button onClick={() => handleClaim(0)} variant="outline-secondary">
-						Claim rewards
-					</Button>
+					<Button onClick={() => handleClaim(0)}>Claim rewards</Button>
 					&nbsp;
 					<Button onClick={() => handleToggle()} variant="link">
 						{toggle ? '▲' : '▼'}
@@ -165,12 +167,12 @@ export function StakeLp() {
 					</Row>
 					<Row className="pb-2">
 						<Col sm={6}>
-							<Button onClick={() => handleDeposit(inputs['stake'])} block variant="outline-secondary">
+							<Button onClick={() => handleDeposit(inputs['stake'])} block>
 								Stake
 							</Button>
 						</Col>
 						<Col sm={6}>
-							<Button onClick={() => handleWithdraw(inputs['unstake'])} block variant="outline-secondary">
+							<Button onClick={() => handleWithdraw(inputs['unstake'])} block>
 								Unstake
 							</Button>
 						</Col>

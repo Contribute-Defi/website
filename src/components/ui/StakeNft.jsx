@@ -137,13 +137,15 @@ export function StakeNft() {
 							<h4>{nftName}</h4>
 						</Col>
 						<Col sm={8} className="text-right">
-							<Button href="https://app.uniswap.org" variant="outline-secondary">
-								Trade in OpenSea
+							<Button
+								href="https://opensea.io/collection/unidentified-contract-xsgyraijpu"
+								target="blank"
+								variant="outline-secondary"
+							>
+								Trade at OpenSea
 							</Button>
 							&nbsp;
-							<Button variant="outline-secondary" onClick={() => handleWithdraw(nftId, true)}>
-								Claim rewards
-							</Button>
+							<Button onClick={() => handleWithdraw(nftId, true)}>Claim rewards</Button>
 							&nbsp;
 							<Button onClick={() => handleToggle(nftName)} variant="link">
 								{toggles[nftName] ? '▲' : '▼'}
@@ -195,12 +197,12 @@ export function StakeNft() {
 							</Row>
 							<Row className="pb-2">
 								<Col sm={6}>
-									<Button onClick={() => handleDeposit(nftId)} block variant="outline-secondary">
+									<Button onClick={() => handleDeposit(nftId)} block>
 										Stake
 									</Button>
 								</Col>
 								<Col sm={6}>
-									<Button onClick={() => handleWithdraw(nftId)} block variant="outline-secondary">
+									<Button onClick={() => handleWithdraw(nftId)} block>
 										Unstake
 									</Button>
 								</Col>
