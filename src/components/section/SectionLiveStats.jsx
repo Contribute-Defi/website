@@ -4,9 +4,8 @@ import { RowStat, Statistic } from '../ui';
 
 function SectionLiveStats(props) {
 	const { phase } = props;
-	const handleScrollDown = (element) => {
-		console.log(element);
-		document.getElementById(element).scrollIntoView({ behavior: 'smooth' });
+	const handleScrollDown = () => {
+		document.getElementById('anchor-participate').scrollIntoView({ behavior: 'smooth' });
 	};
 
 	return (
@@ -41,7 +40,7 @@ function SectionLiveStats(props) {
 						</div>
 						{phase === 2 && (
 							<div className="mt-5 mb-5 text-center">
-								<Button onClick={handleScrollDown('anchor-participate')} className="btn-tdao pl-5 pr-5">
+								<Button onClick={handleScrollDown} className="btn-tdao pl-5 pr-5">
 									Contribute
 								</Button>
 							</div>
