@@ -12,7 +12,7 @@ import imageSupreme from '../assets/nft/SUPREME.jpg';
 import imageImmortal from '../assets/nft/IMMORTAL.jpg';
 import imageDivinity from '../assets/nft/DIVINITY.jpg';
 
-export const USE_UNISWAP_PRICE = false;
+export const USE_UNISWAP_PRICE = true;
 
 export const LINKS = {
 	telegram: 'https://t.me/joinchat/GKigSxj3yFWFFFjQjUN7RA',
@@ -149,10 +149,26 @@ export const stats = {
 	},
 	tdaoPriceTRIB: {
 		unit: 'TRIB',
-		label: 'TDAO Price Floor**',
+		label: 'TDAO Price',
 		contract: 'uiView',
 		decimals: 2,
 		params: [USE_UNISWAP_PRICE],
+	},
+	tdaoPriceFloorTRIB: {
+		unit: 'TRIB',
+		label: 'TDAO Price Floor**',
+		contract: 'uiView',
+		method: 'tdaoPriceTRIB',
+		decimals: 2,
+		params: [false],
+	},
+	tdaoPriceFloorUSD: {
+		unit: 'USD',
+		label: 'TDAO Price',
+		contract: 'uiView',
+		method: 'tdaoPriceUSD',
+		decimals: 2,
+		params: [false],
 	},
 	tdaoPriceUSD: {
 		unit: 'USD',
@@ -173,7 +189,7 @@ export const stats = {
 		label: 'TRIG Price',
 		contract: 'uiView',
 		decimals: 2,
-		params: [USE_UNISWAP_PRICE],
+		params: [false],
 	},
 	tribPriceUSD: {
 		unit: 'USD',

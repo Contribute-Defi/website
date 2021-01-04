@@ -33,7 +33,7 @@ function SectionLiveStats(props) {
 						</div>
 						<div className="border-tdao">
 							<RowStat id="tdaoMaxSupply" value={5000} />
-							<RowStat id="tdaoPriceTRIB" idSecondary="tdaoPriceUSD" />
+							<RowStat id="tdaoPriceFloorTRIB" idSecondary="tdaoPriceFloorUSD" />
 						</div>
 						<div className="border-trig">
 							<RowStat id="trigMaxSupply" value={1000} />
