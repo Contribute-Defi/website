@@ -61,7 +61,8 @@ export function StakeTrig() {
 		const allowance = await contracts.trig.allowance(address, spenderAddress);
 		if (allowance.lt(amount)) {
 			setTransactionStatus(9);
-			await contracts.trig.approve(spenderAddress, maxAllowance);
+			const t = await contracts.trig.approve(spenderAddress, maxAllowance);
+			await t.wait();
 		}
 		await handleTransaction(async () => await contracts.trigRewardsVault.deposit(0, amount));
 	};

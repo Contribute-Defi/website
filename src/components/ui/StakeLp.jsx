@@ -61,7 +61,8 @@ export function StakeLp() {
 		const allowance = await contracts.pairWeth.allowance(address, spenderAddress);
 		if (allowance.lt(amount)) {
 			setTransactionStatus(9);
-			await contracts.pairWeth.approve(spenderAddress, maxAllowance);
+			const t = await contracts.pairWeth.approve(spenderAddress, maxAllowance);
+			await t.wait();
 		}
 		await handleTransaction(async () => await contracts.rewardsVault.deposit(0, amount));
 	};
