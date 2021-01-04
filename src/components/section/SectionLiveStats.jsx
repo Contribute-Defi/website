@@ -45,6 +45,17 @@ function SectionLiveStats(props) {
 								</Button>
 							</div>
 						)}
+						{phase === 3 && (
+							<div className="mt-5 mb-5 text-center">
+								<Button
+									href="https://app.uniswap.org/#/swap?inputCurrency=0x8e84ee8b28ddbe2b1d5e204e674460835d298815&outputCurrency=ETH"
+									target="blank"
+									className="btn-tdao pl-5 pr-5"
+								>
+									Purchase TDAO
+								</Button>
+							</div>
+						)}
 						<div className="note">
 							<p>
 								* The TRIB Virtual Price Floor takes into account the burned tokens in addition to the
