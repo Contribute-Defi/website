@@ -71,7 +71,7 @@ export function PageGovern() {
 			{phase === 1 && <SectionJoinContribute />}
 			{phase === 2 && <SectionJoinColumn />}
 			{phase === 2 && <SectionContributeTdao />}
-			{(phase === 2 || (phase === 3 && !hasClaimed)) && (
+			{((phase === 2 && address) || (phase === 3 && !hasClaimed && address)) && (
 				<SectionAccountInfo phase={phase} hasClaimed={hasClaimed} onClaimed={onUpdate} />
 			)}
 			{phase === 3 && hasClaimed && <SectionStakeEarn phase={phase} />}

@@ -22,7 +22,7 @@
 			width: 550px;
 		}
 
-		.read-block-link {
+		.read-blog-link {
 			font-size: 1em;
 			font-weight: 700;
 			a {
@@ -32,6 +32,15 @@
 
 		.gallery {
 			margin-top: 50px;
+
+			a {
+				color: #444049;
+				text-decoration: none;
+			}
+
+			a:hover {
+				color: #f12ea6;
+			}
 
 			.card_container {
 				width: 33.33%;

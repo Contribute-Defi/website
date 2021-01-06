@@ -1,178 +1,28 @@
-.stake-earn_container {
-	background: #282828;
-
-	.stake-earn {
-		width: 800px;
-		padding: 50px 20px;
-		color: #fff;
-
-		.stake-earn_header {
-			font-size: 1.8em;
-            font-weight: 100;
-            margin-bottom: 50px;
+.section-stake-earn {
+	@media (max-width: 576px) {
+		.input-group {
+			margin-bottom: 10px;
 		}
 
-		.stake {
-			padding: 14px 5px 0 5px;
-
-			.header-and-purchase-btn {
-				// & > div {
-				// 	width: 28%;
-				// }
-				.stake-header_container {
-					padding: 0 0 8px 8px;
-				}
-
-				.purchase-btn_container {
-					padding: 0 8px 8px 0;
-
-					.purchase-btn {
-						border: 1px solid #404040;
-						outline: none;
-						background: none;
-						padding: 5px 24px;
-						color: #fff;
-						font-size: 1em;
-					}
-
-					span {
-						font-size: 1.4em;
-					}
-				}
-			}
-
-			.stake-details_container {
-				padding: 16px 0;
-				.stake-detail_container {
-					width: 20%;
-
-					.detail-text {
-						font-size: 0.9em;
-						font-weight: 100;
-					}
-
-					.detail-value {
-						font-size: 1.4em;
-						font-weight: 500;
-
-						span {
-							font-size: 0.6em;
-							font-weight: 100;
-						}
-					}
-				}
-			}
-
-			.bottom-line {
-				width: 100%;
-				height: 1px;
-				background: #6b6b6b;
-			}
-
-			.stake-form_container {
-				.stake-form {
-					width: 50%;
-					padding: 0 10px;
-
-					label {
-						font-size: 1em;
-						font-weight: 100;
-					}
-
-					.stake-input {
-						width: 100%;
-						border: 1px solid #555555;
-						background: #3d3d3d;
-						padding: 5px 10px;
-						border-radius: 3px;
-					}
-
-					.stake-btn {
-						width: 100%;
-						border: none;
-						outline: none;
-						border-radius: 3px;
-						padding: 5px 10px;
-						background: #f12ea6;
-						color: #fff;
-						font-size: 1em;
-					}
-				}
-			}
+		.stat {
+			font-size: 0.6rem;
 		}
 
-		.trig-stake {
-			border-left: 2px solid #d08709;
+		.btn-primary {
+			margin-bottom: 10px;
 		}
 
-		.pioneer-stake {
-			border-left: 2px solid #b0b0b0;
-            margin-top: 50px;
-            
-            .stake-header_container{
-                .pioneer-check{
-                    -webkit-appearance: none;
-                    width: 40px;
-                    height: 40px;
-                    background: none;
-                    border: 1px solid #6b6b6b;
-                    position: relative;
-                }
-
-                .pioneer-check:focus{
-                    border: 1px solid #6b6b6b;
-                    outline: none;
-                }
-
-                .pioneer-check:checked::before{
-                    content: '\2713';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: #0667dc;
-                    color: #fff;
-                    font-size: 1.4em;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-            }
+		.btn-outline-secondary {
+			margin-bottom: 10px;
 		}
 	}
-}
 
-
-
-@media (max-width: 576px){
-	.stake-earn_container {
-		background: #282828;
-	
-		.stake-earn {
-			width: 100%;
-	
-			.stake {
-	
-				.header-and-purchase-btn {
-				}
-	
-				.stake-details_container {
-					.stake-detail_container {
-						width: 50%;
-						margin-bottom: 10px;
-					}
-				}
-	
-				.stake-form_container {
-					.stake-form {
-						width: 100%;
-						margin-bottom: 20px;						
-					}
-				}
-			}
-	
+	@media (max-width: 480px) {
+		.stat {
+			font-size: 0.5rem;
+		}
+		.stat-unit {
+			display: none;
 		}
 	}
-	
 }

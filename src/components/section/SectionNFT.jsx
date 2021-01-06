@@ -12,29 +12,8 @@ import tier8 from '../../assets/nft/DIVINITY.jpg';
 
 export function SectionNFT(props) {
 	const { contracts } = useEthers();
-	const [nftQuantity, setNftQuantity] = useState([1, 1, 2, 4, 5, 6, 8, 10]);
-
-	useEffect(() => {
-		if (contracts) {
-			recountNFTRemaining();
-		}
-	}, [contracts]);
-
-	const recountNFTRemaining = async () => {
-		const address = await contracts.lockedLiquidityEvent.address;
-		const addresses = [address, address, address, address, address, address, address, address];
-		const ids = [0, 1, 2, 3, 4, 5, 6, 7];
-		const nftBalance = await contracts.uiView.nftBalance(addresses, ids);
-		let newBalance = new Array();
-		for (let i in nftBalance) {
-			if (i == 4 || i == 3) {
-				newBalance.push(0);
-			} else {
-				newBalance.push(nftBalance[i].toString());
-			}
-		}
-		setNftQuantity(newBalance.reverse());
-	};
+	const [nftQuantity, setNftQuantity] = useState([1, 1, 2, 2, 2, 6, 8, 10]);
+	const nftURL = 'https://opensea.io/assets/0x2da71c9db22f9d620fdc07bd42105e852afe05a2/';
 
 	return (
 		<div className="nft-container">
@@ -43,9 +22,9 @@ export function SectionNFT(props) {
 					Earn Even <span>More Fees</span> By staking These <span>Exclusive Nfts</span>
 				</h3>
 				<p className="nft-desc mx-auto">
-					These NFTs were crested to reward users who take the most risk in the Locked Liquidity Event
+					These NFTs were created to reward users who take the most risk in the Locked Liquidity Event
 				</p>
-				<span className="read-block-link">
+				<span className="read-blog-link">
 					<a target="blank" href="https://medium.com/contribute-defi">
 						Read the blog post to learn more.
 					</a>
@@ -56,36 +35,36 @@ export function SectionNFT(props) {
 							<p className="issued">{nftQuantity[0]}x</p>
 							<img src={tier8} alt="" />
 						</div>
-						<h5 className="img-title text-uppercase m-0 mt-3">Divinity</h5>
-						<h5 className="total-issued text-uppercase">
-							5.0% of NFT rewards
-							<br />
-							<span>Top</span> Contributor
+						<h5 className="img-title text-uppercase m-0 mt-3">
+							<a href={nftURL + '7'} target="blank">
+								Divinity
+							</a>
 						</h5>
+						<h5 className="total-issued text-uppercase">5.0% of NFT rewards</h5>
 					</div>
 					<div className="card_container mx-5">
 						<div className="card">
 							<p className="issued">{nftQuantity[1]}x</p>
 							<img src={tier7} alt="" />
 						</div>
-						<h5 className="img-title text-uppercase m-0 mt-3">Immortal</h5>
-						<h5 className="total-issued text-uppercase">
-							36% of NFT rewards
-							<br />
-							<span>100,000 TRIB</span> Minimum
+						<h5 className="img-title text-uppercase m-0 mt-3">
+							<a href={nftURL + '6'} target="blank">
+								Immortal
+							</a>
 						</h5>
+						<h5 className="total-issued text-uppercase">36% of NFT rewards</h5>
 					</div>
 					<div className="card_container">
 						<div className="card">
 							<p className="issued">{nftQuantity[2]}x</p>
 							<img src={tier6} alt="" />
 						</div>
-						<h5 className="img-title text-uppercase m-0 mt-3">Supreme</h5>
-						<h5 className="total-issued text-uppercase">
-							28% of NFT rewards
-							<br />
-							<span>50,000 TRIB</span> Minimum
+						<h5 className="img-title text-uppercase m-0 mt-3">
+							<a href={nftURL + '5'} target="blank">
+								Supreme
+							</a>
 						</h5>
+						<h5 className="total-issued text-uppercase">28% of NFT rewards</h5>
 					</div>
 				</div>
 				<div className="gallery second_row d-flex">
@@ -94,60 +73,60 @@ export function SectionNFT(props) {
 							<p className="issued">{nftQuantity[3]}x</p>
 							<img src={tier5} alt="" />
 						</div>
-						<h5 className="img-title text-uppercase m-0 mt-3">Legend</h5>
-						<h5 className="total-issued text-uppercase">
-							18% of NFT rewards
-							<br />
-							<span>20,000 TRIB</span> Minimum
+						<h5 className="img-title text-uppercase m-0 mt-3">
+							<a href={nftURL + '4'} target="blank">
+								Legend
+							</a>
 						</h5>
+						<h5 className="total-issued text-uppercase">18% of NFT rewards</h5>
 					</div>
 					<div className="card_container ml-4">
 						<div className="card">
 							<p className="issued">{nftQuantity[4]}x</p>
 							<img src={tier4} alt="" />
 						</div>
-						<h5 className="img-title text-uppercase m-0 mt-3">Voyager</h5>
-						<h5 className="total-issued text-uppercase">
-							8.4% of NFT rewards
-							<br />
-							<span>10,000 TRIB</span> Minimum
+						<h5 className="img-title text-uppercase m-0 mt-3">
+							<a href={nftURL + '3'} target="blank">
+								Voyager
+							</a>
 						</h5>
+						<h5 className="total-issued text-uppercase">8.4% of NFT rewards</h5>
 					</div>
 					<div className="card_container mx-4">
 						<div className="card">
 							<p className="issued">{nftQuantity[5]}x</p>
 							<img src={tier3} alt="" />
 						</div>
-						<h5 className="img-title text-uppercase m-0 mt-3">Alchemist</h5>
-						<h5 className="total-issued text-uppercase">
-							3.4% of NFT rewards
-							<br />
-							<span>5,000 TRIB</span> Minimum
+						<h5 className="img-title text-uppercase m-0 mt-3">
+							<a href={nftURL + '2'} target="blank">
+								Alchemist
+							</a>
 						</h5>
+						<h5 className="total-issued text-uppercase">3.4% of NFT rewards</h5>
 					</div>
 					<div className="card_container mr-4">
 						<div className="card">
 							<p className="issued">{nftQuantity[6]}x</p>
 							<img src={tier2} alt="" />
 						</div>
-						<h5 className="img-title text-uppercase m-0 mt-3">Explorer</h5>
-						<h5 className="total-issued text-uppercase">
-							1.0% of NFT rewards
-							<br />
-							<span>2,000 TRIB</span> Minimum
+						<h5 className="img-title text-uppercase m-0 mt-3">
+							<a href={nftURL + '1'} target="blank">
+								Explorer
+							</a>
 						</h5>
+						<h5 className="total-issued text-uppercase">1.0% of NFT rewards</h5>
 					</div>
 					<div className="card_container">
 						<div className="card">
 							<p className="issued">{nftQuantity[7]}x</p>
 							<img src={tier1} alt="" />
 						</div>
-						<h5 className="img-title text-uppercase m-0 mt-3">Visionary</h5>
-						<h5 className="total-issued text-uppercase">
-							0.2% of NFT rewards
-							<br />
-							<span>500 TRIB</span> Minimum
+						<h5 className="img-title text-uppercase m-0 mt-3">
+							<a href={nftURL + '0'} target="blank">
+								Visionary
+							</a>
 						</h5>
+						<h5 className="total-issued text-uppercase">0.2% of NFT rewards</h5>
 					</div>
 				</div>
 			</div>

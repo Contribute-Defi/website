@@ -39,7 +39,7 @@ section {
 		min-width: 500px;
 	}
 	@include media-breakpoint-up('md') {
-		padding: 12rem 0;
+		padding: 18rem 0;
 		h2 {
 			position: relative;
 			left: -1rem;
@@ -124,10 +124,6 @@ img.logoGovernance {
 	background-color: #444049;
 }
 
-.section-live-stats {
-	background-color: #0f0f0f;
-}
-
 .section-account-info {
 	background-color: #282828;
 }
@@ -135,7 +131,7 @@ img.logoGovernance {
 .section-stake-earn {
 	background-color: #282828;
 	.stat-label {
-		color: rgba(255, 255, 255, .66);
+		color: rgba(255, 255, 255, 0.66);
 		text-transform: uppercase;
 	}
 	.stat-value-unit {
@@ -145,11 +141,11 @@ img.logoGovernance {
 		font-size: 2em;
 	}
 	.stat-unit {
-		color: rgba(255, 255, 255, .66);
+		color: rgba(255, 255, 255, 0.66);
 		font-size: 11px;
 	}
 	h4 {
-		margin-top: .33em;
+		margin-top: 0.33em;
 	}
 }
 

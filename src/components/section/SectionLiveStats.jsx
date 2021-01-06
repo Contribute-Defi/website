@@ -12,7 +12,7 @@ function SectionLiveStats(props) {
 		<section className="section-live-stats text-light">
 			<Container className="mb-6">
 				<h2 className="font-weight-kight mb-5 text-center text-uppercase">Live Stats</h2>
-				<Row className="text-center text-lg-left">
+				<Row className="top-stats text-center text-lg-left">
 					<Col sm="6" lg="4">
 						<Statistic id="lleTribContributed" idSecondary="lleTribContributedUsd" color="trib" />
 					</Col>
@@ -24,7 +24,7 @@ function SectionLiveStats(props) {
 					</Col>
 				</Row>
 			</Container>
-			<Container className="mb-6">
+			<Container className="table-stats mb-6">
 				<Row>
 					<Col md={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }} xl={{ span: 6, offset: 3 }}>
 						<div className="border-trib">
