@@ -26,7 +26,7 @@ export function CurrentApy() {
 			const savingsContractAddress = await savingsManager.savingsContracts(musdAddress);
 			const savingsContract = new Contract(savingsContractAddress, mstableAbi, provider);
 			const blockNumber = await provider.getBlockNumber();
-			const blocksDiff = APPROX_BLOCKS_PER_DAY * 7;
+			const blocksDiff = APPROX_BLOCKS_PER_DAY * 0.5;
 
 			const currentBlock = await provider.getBlock(blockNumber);
 			const pastBlock = await provider.getBlock(blockNumber - blocksDiff);
