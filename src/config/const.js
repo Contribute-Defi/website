@@ -62,7 +62,7 @@ export const stats = {
 		unit: 'USD',
 	},
 	apy: {
-		label: '(Average Variable APY)',
+		label: 'Average Variable APY',
 		link: 'https://app.mstable.org/analytics',
 		decimals: 2,
 		unit: '%',
