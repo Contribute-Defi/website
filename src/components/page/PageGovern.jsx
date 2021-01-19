@@ -62,7 +62,7 @@ export function PageGovern() {
 
 	return (
 		<div className="page2">
-			<Header activePath="govern" />
+			<Header activePath="tdao" />
 			<SectionHeroGovernance phase={phase} endTime={phaseEndTime} />
 			{phase >= 2 && <SectionLiveStats phase={phase} />}
 			<SectionIntroducing />

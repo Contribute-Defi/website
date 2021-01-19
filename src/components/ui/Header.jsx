@@ -6,7 +6,7 @@ import { Menu } from './Menu';
 
 function Header(props) {
 	const { connect, connected, address, error, status } = useEthers();
-
+	const { activePath } = props;
 	if (status === EthersStatus.DISCONNECTED) {
 		return (
 			<div className="header_container">
@@ -16,7 +16,7 @@ function Header(props) {
 							Con<span>trib</span>ute
 						</h3>
 					</div>
-					<Menu />
+					<Menu activePath={activePath} />
 					<button className="connect-wallet-btn" onClick={() => connect()}>
 						Connect Wallet
 					</button>
@@ -33,7 +33,7 @@ function Header(props) {
 							Con<span>trib</span>ute
 						</h3>
 					</div>
-					<Menu />
+					<Menu activePath={activePath} />
 					<button className="connect-wallet-btn">Connect Wallet</button>
 				</div>
 			</div>
@@ -47,7 +47,7 @@ function Header(props) {
 						Con<span>trib</span>ute
 					</h3>
 				</div>
-				<Menu />
+				<Menu activePath={activePath} />
 				<p className="connected_wallet">
 					<strong>Wallet connected:</strong> {shortenAddress(address)}
 				</p>

@@ -6,7 +6,7 @@ import Header from '../ui/Header';
 export function PageContribute() {
 	return (
 		<>
-			<Header />
+			<Header activePath="trib" />
 			<SectionHeroTrade />
 			<SectionPurchase />
 			<SectionStats />
